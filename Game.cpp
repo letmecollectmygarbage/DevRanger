@@ -9,26 +9,38 @@ void Game::initWindow()
 	std::string title = "DevRanger";
 	sf::VideoMode window_bounds(800, 600);
 	unsigned int framerate_limit = 120;
-	bool isVSyncEnabled = false;
+	bool isVSyncEnabled = true;
 
 	this->window = new sf::RenderWindow(window_bounds, title);
 	this->window->setFramerateLimit(framerate_limit);
 	this->window->setVerticalSyncEnabled(isVSyncEnabled);
 }
 
-
-
-
+void Game::initStates()
+{
+	this->states.push(new GameState(this->window));
+}
 
 //Constructors/Destructors
 Game::Game()
 {
 	this->initWindow();
+	this->initStates();
 }
 
 Game::~Game()
 {
+	/*
+	* Destructor for exiting the game : 
+	* 	frees the memory of every state which composes the game
+	*/
 	delete this->window;
+	while(this->states.empty())
+	{
+		delete this->states.top(); // removes data holded by pointer
+		this->states.pop(); // removes the pointer
+	}
+		
 }
 
 //Functions
@@ -56,6 +68,8 @@ void Game::updateSFMLEvents()
 void Game::update()
 {
 	this->updateSFMLEvents();
+	if(!this->states.empty())
+		this->states.top()->update(this->dt);
 }
 
 void Game::render()
@@ -63,6 +77,10 @@ void Game::render()
 	this->window->clear();
 
 	//Render items
+	if(!this->states.empty())
+	{
+		this->states.top()->render(this->window);
+	}
 
 	this->window->display();
 }
