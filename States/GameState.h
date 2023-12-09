@@ -8,7 +8,8 @@ class GameState :
     {
 
         private:
-            Entity player ; 
+            //Entity whiteRectangle ; // to replace by actual hero
+            Player player ; // hey it's my player !!!
 
 
 
