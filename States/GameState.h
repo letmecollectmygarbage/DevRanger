@@ -6,6 +6,13 @@
 class GameState : 
     public State
     {
+
+        private:
+            Entity player ; 
+
+
+
+
         public:
             GameState(sf::RenderWindow* window);
             virtual ~GameState();

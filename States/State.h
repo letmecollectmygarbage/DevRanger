@@ -1,15 +1,8 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <iostream>
-#include <cstdlib> // for random enemy positions
-#include <ctime> // for random enemy positions
-#include <chrono> // for FPS measurement
-#include <stack>
-#include <vector>
-#include <map>
+#include "../Entities/Entity.h"
+
 
 class State
 {

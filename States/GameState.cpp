@@ -27,11 +27,14 @@ void GameState::update(const float &dt)
     {
         std::cout << "A" << "\n" ; // test 
     }
+
+    this->player.update(dt);
          
 }
 
 void GameState::render(sf::RenderTarget* target)
 {
+    this->player.render(target);
 
 }
 
