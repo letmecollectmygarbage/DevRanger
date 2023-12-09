@@ -1,7 +1,8 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "Entity.h"
+
+#include "Player.h"
 
 
 
@@ -44,13 +45,10 @@ void Entity::render(sf::RenderTarget* target)
 }
 
 void Entity::move(const float& dt, const float dir_x, const float dir_y)
-/*
-*       -1 <= dir_x <= 1
-*       -1 <= dir_y <= 1
-*
-*/
-
 {
+    /*
+    *       -1 <= dir_x <= 1
+    *       -1 <= dir_y <= 1
+    */
     this->shape.move(dir_x*this->movementSpeed*dt,dir_y*this->movementSpeed*dt);
-    
 }
