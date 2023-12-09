@@ -27,7 +27,7 @@ class Entity
 
     public:
         Entity();
-        virtual ~Entity(); // virtual keyword means this function is intended to be derived by derived classes
+        virtual ~Entity(); // Declare the destructor as virtual for proper polymorphism
 
         // Functions 
         virtual void update(const float& dt) ;
