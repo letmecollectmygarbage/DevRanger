@@ -69,7 +69,25 @@ void Game::update()
 {
 	this->updateSFMLEvents();
 	if(!this->states.empty())
-		this->states.top()->update(this->dt);
+	{
+		this->states.top()->update(this->dt) ;
+
+		if(this->states.top()->getQuit()) // if we want to escape current state
+		{
+			this->states.top()->endState(); // put endState on top of stack and execute it
+			delete this->states.top(); // delete endState's data
+			this->states.pop(); // remove pointer to endState
+		}
+	}
+
+	// Application End
+	else // if the states' stack is empty
+	{
+		this->endApplication();
+		Game::~Game();
+		//this->window->close();
+	}
+		
 }
 
 void Game::render()

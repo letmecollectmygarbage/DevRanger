@@ -13,15 +13,29 @@ GameState::~GameState()
 }
 
 void GameState::endState()
+/*
+*   State before quitting where you can save hero's progression for example
+*/
 {
+    std::cout << "endState is reached !" << "\n" ;
 }
 
 void GameState::update(const float &dt)
 {
-    std::cout << "Hello from GameState!" << "\n" ; 
+    this->updateKeybinds(dt);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        std::cout << "A" << "\n" ; // test 
+    }
+         
 }
 
 void GameState::render(sf::RenderTarget* target)
 {
 
+}
+
+void GameState::updateKeybinds(const float& dt)
+{
+    this->checkForQuit();
 }
