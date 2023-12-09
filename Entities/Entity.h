@@ -1,5 +1,3 @@
-
-
 #include <iostream>
 #include <cstdlib> // for random enemy positions
 #include <ctime> // for random enemy positions
@@ -7,6 +5,8 @@
 #include <stack>
 #include <vector>
 #include <map>
+#include <array>
+
 
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
