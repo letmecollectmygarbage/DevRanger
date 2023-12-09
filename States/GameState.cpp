@@ -26,10 +26,7 @@ void GameState::update(const float &dt)
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
         std::cout << "A" << "\n" ; // test 
-    }
-
-    this->player.update(dt);
-         
+    }    this->player.update(dt);      
 }
 
 void GameState::render(sf::RenderTarget* target)
