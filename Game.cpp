@@ -70,7 +70,7 @@ void Game::update()
 	this->updateSFMLEvents();
 	if(!this->states.empty())
 	{
-		this->states.top()->update(this->dt) ;
+		this->states.top()->update(this->dt) ; // updating continuously current state with state's specialized update method
 
 		if(this->states.top()->getQuit()) // if we want to escape current state
 		{
