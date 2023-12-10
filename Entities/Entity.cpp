@@ -11,8 +11,8 @@
 
 Entity::Entity()
 {
-    this->shape.setSize(sf::Vector2f(50.f,50.f));
-    this->movementSpeed = 300.f ;
+    //this->shape.setSize(sf::Vector2f(50.f,50.f));
+    //this->movementSpeed = 300.f ;
 }
 
 Entity::~Entity()
@@ -21,22 +21,7 @@ Entity::~Entity()
 
 void Entity::update(const float &dt)
 {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) // left 
-    {
-        this->move(dt,-1.f,0.f);
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) // up
-    {
-        this->move(dt,0.f,-1.f);
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // right
-    {
-        this->move(dt,1.f,0.f);
-    } 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // down
-    {
-        this->move(dt,0.f,1.f);
-    }
+
 }
 
 void Entity::render(sf::RenderTarget* target)

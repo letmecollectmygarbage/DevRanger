@@ -8,8 +8,8 @@ class GameState :
     {
 
         private:
-            //Entity whiteRectangle ; // to replace by actual hero
-            Player player ; // hey it's my player !!!
+            Entity whiteRectangle ; // to replace by actual hero
+            Player statePlayer ; // is this my player from Player class? 
 
 
 
@@ -22,7 +22,7 @@ class GameState :
             
             void endState();
 
-            void updateKeybinds(const float& dt);
+            void updateInput(const float& dt);
             void update(const float& dt);
             void render(sf::RenderTarget* target = nullptr);
     };

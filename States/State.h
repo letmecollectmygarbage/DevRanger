@@ -17,7 +17,7 @@ class State
 
 		const bool& getQuit() const;
 
-		virtual void updateKeybinds(const float& dt)=0; 
+		virtual void updateInput(const float& dt)=0; 
 		virtual void endState() = 0;
 		virtual void checkForQuit(); 
 		virtual void update(const float& dt) = 0; // (virtual ... = 0) means you MUST create this function for children classes
