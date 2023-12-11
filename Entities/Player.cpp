@@ -44,15 +44,19 @@ int Player::initPlayerSprites()
     *              0 if all good 
     */
     int nbMovements = 18 ; // 18 sprites necessary to display every moving positions (going down, up, steps, ...)
-    std::string filename,folder;
-    folder = "Images/" ; // TODO : find a more sustainable way to manage paths
+    std::string filename,imagesFolder,imagesPlayerFolder;
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    imagesFolder = "Images" ;
+    imagesPlayerFolder = "Player" ; 
+    std::filesystem::path folderPath = currentPath/imagesFolder/imagesPlayerFolder; 
     for(int i = 0 ; i < nbMovements ; i++)
     {
-        
         filename = "hero" + std::to_string(i) + ".png"; // be careful to name the pictures in the Images folder as defined below
-        if(!this->mvmtTextures[i].loadFromFile(folder+filename))
+        if(!this->mvmtTextures[i].loadFromFile(folderPath/filename))
         {
             std::cerr << "The image " + std::to_string(i) + " was not found \n" ;
+            std::filesystem::path currentPath = std::filesystem::current_path();
+            std::cout << "Current working directory: " << currentPath.string() << std::endl;
             return -1 ; 
         }
     }
@@ -63,8 +67,6 @@ int Player::initPlayerSprites()
     playerSprite = mvmtSprites[2];
     std::cout << "Reached end of initPlayerSprites()" << "\n" ; 
     return 0 ;
-
-
 }
 
 // Implement any additional member functions for the Player class if needed
@@ -81,7 +83,6 @@ void Player::move(const float& dt, const float dir_x, const float dir_y)
     *       -1 <= dir_y <= 1
     */
    static int lastMvmt ; // last movement of player 
-   
     if(dir_x == 0.f && dir_y == -1.f) // player going up
    {
         if(lastMvmt == 0)

@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#define NB_TEXTURES_PLAYER 16 // 16 sprites necessary to display every moving positions (going down, up, ...) 
-                                // TODO : remove this is C style and ugly
+#define NB_TEXTURES_PLAYER 18 // 18 sprites necessary to display every moving positions (going down, up, ...) 
+                                // TODO : remove this is C style and ugly and might cause runtime errors if we add sprites in cpp file wtihout adjusting size
 
 #include "Entity.h"
 
@@ -18,10 +18,8 @@ public:
     Player();
     ~Player();
     int initPlayerSprites();
-
     void render(sf::RenderTarget* target);
     void move(const float& dt, const float dir_x, const float dir_y);
-
     // Add any additional member functions specific to the Player class here
 };
 
