@@ -7,6 +7,8 @@ The goal is to unlock access to the whole map by helping the goodies and defeati
 This is the command to compile and generate the executable game file : 
 
 g++ -o DevRanger.out main.cpp Game.cpp States/GameState.cpp Entities/Entity.cpp Entities/Player.cpp States/State.cpp -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+
+C++17 is required at least because of <filesystem> header being used
  
 Credits : 
     SFML tutorial about game states : https://www.youtube.com/watch?v=WFJW9M852Ko (author : Suraj Sharma)
