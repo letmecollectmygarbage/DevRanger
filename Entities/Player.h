@@ -26,3 +26,27 @@ public:
 };
 
 #endif
+
+                        // // IDLE //
+                        //     0 IDLE up
+                        //     1 IDLE right
+                        //     2 IDLE down
+                        //     3 IDLE left
+                        // // going left //
+                        //     4 half left step
+                        //     5 full left step
+                        //     6 half right step
+                        //     7 full right step
+                        // // going right //
+                        //     8 half left step
+                        //     9 full left step
+                        //     10 half right step
+                        //     11 full right step
+                        // // going up //
+                        //     12 half right step
+                        //     13 full right step
+                        //     14 half left step
+                        //     15 full left step
+                        // // going down //
+                        //     16 right step
+                        //     17 left step  

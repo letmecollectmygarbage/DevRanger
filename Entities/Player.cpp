@@ -3,7 +3,7 @@
 Player::Player() 
 {
     this->shape.setSize(sf::Vector2f(50.f,50.f));
-    this->movementSpeed = 100.f ;
+    this->movementSpeed = 200.f ;
     initPlayerSprites();
     this->pos = {0.f,0.f};
 }
@@ -23,27 +23,27 @@ int Player::initPlayerSprites()
                             2 IDLE down
                             3 IDLE left
                         // going left //
-                            4 full left step 
-                            5 half left step
-                            6 full right step
-                            7 half right step
+                            4 half left step
+                            5 full left step
+                            6 half right step
+                            7 full right step
                         // going right //
-                            8 full left step
-                            9 half left step
-                            10 full right step
-                            11 half right step
+                            8 half left step
+                            9 full left step
+                            10 half right step
+                            11 full right step
                         // going up //
-                            12 right step
-                            13 left step
+                            12 half right step
+                            13 full right step
+                            14 half left step
+                            15 full left step
                         // going down //
-                            14 right step
-                            15 left step
-                    
+                            16 right step
+                            17 left step              
     *   @return : -1 if at least one image file was not found
     *              0 if all good 
-    *
     */
-    int nbMovements = 16 ; // 16 sprites necessary to display every moving positions (going down, up, steps, ...)
+    int nbMovements = 18 ; // 18 sprites necessary to display every moving positions (going down, up, steps, ...)
     std::string filename,folder;
     folder = "Images/" ; // TODO : find a more sustainable way to manage paths
     for(int i = 0 ; i < nbMovements ; i++)
@@ -80,9 +80,9 @@ void Player::move(const float& dt, const float dir_x, const float dir_y)
     *       -1 <= dir_x <= 1
     *       -1 <= dir_y <= 1
     */
-   static int lastMvmt ; // last movement sprite of player 
+   static int lastMvmt ; // last movement of player 
    
-   if(dir_x == 0.f && dir_y == -1.f) // player going up
+    if(dir_x == 0.f && dir_y == -1.f) // player going up
    {
         if(lastMvmt == 0)
         { // start walking up
@@ -91,16 +91,22 @@ void Player::move(const float& dt, const float dir_x, const float dir_y)
             lastMvmt = 12;
         }
         else if(lastMvmt==12)
-        { // alternating foot
+        { // go full amplitude
             mvmtSprites[13].setPosition(this->pos);
             this->playerSprite= mvmtSprites[13];
             lastMvmt = 13;
         }
         else if(lastMvmt==13)
-        { // alternating foot
-            mvmtSprites[12].setPosition(this->pos);
-            this->playerSprite= mvmtSprites[12]; 
-            lastMvmt = 12;
+        { // go alternate foot
+            mvmtSprites[14].setPosition(this->pos);
+            this->playerSprite= mvmtSprites[14]; 
+            lastMvmt = 14;
+        }
+        else if(lastMvmt==14)
+        { // go full amplitude
+            mvmtSprites[15].setPosition(this->pos);
+            this->playerSprite= mvmtSprites[15]; 
+            lastMvmt = 15;
         }
         else // player was not going up before
         {
@@ -177,15 +183,15 @@ void Player::move(const float& dt, const float dir_x, const float dir_y)
    {
         if(lastMvmt == 2)
         { // start walking down
-            mvmtSprites[14].setPosition(this->pos);
-            this->playerSprite= mvmtSprites[14];
-            lastMvmt = 14;
+            mvmtSprites[16].setPosition(this->pos);
+            this->playerSprite= mvmtSprites[16];
+            lastMvmt = 16;
         }
-        else if(lastMvmt==14)
+        else if(lastMvmt==16)
         { // alternating foot
-            mvmtSprites[15].setPosition(this->pos);
-            this->playerSprite= mvmtSprites[15];
-            lastMvmt = 15;
+            mvmtSprites[17].setPosition(this->pos);
+            this->playerSprite= mvmtSprites[17];
+            lastMvmt = 17;
         }
         else // player was not facing down before
         {
@@ -198,24 +204,3 @@ void Player::move(const float& dt, const float dir_x, const float dir_y)
     this->pos = playerSprite.getPosition(); // update current position of player
 }
 
-                        // // IDLE //
-                        //     0 IDLE up
-                        //     1 IDLE right
-                        //     2 IDLE down
-                        //     3 IDLE left
-                        // // going left //
-                        //     4 full left step 
-                        //     5 half left step
-                        //     6 full right step
-                        //     7 half right step
-                        // // going right //
-                        //     8 full left step
-                        //     9 half left step
-                        //     10 full right step
-                        //     11 half right step
-                        // // going up //
-                        //     12 right step
-                        //     13 left step
-                        // // going down //
-                        //     14 right step
-                        //     15 left step
