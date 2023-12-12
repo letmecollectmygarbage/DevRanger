@@ -14,6 +14,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+#ifndef ENTITY_H
+#define ENTITY_H
+
 class Entity
 {
     private : 
@@ -35,3 +38,5 @@ class Entity
         virtual void render(sf::RenderTarget* target) ;
         virtual void move(const float& dt, const float x, const float y);
 };
+
+#endif
