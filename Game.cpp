@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "GameWorld.h"
 
 //Static functions
 
@@ -18,7 +19,11 @@ void Game::initWindow()
 
 void Game::initStates()
 {
-	this->states.push(new GameState(this->window));
+
+
+
+	GameState* newState = new GameState(this->window);
+	this->states.push(newState);
 }
 
 //Constructors/Destructors
@@ -26,6 +31,7 @@ Game::Game()
 {
 	this->initWindow();
 	this->initStates();
+	this->gameWorld = GameWorld();
 }
 
 Game::~Game()
@@ -99,6 +105,15 @@ void Game::render()
 	{
 		this->states.top()->render(this->window);
 	}
+
+	// i should put this in a state
+	// TODO : add the rest of the rows and iterate with double for loop to draw the whole window
+	for(int i = 0 ; i < gameWorld.gridSize.x ; i++)
+	{
+		this->window->draw(gameWorld.tiles[0][i]->sprite);
+
+	}
+	
 
 	this->window->display();
 }

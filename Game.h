@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "States/GameState.h"
+#include "GameWorld.h"
 
 class Game
 {
@@ -9,6 +10,8 @@ private:
 	//Variables
 	sf::RenderWindow *window;
 	sf::Event sfEvent;
+	// i should probably put this in a state but idk where else to put it 
+	GameWorld gameWorld ; // this line produces an error
 
 	sf::Clock dtClock;
 	float dt;
