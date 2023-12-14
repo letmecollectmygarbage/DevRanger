@@ -100,19 +100,22 @@ void Game::render()
 {
 	this->window->clear();
 
-	//Render items
-	if(!this->states.empty())
-	{
-		this->states.top()->render(this->window);
-	}
+	
 
 	// i should put this in a state
 	// TODO : add the rest of the rows and iterate with double for loop to draw the whole window
 	for(int i = 0 ; i < gameWorld.gridSize.x ; i++)
 	{
 		this->window->draw(gameWorld.tiles[0][i]->sprite);
-
 	}
+
+	//Render items
+	if(!this->states.empty())
+	{
+		this->states.top()->render(this->window);
+	}
+
+
 	
 
 	this->window->display();
