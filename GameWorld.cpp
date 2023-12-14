@@ -26,15 +26,19 @@ void GameWorld::setUpTiles()
     std::filesystem::path currentPath = std::filesystem::current_path();
     std::filesystem::path wallPath = currentPath/folder/wall ;
     std::filesystem::path doorPath = currentPath/folder/door ;
-
+    float scaleFactor = 2.f ; 
+    bool resize = true ;
+    bool isFree = false ; 
+    bool isExit = false ; 
     std::vector<GameTile *> firstRow ; // row != column
     for(int i = 0 ; i < 16 ; i++)
     {
         // create top wall 
         
-        firstRow.push_back(new GameTile((wallPath),{i*50.f,0},false,false)); // bc each tile is a 50x50px square
+        firstRow.push_back(new GameTile((wallPath),{i*50.f,0},isFree,isExit,scaleFactor,resize)); // bc each tile is a 50x50px square
     }
-    firstRow[8]->setUpSprite(doorPath) ; 
+
+    firstRow[8]->setUpSprite(doorPath,scaleFactor,resize) ;  // TODO : find a way to set isExit attribute to true for this one
     tiles.push_back(firstRow); 
 }
 
