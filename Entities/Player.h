@@ -1,15 +1,25 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#define NB_TEXTURES_PLAYER 18 // 18 sprites necessary to display every moving positions (going down, up, ...) 
-                                // TODO : remove this is C style and ugly and might cause runtime errors if we add sprites in cpp file wtihout adjusting size
+#define NB_TEXTURES_PLAYER 28 // 28 sprites necessary to display every moving positions (going down, up, ...) 
+                                // TODO : remove this is C style and ugly and might cause runtime errors if we add sprites in cpp file without adjusting size
 
 #include "Entity.h"
 
 class Player : public Entity {
 private:
     // Add any additional member variables specific to the Player class here
-    std::array<sf::Sprite, NB_TEXTURES_PLAYER> mvmtSprites ;  
-    std::array<sf::Texture,NB_TEXTURES_PLAYER> mvmtTextures ;
+    std::array<sf::Sprite, 4> sprtIDLE ;  
+    std::array<sf::Sprite, 6> sprtUP ; 
+    std::array<sf::Sprite, 6> sprtDOWN ; 
+    std::array<sf::Sprite, 6> sprtLEFT ; 
+    std::array<sf::Sprite, 6> sprtRIGHT ; 
+
+    std::array<sf::Texture, 4> txtrIDLE ;  
+    std::array<sf::Texture, 6> txtrUP ; 
+    std::array<sf::Texture, 6> txtrDOWN ; 
+    std::array<sf::Texture, 6> txtrLEFT ; 
+    std::array<sf::Texture, 6> txtrRIGHT ; 
+
     sf::Sprite playerSprite ; // the player that the user can move
     sf::Vector2f pos; // position of the player 
 
@@ -25,26 +35,3 @@ public:
 
 #endif
 
-                        // // IDLE //
-                        //     0 IDLE up
-                        //     1 IDLE right
-                        //     2 IDLE down
-                        //     3 IDLE left
-                        // // going left //
-                        //     4 half left step
-                        //     5 full left step
-                        //     6 half right step
-                        //     7 full right step
-                        // // going right //
-                        //     8 half left step
-                        //     9 full left step
-                        //     10 half right step
-                        //     11 full right step
-                        // // going up //
-                        //     12 half right step
-                        //     13 full right step
-                        //     14 half left step
-                        //     15 full left step
-                        // // going down //
-                        //     16 right step
-                        //     17 left step  
