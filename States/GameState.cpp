@@ -54,15 +54,15 @@ void GameState::updateInput(const float& dt)
     {
         this->statePlayer.move(dt,-1.f,0.f);
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) // up
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) // up
     {
         this->statePlayer.move(dt,0.f,-1.f);
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // right
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // right
     {
         this->statePlayer.move(dt,1.f,0.f);
     } 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // down
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // down
     {
         this->statePlayer.move(dt,0.f,1.f);
     }
