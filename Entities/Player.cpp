@@ -133,11 +133,14 @@ void Player::move(const float& dt, const float dir_x, const float dir_y)
     *   For correct behaviour only use this functions with   
     *   dir_x belonging to [-1;1]
     *   dir_y belonging to [-1;1]
+    *   Warning : you only enter this function when Z,Q,S or D is pressed.
     */
     static char lastMvmt = 'I' ; // initiated as IDLE down
     static int cyclePos = 0 ; // position in the current movement cycle (0->5)
     static int i = 0 ; 
-    int repeat = 16 ; // number of times each sprite is repeated, used to slow down the 6 frame movement cycle
+    int repeat = 4 ; // number of times each sprite is repeated, used to slow down the 6 frame movement cycle
+
+    // HANDLE FRAME CYCLES //
     if(dir_x == 0.f && dir_y == -1.f) // player going UP
     {
         if(lastMvmt == 'U') // if already walking UP
@@ -178,7 +181,7 @@ void Player::move(const float& dt, const float dir_x, const float dir_y)
                 sprtLEFT[cyclePos].setPosition(this->pos);
                 this->playerSprite= sprtLEFT[cyclePos];
                 cyclePos++;
-            if(cyclePos >= 6) cyclePos = 0 ; 
+                if(cyclePos >= 6) cyclePos = 0 ; 
             }
         }
         else// was not walking UP before
@@ -189,7 +192,7 @@ void Player::move(const float& dt, const float dir_x, const float dir_y)
             cyclePos++;
             lastMvmt = 'L';
         }
-   }
+    }
     else if(dir_x == 1.f && dir_y == 0.f) // player going RIGHT
         if(lastMvmt == 'R') // if already walking RIGHT
         { 
@@ -215,7 +218,7 @@ void Player::move(const float& dt, const float dir_x, const float dir_y)
             lastMvmt = 'R';
         }
     else if(dir_x == 0.f && dir_y == 1.f) // player going DOWN
-   {
+    {
         if(lastMvmt == 'D') // if already walking DOWN
         { 
             if(i < repeat)
@@ -250,12 +253,12 @@ void Player::move(const float& dt, const float dir_x, const float dir_y)
         else if(lastMvmt == 'L') // was walking LEFT
         {
             sprtIDLE[1].setPosition(this->pos);
-            this->playerSprite= sprtIDLE[1];            
+            this->playerSprite= sprtIDLE[1];         
         }
         else if(lastMvmt == 'R') // was walking RIGHT
         {
             sprtIDLE[2].setPosition(this->pos);
-            this->playerSprite= sprtIDLE[2];            
+            this->playerSprite= sprtIDLE[2];           
         }
         else
         {
@@ -263,15 +266,10 @@ void Player::move(const float& dt, const float dir_x, const float dir_y)
             this->playerSprite= sprtIDLE[3];
         }
    }
-//    else // player is trying to move diagonally : block him in IDLE down
-//    {
-//     sprtIDLE[0].setPosition(this->pos);
-//     this->playerSprite= sprtIDLE[0];
-//    }
-   if ( (dir_x == 0.f) ^ (dir_y == 0.f) ) // ensure hero cannot move in diagonal (^ = XOR)
-   {
-        this->playerSprite.move(dir_x*this->movementSpeed*dt,dir_y*this->movementSpeed*dt);
-        this->pos = playerSprite.getPosition(); // update current position of player
-   }
+
+    // ACTUALLY MOVE THE PLAYER'S SPRITE //
+
+    this->playerSprite.move(dir_x*this->movementSpeed*dt,dir_y*this->movementSpeed*dt);
+    this->pos = playerSprite.getPosition(); // update current position of player
 }
 

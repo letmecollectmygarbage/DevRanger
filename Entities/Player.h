@@ -29,7 +29,7 @@ public:
     ~Player();
     int initPlayerSprites();
     void render(sf::RenderTarget* target);
-    void move(const float& dt, const float dir_x, const float dir_y);
+    void move(const float& dt, const float dir_x,const float dir_y);
     // Add any additional member functions specific to the Player class here
 };
 
