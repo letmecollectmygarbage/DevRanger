@@ -33,7 +33,8 @@ bool GameTile::setUpSprite(std::string textureName,float scaleFactor, bool resiz
     this->texture.setSmooth(true); // blurs the edges of the texture
     this->sprite.setTexture(this->texture);
     sf::Vector2u textureSize = this->texture.getSize(); 
-    this->sprite.setTextureRect(sf::IntRect(0,0,textureSize.x,textureSize.y)); // defines the "hitbox"
+    
+    //this->sprite.setTextureRect(sf::IntRect(0,0,textureSize.x,textureSize.y)); // defines the "hitbox"
     return true;
 }
 
@@ -64,8 +65,7 @@ sf::Texture GameTile::resizeTexture(const sf::Texture& originalTexture, float sc
                 for (float dx = 0; dx < scaleFactor; dx++) 
                 {
                     resizedImage.setPixel(static_cast<unsigned int>(x * scaleFactor + dx),
-                                          static_cast<unsigned int>(y * scaleFactor + dy),
-                                          pixelColor);
+                                          static_cast<unsigned int>(y * scaleFactor + dy),pixelColor);
                 }
             }
         }

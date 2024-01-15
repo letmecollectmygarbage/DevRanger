@@ -19,9 +19,6 @@ void Game::initWindow()
 
 void Game::initStates()
 {
-
-
-
 	GameState* newState = new GameState(this->window);
 	this->states.push(newState);
 }
@@ -45,8 +42,7 @@ Game::~Game()
 	{
 		delete this->states.top(); // removes data holded by pointer
 		this->states.pop(); // removes the pointer
-	}
-		
+	}	
 }
 
 //Functions
@@ -106,7 +102,8 @@ void Game::render()
 	// TODO : add the rest of the rows and iterate with double for loop to draw the whole window
 	for(int i = 0 ; i < gameWorld.gridSize.x ; i++)
 	{
-		this->window->draw(gameWorld.tiles[0][i]->sprite);
+		this->window->draw(gameWorld.tiles[0][i]->sprite); // draws firstRow
+		this->window->draw(gameWorld.tiles[1][i]->sprite); // draws bottomRow
 	}
 
 	//Render items
