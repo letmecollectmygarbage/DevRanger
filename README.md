@@ -26,3 +26,4 @@ TODO :
     3) add functionality to block player or not with walls (collision detection)
     4) put map generation from GameWorld into its own game state
 
+#test 
