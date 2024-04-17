@@ -33,7 +33,6 @@ void GameWorld::setUpTiles()
         firstRow.push_back(new GameTile(wallPath,posFirstRow,isFree,isExit,scaleFactor,resize)); // bc each tile is a 32x32px
         bottomRow.push_back(new GameTile(wallPath,posBottomRow,isFree,isExit,scaleFactor,resize)); // 32 * gridSize.x = 800
         
-        std::cerr << "[DEBUG] i = " << i << "\n";
         posFirstRow.x += 32.f ; 
         posBottomRow.x = posFirstRow.x ;
     }
