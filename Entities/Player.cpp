@@ -33,7 +33,7 @@ int Player::initPlayerSprites()
     for(int i = 0 ; i < nbMvtIDLE ; i++) // IDLE
     {
         filename = "IDLE_" + std::to_string(i+1) + ".png"; 
-        if(!this->txtrIDLE[i].loadFromFile(folderPath/filename))
+        if(!this->txtrIDLE[i].loadFromFile((folderPath/filename).string()))
         {
             std::cerr << "The image IDLE_" + std::to_string(i) + " was not found \n" ;
             std::filesystem::path currentPath = std::filesystem::current_path();
@@ -44,7 +44,7 @@ int Player::initPlayerSprites()
     for(int i = 0 ; i < nbMvtUP ; i++) // UP
     {
         filename = "UP_" + std::to_string(i+1) + ".png"; 
-        if(!this->txtrUP[i].loadFromFile(folderPath/filename))
+        if(!this->txtrUP[i].loadFromFile((folderPath/filename).string()))
         {
             std::cerr << "The image UP_" + std::to_string(i) + " was not found \n" ;
             std::filesystem::path currentPath = std::filesystem::current_path();
@@ -56,7 +56,7 @@ int Player::initPlayerSprites()
     for(int i = 0 ; i < nbMvtLEFT ; i++) // LEFT
     {
         filename = "LEFT_" + std::to_string(i+1) + ".png"; 
-        if(!this->txtrLEFT[i].loadFromFile(folderPath/filename))
+        if(!this->txtrLEFT[i].loadFromFile((folderPath/filename).string()))
         {
             std::cerr << "The image LEFT_" + std::to_string(i) + " was not found \n" ;
             std::filesystem::path currentPath = std::filesystem::current_path();
@@ -68,7 +68,7 @@ int Player::initPlayerSprites()
     for(int i = 0 ; i < nbMvtRIGHT ; i++) // RIGHT
     {
         filename = "RIGHT_" + std::to_string(i+1) + ".png"; // be careful to name the pictures in the Images/Moves folder as defined below
-        if(!this->txtrRIGHT[i].loadFromFile(folderPath/filename))
+        if(!this->txtrRIGHT[i].loadFromFile((folderPath/filename).string()))
         {
             std::cerr << "The image RIGHT_" + std::to_string(i) + " was not found \n" ;
             std::filesystem::path currentPath = std::filesystem::current_path();
@@ -80,7 +80,7 @@ int Player::initPlayerSprites()
     for(int i = 0 ; i < nbMvtDOWN ; i++) // DOWN
     {
         filename = "DOWN_" + std::to_string(i+1) + ".png"; // be careful to name the pictures in the Images/Moves folder as defined below
-        if(!this->txtrDOWN[i].loadFromFile(folderPath/filename))
+        if(!this->txtrDOWN[i].loadFromFile((folderPath/filename).string()))
         {
             std::cerr << "The image DOWN_" + std::to_string(i) + " was not found \n" ;
             std::filesystem::path currentPath = std::filesystem::current_path();
