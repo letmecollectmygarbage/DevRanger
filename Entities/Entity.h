@@ -1,3 +1,6 @@
+#ifndef ENTITY_H
+#define ENTITY_H
+
 #include <iostream>
 #include <cstdlib> // for random enemy positions
 #include <ctime> // for random enemy positions
@@ -14,8 +17,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-#ifndef ENTITY_H
-#define ENTITY_H
+
 
 class Entity
 {
