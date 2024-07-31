@@ -35,3 +35,6 @@ desktop.ini
 #others
 *.dll
 LICENSE
+
+# confidentiality issues (exposes username of dev's PC)
+src/Doxyfile 
