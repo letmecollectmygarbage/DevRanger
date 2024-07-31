@@ -1,0 +1,34 @@
+// Execute this task with : Command Palette > Tasks: Run Build Task
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build DevRanger",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-o", "DevRanger.exe",
+                "src/main.cpp",
+                "src/Game.cpp",
+                "src/States/GameState.cpp",
+                "src/Entities/Entity.cpp",
+                "src/GameWorld.cpp",
+                "src/GameTile.cpp",
+                "src/Entities/Player.cpp",
+                "src/States/State.cpp",
+                "-IC:\\SFML\\include\\",
+                "-LC:\\SFML\\lib\\",
+                "-lsfml-audio",
+                "-lsfml-graphics",
+                "-lsfml-window",
+                "-lsfml-system"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Custom task for building the DevRanger project"
+        }
+    ]
+}
