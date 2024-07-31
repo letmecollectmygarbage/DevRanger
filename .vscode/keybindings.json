@@ -1,0 +1,9 @@
+// Place your key bindings in this file to override the defaults
+// this is just a copy of the used file : C:\Users\<USER>\AppData\Roaming\Code\User
+// to remember how I can automate build process with VSCode
+[
+    {
+        "key": "ctrl+b", 
+        "command": "workbench.action.tasks.build"
+    }
+]
