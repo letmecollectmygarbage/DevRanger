@@ -1,0 +1,45 @@
+--------------
+------------------------------------------
+------------------------------------------TASKS ACHIEVED------------------------------------------
+------------------------------------------
+--------------
+
+
+
+
+
+--------------
+------------------------------------------
+------------------------------------------TASKS TO DO------------------------------------------
+------------------------------------------
+--------------
+
+task #0 : [Meta/Organization] Organize the code better
+        a) Put all the code in a src/ folder
+        b) Make a class diagram
+
+task #1 : Play music 
+        a) Find 3 free songs 
+        b) Allow the user to mute by pressing 'M' key
+        c) Make an in-game menu where : 
+            i) the user can change the music currently playing
+            ii) the user can set the volume as he wants
+
+task #2 : Make monsters that attack our hero 
+        a) Find some free sprites on the web and use them
+        b) Make the hero lose life and eventually die with every collision with the monsters
+        c) Give characteristics to monsters and our hero (HP, attack, defense, walking speed, ...)
+
+task #3 : Give weapons to our hero so he can defend himself from the monsters
+        a) Default weapon will be a bow with unlimited arrows but limited range 
+        b) Find a free arrow sprite, bow sprite, or even a whole free archer character for our hero 
+        c) Give characteristics to weapons (attack, velocity, ammos, fire rate, range ...)
+        d) Projectiles can go 360°
+        e) The orientation of the sprite of the bow will have to be coherent with the projectile 
+
+task #4 : Make a gate system where the hero will have to code to get through and access new content
+        a) Implement a way to receive user input 
+        b) Implement a way to compile the code made by the user 
+        c) Implement a way to test the program made by the user
+
+
