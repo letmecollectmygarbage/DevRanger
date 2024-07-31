@@ -13,7 +13,7 @@ void GameWorld::setUpTiles()
     // window = 800*600 px
 
     tiles.clear();
-    std::string folder = "Images/" ;
+    std::string folder = "ressources/Images/" ;
     std::string wall = "wall.png" ;  // 16*16px --> 32*32px bc of scaleFactor
     std::string door = "door.png" ;
     std::filesystem::path currentPath = std::filesystem::current_path();

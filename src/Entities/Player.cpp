@@ -24,7 +24,7 @@ int Player::initPlayerSprites()
 
     std::string filename,imagesFolder,imagesPlayerFolder;
     std::filesystem::path currentPath = std::filesystem::current_path();
-    imagesFolder = "Images" ;
+    imagesFolder = "ressources/Images" ;
     imagesPlayerFolder = "Player/Moves" ; 
     std::filesystem::path folderPath = currentPath/imagesFolder/imagesPlayerFolder; 
 
