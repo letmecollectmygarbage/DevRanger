@@ -15,8 +15,9 @@
 --------------
 
 task #0 : [Meta/Organization] Organize the code better
-        a) Put all the code in a src/ folder
-        b) Make a class diagram
+        a) Put all the code in a src/ folder (done)
+        b) Make an in-line doc of every method
+        c) Make a class diagram (try to make automatically thanks to doxygen)
 
 task #1 : Play music 
         a) Find 3 free songs 
