@@ -29,15 +29,13 @@ void GameWorld::setUpTiles()
     sf::Vector2f posBottomRow = {0.f,568.f};
     std::vector<GameTile *> firstRow ; // row != column
     std::vector<GameTile *> bottomRow ; 
-    for(int i = 0 ; i < gridSize.x ; i++)
-    {
+    for(int i = 0 ; i < gridSize.x ; i++){
         // create top wall 
-        // GameTile::GameTile(std::string textureName, sf::Vector2f pos, bool isFree, bool isExit, float scaleFactor, bool resize)
         firstRow.push_back(new GameTile(wallPathString,posFirstRow,isFree,isExit,scaleFactor,resize)); // bc each tile is a 32x32px
         bottomRow.push_back(new GameTile(wallPathString,posBottomRow,isFree,isExit,scaleFactor,resize)); // 32 * gridSize.x = 800
         
-        posFirstRow.x += 32.f ; 
-        posBottomRow.x = posFirstRow.x ;
+        posFirstRow.x += 32.f ; // increment by width of tile
+        posBottomRow.x = posFirstRow.x ; // symmetrical with top wall
     }
 
     firstRow[8]->setUpSprite(doorPathString,scaleFactor,resize) ;  // TODO : find a way to set isExit attribute to true for this one
