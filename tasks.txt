@@ -42,4 +42,11 @@ task #4 : Make a gate system where the hero will have to code to get through and
         b) Implement a way to compile the code made by the user 
         c) Implement a way to test the program made by the user
 
+task #5 : Improve hero's movement
+            a) make hero go in IDLE position when  dir_x = dir_y = 0
+
+task #6 : block player with walls (collision detection)
+
+task #7:  put map generation from GameWorld into its own game state (??? whatever it means)
+
 
