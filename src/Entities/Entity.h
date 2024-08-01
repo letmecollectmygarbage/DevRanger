@@ -9,7 +9,6 @@
 #include <vector>
 #include <map>
 #include <array>
-#include <filesystem> // for path handling
 
 
 #include <SFML/System.hpp>
