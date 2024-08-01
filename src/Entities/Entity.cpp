@@ -13,6 +13,7 @@ Entity::~Entity()
 {
 }
 
+// Does NOTHING !
 void Entity::update(const float &dt)
 {
 
