@@ -2,7 +2,9 @@
 
 Player::Player() 
 {
-    this->shape.setSize(sf::Vector2f(50.f,50.f));
+    
+    sf::Vector2f initialSize = sf::Vector2f(50.f,50.f);
+    this->shape.setSize(initialSize); // 
     this->movementSpeed = 200.f ;
     initPlayerSprites();
     this->pos = {0.f,0.f};
@@ -16,7 +18,8 @@ Player::~Player()
 // Initializes sprites of the hero
 int Player::initPlayerSprites(){
     // Number of movements for each walk cycle and IDLE. Must all be equal to use a map
-    int nbMvt = 6 ; 
+    std::string mvmtID ; 
+
 
 
     std::string filename,imagesFolder,imagesPlayerFolder;
@@ -27,72 +30,31 @@ int Player::initPlayerSprites(){
     this->lastMvmt = "IDLE" ; // initiated as IDLE down
     // LOAD EVERY TEXTURE NECESSARY FOR HERO MOVEMENT //
     // IDLE:
-    for(int i = 0 ; i < nbMvt ; i++){
-        filename = "IDLE_" + std::to_string(i+1) + ".png"; 
-        if(!this->txtrIDLE[i].loadFromFile(folderPath+filename)){
-            std::cerr << "The image IDLE_" + std::to_string(i) + " was not found \n" ;
-            return -1 ; 
-        }
-    }
-    // UP:
-    for(int i = 0 ; i < nbMvt ; i++){
-        filename = "UP_" + std::to_string(i+1) + ".png"; 
-        if(!this->txtrUP[i].loadFromFile((folderPath+filename))){
-            std::cerr << "The image UP_" + std::to_string(i) + " was not found \n" ;
-            return -1 ; 
-        }
-    }
-    // LEFT:
-    for(int i = 0 ; i < nbMvt ; i++){
-        filename = "LEFT_" + std::to_string(i+1) + ".png"; 
-        if(!this->txtrLEFT[i].loadFromFile(folderPath+filename)){
-            std::cerr << "The image LEFT_" + std::to_string(i) + " was not found \n" ;
-            return -1 ; 
-        }
-    }
-    // RIGHT:
-    for(int i = 0 ; i < nbMvt ; i++){
-        filename = "RIGHT_" + std::to_string(i+1) + ".png"; // be careful to name the pictures in the Images/Moves folder as defined below
-        if(!this->txtrRIGHT[i].loadFromFile(folderPath+filename)){
-            std::cerr << "The image RIGHT_" + std::to_string(i) + " was not found \n" ;
-            return -1 ; 
-        }
-    }
-    // DOWN:
-    for(int i = 0 ; i < nbMvt ; i++){
-        filename = "DOWN_" + std::to_string(i+1) + ".png"; // be careful to name the pictures in the Images/Moves folder as defined below
-        if(!this->txtrDOWN[i].loadFromFile(folderPath+filename)){
-            std::cerr << "The image DOWN_" + std::to_string(i) + " was not found \n" ;
-            return -1 ; 
+    
+    // For every different movement
+    for(int j = 0 ; j < numberOfDifferentMovements ; j++){
+        // define mvmtID of image
+        if(j==0){mvmtID = "IDLE";}
+        else if(j==1){mvmtID = "UP";}
+        else if(j==2){mvmtID = "DOWN";}
+        else if(j==3){mvmtID = "LEFT";}
+        else if(j==4){mvmtID = "RIGHT";}
+        // For the number of sprites each movement has
+        for(int i = 0 ; i < imagesPerMovement ; i++){
+            filename = mvmtID + +"_"+std::to_string(i+1) + ".png" ; 
+            if(!this->textureMap[mvmtID][i].loadFromFile(folderPath+filename)){
+                std::cerr << "The image"+mvmtID+"_"+ std::to_string(i) + " was not found \n" ;
+                return -1 ; 
+            }
+            this->spriteMap[mvmtID][i].setTexture(this->textureMap[mvmtID][i]);
         }
     }
 
-    // ASSOCIATE A SPRITE WITH EACH TEXTURE TO DISPLAY LATER //
 
-    for(int i = 0 ; i < nbMvt ; i++){
-        this->sprtIDLE[i].setTexture(this->txtrIDLE[i]);
-    }
-    for(int i = 0 ; i < nbMvt ; i++){
-        this->sprtDOWN[i].setTexture(this->txtrDOWN[i]);
-    }
-    for(int i = 0 ; i < nbMvt ; i++){
-        this->sprtUP[i].setTexture(this->txtrUP[i]);
-    }
-    for(int i = 0 ; i < nbMvt ; i++){
-        this->sprtLEFT[i].setTexture(this->txtrLEFT[i]);
-    }
-    for(int i = 0 ; i < nbMvt ; i++){
-        this->sprtRIGHT[i].setTexture(this->txtrRIGHT[i]);
-    }
-    // Add sprite arrays to the map
-    this->spriteMap["IDLE"] = sprtIDLE;
-    this->spriteMap["UP"] = sprtUP;
-    this->spriteMap["DOWN"] = sprtDOWN;
-    this->spriteMap["LEFT"] = sprtLEFT;
-    this->spriteMap["RIGHT"] = sprtRIGHT;
 
-    // DEFINE DEFAULT POSITION FOR HERO:
-    playerSprite = sprtIDLE[0] ; // IDLE facing down
+
+    // make hero start IDLE facing the user
+    playerSprite = this->spriteMap["IDLE"][0] ; // IDLE facing down
     std::cerr << "[INFO] Player::initPlayerSprites() achieved" << "\n" ; 
     return 0 ;
 }
@@ -156,3 +118,4 @@ void Player::nextSprite(float dir_x, float dir_y){
     }
     return;
 }
+
