@@ -1,130 +1,95 @@
 #include "Game.h"
 #include "Map/GameWorld.h"
 
-//Static functions
 
-//Initializer functions
+// Initalizes window of the game
 void Game::initWindow()
 {
-	/*Creates a SFML window using options from a window.ini file.*/
-	std::string title = "DevRanger";
-	sf::VideoMode window_bounds(800, 600);
-	unsigned int framerate_limit = 120;
+	this->videoMode = sf::VideoMode::getDesktopMode();
+	this->framerate_limit = 60 ; 
 	bool isVSyncEnabled = true;
-
-	this->window = new sf::RenderWindow(window_bounds, title);
-	this->window->setFramerateLimit(framerate_limit);
-	this->window->setVerticalSyncEnabled(isVSyncEnabled);
+	this->VSync = true ;
+	this->window = new sf::RenderWindow(this->videoMode, this->title, sf::Style::Fullscreen);
+	this->window->setFramerateLimit(this->framerate_limit);
+	this->window->setVerticalSyncEnabled(VSync);
 }
 
-void Game::initStates()
-{
+// Initializes states of the game.
+void Game::initStates(){
 	GameState* newState = new GameState(this->window);
 	this->states.push(newState);
 }
 
-//Constructors/Destructors
-Game::Game()
-{
+//Constructor.
+Game::Game(){
 	this->initWindow();
 	this->initStates();
 	this->gameWorld = GameWorld();
 }
 
-Game::~Game()
-{
-	/*
-	* Destructor for exiting the game : 
-	* 	frees the memory of every state which composes the game
-	*/
+// Destructor for exiting the game.
+// Frees the memory of every state of the game.
+Game::~Game(){
+	std::cout << "Ending Application!" << "\n";
 	delete this->window;
-	while(this->states.empty())
-	{
+	while(this->states.empty())	{
 		delete this->states.top(); // removes data holded by pointer
 		this->states.pop(); // removes the pointer
-	}	
+	}
 }
 
-//Functions
-void Game::endApplication()
-{
-	std::cout << "Ending Application!" << "\n";
-}
 
-void Game::updateDt()
-{
-	/*Updates the dt variable with the time it takes to update and render one frame.*/
-
+/*Updates dt variable with time taken to update & render 1 frame.*/
+void Game::updateDt(){
 	this->dt = this->dtClock.restart().asSeconds();
 }
 
-void Game::updateSFMLEvents()
-{
-	while (this->window->pollEvent(this->sfEvent))
-	{
+// Closes game window if sf::Event::Closed is in the event queue
+void Game::updateSFMLEvents(){
+	while (this->window->pollEvent(this->sfEvent)){
 		if (this->sfEvent.type == sf::Event::Closed)
 			this->window->close();
 	}
 }
 
-void Game::update()
-{
-	this->updateSFMLEvents();
-	if(!this->states.empty())
-	{
-		this->states.top()->update(this->dt) ; // updating continuously current state with state's specialized update method
 
-		if(this->states.top()->getQuit()) // if we want to escape current state
-		{
+void Game::update(){
+	this->updateSFMLEvents();
+	// if there is at least one state in the stack:
+	if(!this->states.empty()){
+		// updates current state with state's specialized update method:
+		this->states.top()->update(this->dt) ; 
+		// leave current state:
+		if(this->states.top()->getQuit()){
 			this->states.top()->endState(); // put endState on top of stack and execute it
 			delete this->states.top(); // delete endState's data
 			this->states.pop(); // remove pointer to endState
 		}
 	}
-
-	// Application End
-	else // if the states' stack is empty
-	{
-		this->endApplication();
-		Game::~Game();
-		//this->window->close();
-	}
+	// Application End (stack of states is empty)
+	else{Game::~Game();}
 		
 }
 
-void Game::render()
-{
+// clear window, draw, display
+void Game::render(){
 	this->window->clear();
-
-	
-
-	// i should put this in a state
-	// TODO : add the rest of the rows and iterate with double for loop to draw the whole window
-	for(int i = 0 ; i < gameWorld.gridSize.x ; i++)
-	{
+	for(int i = 0 ; i < gameWorld.gridSize.x ; i++){
 		this->window->draw(gameWorld.tiles[0][i]->sprite); // draws firstRow
 		this->window->draw(gameWorld.tiles[1][i]->sprite); // draws bottomRow
 	}
 
 	//Render items
-	if(!this->states.empty())
-	{
+	if(!this->states.empty()){
 		this->states.top()->render(this->window);
 	}
-
-
-	
-
 	this->window->display();
 }
 
-void Game::run()
-{
-	while (this->window->isOpen())
-	{
+void Game::run(){
+	while (this->window->isOpen()){
 		this->updateDt();
 		this->update();
 		this->render();
 	}
 }
-
