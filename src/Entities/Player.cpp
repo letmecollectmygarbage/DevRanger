@@ -15,52 +15,43 @@ Player::~Player()
 
 // Initializes sprites of the hero
 int Player::initPlayerSprites(){
+    // Number of movements for each walk cycle and IDLE. Must all be equal to use a map
+    int nbMvt = 6 ; 
 
-    int nbMvtIDLE = 4 ; // number of movements for hero being IDLE
-    int nbMvtUP = 6 ; // number of movements for hero going UP
-    int nbMvtDOWN = 6 ; // number of movements for hero going DOWN
-    int nbMvtLEFT = 6 ; // number of movements for hero going LEFT
-    int nbMvtRIGHT = 6 ; // number of movements for hero going RIGHT
 
     std::string filename,imagesFolder,imagesPlayerFolder;
     std::string currentPath = "./" ;
     imagesFolder = "ressources/Images/" ;
     imagesPlayerFolder = "Player/Moves/" ; 
     std::string folderPath = currentPath+imagesFolder+imagesPlayerFolder; 
-    this->lastMvmt = 'I' ; // initiated as IDLE down
+    this->lastMvmt = "IDLE" ; // initiated as IDLE down
     // LOAD EVERY TEXTURE NECESSARY FOR HERO MOVEMENT //
     // IDLE:
-    for(int i = 0 ; i < nbMvtIDLE ; i++){
+    for(int i = 0 ; i < nbMvt ; i++){
         filename = "IDLE_" + std::to_string(i+1) + ".png"; 
         if(!this->txtrIDLE[i].loadFromFile(folderPath+filename)){
             std::cerr << "The image IDLE_" + std::to_string(i) + " was not found \n" ;
-            //std::filesystem::path currentPath = std::filesystem::current_path();
-            //std::cout << "Current working directory: " << currentPath.string() << std::endl;
             return -1 ; 
         }
     }
     // UP:
-    for(int i = 0 ; i < nbMvtUP ; i++){
+    for(int i = 0 ; i < nbMvt ; i++){
         filename = "UP_" + std::to_string(i+1) + ".png"; 
         if(!this->txtrUP[i].loadFromFile((folderPath+filename))){
             std::cerr << "The image UP_" + std::to_string(i) + " was not found \n" ;
-            //std::filesystem::path currentPath = std::filesystem::current_path();
-            //std::cout << "Current working directory: " << currentPath.string() << std::endl;
             return -1 ; 
         }
     }
     // LEFT:
-    for(int i = 0 ; i < nbMvtLEFT ; i++){
+    for(int i = 0 ; i < nbMvt ; i++){
         filename = "LEFT_" + std::to_string(i+1) + ".png"; 
         if(!this->txtrLEFT[i].loadFromFile(folderPath+filename)){
             std::cerr << "The image LEFT_" + std::to_string(i) + " was not found \n" ;
-            //std::filesystem::path currentPath = std::filesystem::current_path();
-            //std::cout << "Current working directory: " << currentPath.string() << std::endl;
             return -1 ; 
         }
     }
     // RIGHT:
-    for(int i = 0 ; i < nbMvtRIGHT ; i++){
+    for(int i = 0 ; i < nbMvt ; i++){
         filename = "RIGHT_" + std::to_string(i+1) + ".png"; // be careful to name the pictures in the Images/Moves folder as defined below
         if(!this->txtrRIGHT[i].loadFromFile(folderPath+filename)){
             std::cerr << "The image RIGHT_" + std::to_string(i) + " was not found \n" ;
@@ -68,7 +59,7 @@ int Player::initPlayerSprites(){
         }
     }
     // DOWN:
-    for(int i = 0 ; i < nbMvtDOWN ; i++){
+    for(int i = 0 ; i < nbMvt ; i++){
         filename = "DOWN_" + std::to_string(i+1) + ".png"; // be careful to name the pictures in the Images/Moves folder as defined below
         if(!this->txtrDOWN[i].loadFromFile(folderPath+filename)){
             std::cerr << "The image DOWN_" + std::to_string(i) + " was not found \n" ;
@@ -78,21 +69,27 @@ int Player::initPlayerSprites(){
 
     // ASSOCIATE A SPRITE WITH EACH TEXTURE TO DISPLAY LATER //
 
-    for(int i = 0 ; i < nbMvtIDLE ; i++){
+    for(int i = 0 ; i < nbMvt ; i++){
         this->sprtIDLE[i].setTexture(this->txtrIDLE[i]);
     }
-    for(int i = 0 ; i < nbMvtDOWN ; i++){
+    for(int i = 0 ; i < nbMvt ; i++){
         this->sprtDOWN[i].setTexture(this->txtrDOWN[i]);
     }
-    for(int i = 0 ; i < nbMvtUP ; i++){
+    for(int i = 0 ; i < nbMvt ; i++){
         this->sprtUP[i].setTexture(this->txtrUP[i]);
     }
-    for(int i = 0 ; i < nbMvtLEFT ; i++){
+    for(int i = 0 ; i < nbMvt ; i++){
         this->sprtLEFT[i].setTexture(this->txtrLEFT[i]);
     }
-    for(int i = 0 ; i < nbMvtRIGHT ; i++){
+    for(int i = 0 ; i < nbMvt ; i++){
         this->sprtRIGHT[i].setTexture(this->txtrRIGHT[i]);
     }
+    // Add sprite arrays to the map
+    this->spriteMap["IDLE"] = sprtIDLE;
+    this->spriteMap["UP"] = sprtUP;
+    this->spriteMap["DOWN"] = sprtDOWN;
+    this->spriteMap["LEFT"] = sprtLEFT;
+    this->spriteMap["RIGHT"] = sprtRIGHT;
 
     // DEFINE DEFAULT POSITION FOR HERO:
     playerSprite = sprtIDLE[0] ; // IDLE facing down
@@ -126,120 +123,36 @@ void Player::nextSprite(float dir_x, float dir_y){
     static int cyclePos = 0 ; // position in the current movement cycle (0->5)
     static int i = 0 ; 
     int repeat = 4 ; // number of times each sprite is repeated, used to slow down the 6 frame movement cycle
+    std::string Mvmt ; // most up to date Movement request from user
 
     // HANDLE FRAME CYCLES //
 
-     // player going UP:
-    if(dir_x == 0.f && dir_y == -1.f){
-        // if already walking UP:
-        if(this->lastMvmt == 'U'){ 
-            if(i < repeat) i++ ;
-            else{
-                i = 0 ; 
-                sprtUP[cyclePos].setPosition(this->pos);
-                this->playerSprite= sprtUP[cyclePos];
-                cyclePos++;
-                if(cyclePos >= 6) cyclePos = 0 ; // reset counter to not go outside the bounds of sprtUP
-            }
-        }
-        // was not walking UP before:
-        else{
-            cyclePos = 0 ; // reset counter 
-            sprtUP[cyclePos].setPosition(this->pos);
-            this->playerSprite= sprtUP[cyclePos];
-            cyclePos++;
-            this->lastMvmt = 'U';
-        }
-    }
-    // player going LEFT:
-    else if(dir_x == -1.f && dir_y == 0.f){
-        // if already walking LEFT:
-        if(this->lastMvmt == 'L'){ 
-            if(i < repeat) i++ ;
-            else{
-                i = 0 ; 
-                sprtLEFT[cyclePos].setPosition(this->pos);
-                this->playerSprite= sprtLEFT[cyclePos];
-                cyclePos++;
-                if(cyclePos >= 6) cyclePos = 0 ; 
-            }
-        }
-        // was not walking UP before:
-        else{
-            cyclePos = 0 ; // reset counter 
-            sprtLEFT[cyclePos].setPosition(this->pos);
-            this->playerSprite= sprtLEFT[cyclePos];
-            cyclePos++;
-            this->lastMvmt = 'L';
-        }
-    }
-    // player going RIGHT:
-    else if(dir_x == 1.f && dir_y == 0.f){
-        // if already walking RIGHT:
-        if(this->lastMvmt == 'R'){ 
-            if(i < repeat) i++ ;
-            else{
-                i = 0 ; 
-                sprtRIGHT[cyclePos].setPosition(this->pos);
-                this->playerSprite= sprtRIGHT[cyclePos];
-                cyclePos++;
-                if(cyclePos >= 6) cyclePos = 0 ;
-            }
-        }
-        // was not walking RIGHT before:
-        else{
-            cyclePos = 0 ; // reset counter 
-            sprtRIGHT[cyclePos].setPosition(this->pos);
-            this->playerSprite= sprtRIGHT[cyclePos];
-            cyclePos++;
-            this->lastMvmt = 'R';
-        }
-    }
-    // player going DOWN:
-    else if(dir_x == 0.f && dir_y == 1.f){
-        // if already walking DOWN:
-        if(this->lastMvmt == 'D'){ 
-            if(i < repeat) i++ ;
-            else{
-                i = 0 ; 
-                sprtDOWN[cyclePos].setPosition(this->pos);
-                this->playerSprite= sprtDOWN[cyclePos];
-                cyclePos++;
-                if(cyclePos >= 6) cyclePos = 0 ;
-            }
-        }
-        // was not walking DOWN before:
-        else{
-            cyclePos = 0 ; // reset counter 
-            sprtDOWN[cyclePos].setPosition(this->pos);
-            this->playerSprite= sprtDOWN[cyclePos];
-            cyclePos++;
-            this->lastMvmt = 'D';
-        }
-   }
-   // player going IDLE: (code below probably never reached)
-   else if(dir_x == 0.f && dir_y == 0.f){
-        // was walking DOWN:
-        if(this->lastMvmt == 'D'){ 
-            sprtIDLE[0].setPosition(this->pos);
-            this->playerSprite= sprtIDLE[0];
-        }
-        // was walking LEFT:
-        else if(this->lastMvmt == 'L'){
-            sprtIDLE[1].setPosition(this->pos);
-            this->playerSprite= sprtIDLE[1];         
-        }
-        // was walking RIGHT:
-        else if(this->lastMvmt == 'R'){
-            sprtIDLE[2].setPosition(this->pos);
-            this->playerSprite= sprtIDLE[2];           
-        }
-        // was walking UP:
-        else{
-            sprtIDLE[3].setPosition(this->pos);
-            this->playerSprite= sprtIDLE[3];
-        }
-   }
-   return;
-}
+    // Determine Mvmt direction based on dir_x and dir_y (user input)
+    if(dir_x == 0.f && dir_y == -1.f){Mvmt = "UP";}
+    else if(dir_x == -1.f && dir_y == 0.f){Mvmt = "LEFT";}
+    else if(dir_x == 1.f && dir_y == 0.f){Mvmt = "RIGHT";}
+    else if(dir_x == 0.f && dir_y == 1.f){Mvmt = "DOWN";}
 
+
+
+    // hero walks in the same direction as last input
+    if(this->lastMvmt == Mvmt){ 
+        if(i < repeat) i++ ; // do nothing to slow down display a little
+        else{ // take next sprite of same direction
+            i = 0 ; 
+            this->playerSprite = spriteMap[Mvmt][cyclePos] ;
+            this->playerSprite.setPosition(this->pos);
+            cyclePos++;
+            if(cyclePos >= 6) cyclePos = 0 ; // reset counter to not go outside the bounds of sprtUP
+        }
+    }
+    // hero changes direction
+    else{
+        cyclePos = 0 ; // reset counter 
+        this->playerSprite = spriteMap[Mvmt][cyclePos] ;
+        this->playerSprite.setPosition(this->pos);
+        cyclePos++;
+        this->lastMvmt = Mvmt;
+    }
+    return;
+}

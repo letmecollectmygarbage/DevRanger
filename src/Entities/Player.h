@@ -8,11 +8,14 @@ class Player : public Entity {
 private:
     // Add any additional member variables specific to the Player class here
     // sprites for all directions
-    std::array<sf::Sprite, 4> sprtIDLE ;  
+
+    std::array<sf::Sprite, 6> sprtIDLE ; // made it the same size bc I need to put them in a map  
     std::array<sf::Sprite, 6> sprtUP ; 
     std::array<sf::Sprite, 6> sprtDOWN ; 
     std::array<sf::Sprite, 6> sprtLEFT ; 
     std::array<sf::Sprite, 6> sprtRIGHT ; 
+    // Map to link sprite arrays to their movement directions
+    std::map<std::string, std::array<sf::Sprite, 6>> spriteMap;
 
     // textures for all directions
     std::array<sf::Texture, 4> txtrIDLE ;  
@@ -23,7 +26,7 @@ private:
     
     sf::Sprite playerSprite ; // the player that the user can move
     sf::Vector2f pos; // position of the player 
-    char lastMvmt;
+    std::string lastMvmt;
 
 
 public:
@@ -33,6 +36,7 @@ public:
     void render(sf::RenderTarget* target);
     void move(const float& dt, const float dir_x,const float dir_y);
     void nextSprite(float dir_x, float dir_y);
+    //void Player::setPlayerSprite();
     // Add any additional member functions specific to the Player class here
 };
 
