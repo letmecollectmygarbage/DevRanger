@@ -12,6 +12,10 @@ g++ -o DevRanger.out src/main.cpp src/Game.cpp src/States/GameState.cpp src/Enti
 ~~~~Windows~~~~
 g++ -o DevRanger.exe src/main.cpp src/Game.cpp src/States/GameState.cpp src/Entities/Entity.cpp src/Map/GameWorld.cpp src/Map/GameTile.cpp src/Entities/Player.cpp src/States/State.cpp -IC:\SFML\include\ -LC:\SFML\lib\ -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
+VSCode Build shortcuts: 
+Build and start debugging: Press 'F5'
+Build in release mode: Press 'CTRL+b' (to customize)
+
 Compiler : g++.exe (MinGW-W64 x86_64-msvcrt-posix-seh, built by Brecht Sanders) 13.1.0
  
 Credits : 
