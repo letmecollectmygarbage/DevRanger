@@ -19,6 +19,15 @@ bug #1:
             Then access its texture attribute to create all
             the remainings blocks
 
+bug #2:
+    description: [Player::move] can be easily optimized
+    fix : improve efficiency by adding return at the end of each 'if' branch so it doesn't check other 'else if'
+
+bug #3: 
+    description: [Player::move] player never goes back in IDLE mode
+    (see line: // player going IDLE)
+    reason: dir_x=dir_y=0 isn't produced by an event so the move method isn't called ?
+    fix: ?
 
 
 --------------
