@@ -23,6 +23,7 @@ private:
     
     sf::Sprite playerSprite ; // the player that the user can move
     sf::Vector2f pos; // position of the player 
+    char lastMvmt;
 
 
 public:
@@ -31,6 +32,7 @@ public:
     int initPlayerSprites();
     void render(sf::RenderTarget* target);
     void move(const float& dt, const float dir_x,const float dir_y);
+    void nextSprite(float dir_x, float dir_y);
     // Add any additional member functions specific to the Player class here
 };
 

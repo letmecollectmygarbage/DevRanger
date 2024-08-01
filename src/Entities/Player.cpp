@@ -27,7 +27,7 @@ int Player::initPlayerSprites(){
     imagesFolder = "ressources/Images/" ;
     imagesPlayerFolder = "Player/Moves/" ; 
     std::string folderPath = currentPath+imagesFolder+imagesPlayerFolder; 
-
+    this->lastMvmt = 'I' ; // initiated as IDLE down
     // LOAD EVERY TEXTURE NECESSARY FOR HERO MOVEMENT //
     // IDLE:
     for(int i = 0 ; i < nbMvtIDLE ; i++){
@@ -115,7 +115,14 @@ void Player::render(sf::RenderTarget* target){
 *   Note: you only enter this function when Z,Q,S or D is pressed.
 */
 void Player::move(const float& dt, const float dir_x, const float dir_y){
-    static char lastMvmt = 'I' ; // initiated as IDLE down
+
+    nextSprite(dir_x, dir_y);
+
+    this->playerSprite.move(dir_x*this->movementSpeed*dt,dir_y*this->movementSpeed*dt);
+    this->pos = playerSprite.getPosition(); // update current position of player
+}
+
+void Player::nextSprite(float dir_x, float dir_y){
     static int cyclePos = 0 ; // position in the current movement cycle (0->5)
     static int i = 0 ; 
     int repeat = 4 ; // number of times each sprite is repeated, used to slow down the 6 frame movement cycle
@@ -125,7 +132,7 @@ void Player::move(const float& dt, const float dir_x, const float dir_y){
      // player going UP:
     if(dir_x == 0.f && dir_y == -1.f){
         // if already walking UP:
-        if(lastMvmt == 'U'){ 
+        if(this->lastMvmt == 'U'){ 
             if(i < repeat) i++ ;
             else{
                 i = 0 ; 
@@ -141,13 +148,13 @@ void Player::move(const float& dt, const float dir_x, const float dir_y){
             sprtUP[cyclePos].setPosition(this->pos);
             this->playerSprite= sprtUP[cyclePos];
             cyclePos++;
-            lastMvmt = 'U';
+            this->lastMvmt = 'U';
         }
     }
     // player going LEFT:
     else if(dir_x == -1.f && dir_y == 0.f){
         // if already walking LEFT:
-        if(lastMvmt == 'L'){ 
+        if(this->lastMvmt == 'L'){ 
             if(i < repeat) i++ ;
             else{
                 i = 0 ; 
@@ -163,13 +170,13 @@ void Player::move(const float& dt, const float dir_x, const float dir_y){
             sprtLEFT[cyclePos].setPosition(this->pos);
             this->playerSprite= sprtLEFT[cyclePos];
             cyclePos++;
-            lastMvmt = 'L';
+            this->lastMvmt = 'L';
         }
     }
     // player going RIGHT:
     else if(dir_x == 1.f && dir_y == 0.f){
         // if already walking RIGHT:
-        if(lastMvmt == 'R'){ 
+        if(this->lastMvmt == 'R'){ 
             if(i < repeat) i++ ;
             else{
                 i = 0 ; 
@@ -185,13 +192,13 @@ void Player::move(const float& dt, const float dir_x, const float dir_y){
             sprtRIGHT[cyclePos].setPosition(this->pos);
             this->playerSprite= sprtRIGHT[cyclePos];
             cyclePos++;
-            lastMvmt = 'R';
+            this->lastMvmt = 'R';
         }
     }
     // player going DOWN:
     else if(dir_x == 0.f && dir_y == 1.f){
         // if already walking DOWN:
-        if(lastMvmt == 'D'){ 
+        if(this->lastMvmt == 'D'){ 
             if(i < repeat) i++ ;
             else{
                 i = 0 ; 
@@ -207,23 +214,23 @@ void Player::move(const float& dt, const float dir_x, const float dir_y){
             sprtDOWN[cyclePos].setPosition(this->pos);
             this->playerSprite= sprtDOWN[cyclePos];
             cyclePos++;
-            lastMvmt = 'D';
+            this->lastMvmt = 'D';
         }
    }
-   // player going IDLE:
+   // player going IDLE: (code below probably never reached)
    else if(dir_x == 0.f && dir_y == 0.f){
         // was walking DOWN:
-        if(lastMvmt == 'D'){ 
+        if(this->lastMvmt == 'D'){ 
             sprtIDLE[0].setPosition(this->pos);
             this->playerSprite= sprtIDLE[0];
         }
         // was walking LEFT:
-        else if(lastMvmt == 'L'){
+        else if(this->lastMvmt == 'L'){
             sprtIDLE[1].setPosition(this->pos);
             this->playerSprite= sprtIDLE[1];         
         }
         // was walking RIGHT:
-        else if(lastMvmt == 'R'){
+        else if(this->lastMvmt == 'R'){
             sprtIDLE[2].setPosition(this->pos);
             this->playerSprite= sprtIDLE[2];           
         }
@@ -233,10 +240,6 @@ void Player::move(const float& dt, const float dir_x, const float dir_y){
             this->playerSprite= sprtIDLE[3];
         }
    }
-
-    // ACTUALLY MOVE THE PLAYER'S SPRITE //
-
-    this->playerSprite.move(dir_x*this->movementSpeed*dt,dir_y*this->movementSpeed*dt);
-    this->pos = playerSprite.getPosition(); // update current position of player
+   return;
 }
 
