@@ -3,15 +3,21 @@
 
 #include "States/GameState.h"
 #include "Map/GameWorld.h"
+#include "wtypes.h" // to get screen resolution
 
 class Game
 {
 private:
 	//Variables
 	sf::RenderWindow *window;
-	sf::Event sfEvent;
-	// i should probably put this in a state but idk where else to put it 
-	GameWorld gameWorld ; // this line produces an error
+	sf::VideoMode videoMode ; 
+	int resX ; // X resolution of the game's window
+	int resY  ; // Y resolution of the game's window
+	std::string title = "DevRanger"; // game's name
+	int framerate_limit ;
+	bool VSync ; // True = enabled
+	sf::Event sfEvent; 
+	GameWorld gameWorld ; 
 
 	sf::Clock dtClock;
 	float dt;
@@ -28,9 +34,6 @@ public:
 	virtual ~Game();
 
 	//Functions
-
-	//Regular
-	void endApplication();
 
 	//Update
 	void updateDt();
