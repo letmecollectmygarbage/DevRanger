@@ -2,8 +2,17 @@
 
 Player::Player() 
 {
+    imagesPerMovement = 6 ; // according to what I have in Images/Player/Moves
+    movementSpeed = 300.f ; 
+    numberOfDifferentMovements = 5 ; // idle, left,right,up,down
+    width = 50.f ; 
+    height = 50.f ; 
+    size = {width,height}; 
     shape.setSize(size); 
-    movementSpeed = 200.f ;
+    initialX = 0.f ;
+    initialY = 0.f ;  
+    initialPos = {initialX,initialY} ; 
+    lastMovement = "IDLE" ; 
     initPlayerSprites();
     
 }
