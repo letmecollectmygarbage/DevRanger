@@ -7,10 +7,10 @@ The goal is to unlock access to the whole map by helping the goodies and defeati
 This is the command to compile and generate the executable game file : 
 
 ~~~~Linux~~~~
-g++ -o DevRanger.out main.cpp Game.cpp States/GameState.cpp Entities/Entity.cpp GameWorld.cpp GameTile.cpp Entities/Player.cpp States/State.cpp  -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+g++ -o DevRanger.out src/main.cpp src/Game.cpp src/States/GameState.cpp src/Entities/Entity.cpp src/Map/GameWorld.cpp src/Map/GameTile.cpp src/Entities/Player.cpp src/States/State.cpp  -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
 ~~~~Windows~~~~
-g++ -o DevRanger.exe src/main.cpp src/Game.cpp src/States/GameState.cpp src/Entities/Entity.cpp src/GameWorld.cpp src/GameTile.cpp src/Entities/Player.cpp src/States/State.cpp -IC:\SFML\include\ -LC:\SFML\lib\ -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+g++ -o DevRanger.exe src/main.cpp src/Game.cpp src/States/GameState.cpp src/Entities/Entity.cpp src/Map/GameWorld.cpp src/Map/GameTile.cpp src/Entities/Player.cpp src/States/State.cpp -IC:\SFML\include\ -LC:\SFML\lib\ -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
 Compiler : g++.exe (MinGW-W64 x86_64-msvcrt-posix-seh, built by Brecht Sanders) 13.1.0
  

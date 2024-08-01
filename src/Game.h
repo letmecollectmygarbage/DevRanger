@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include "States/GameState.h"
-#include "GameWorld.h"
+#include "Map/GameWorld.h"
 
 class Game
 {

@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "GameWorld.h"
+#include "Map/GameWorld.h"
 
 //Static functions
 

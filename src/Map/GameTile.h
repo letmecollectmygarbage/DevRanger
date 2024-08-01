@@ -1,4 +1,4 @@
-#include "Entities/Entity.h"
+#include "../Entities/Entity.h"
 
 #ifndef GAMETILE_H
 #define GAMETILE_H
