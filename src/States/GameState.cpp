@@ -6,64 +6,44 @@ GameState::GameState(sf::RenderWindow* window)
 
 }
 
-GameState::~GameState()
-{
-
-
+// Destructor (but does nothing yet)
+GameState::~GameState(){
 }
 
-void GameState::endState()
-/*
-*   State before quitting where you can save hero's progression for example
-*/
-{
+
+//State before quitting where you can save hero's progression for example
+void GameState::endState(){
     std::cout << "endState is reached !" << "\n" ;
 }
 
-void GameState::update(const float &dt)
-{
-    this->updateInput(dt);
-
-    // just a debug test //
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        std::cout << "A" << "\n" ; // test 
-    }    
-    // end of test 
-
-    this->statePlayer.update(dt);      
+// Checks for user input and does something else
+void GameState::update(const float &dt){
+    this->updateInput(dt);  
 }
 
-void GameState::render(sf::RenderTarget* target)
-{
-    // if(!target)
-    // {
-    //     target = this->window;
-    // }
+void GameState::render(sf::RenderTarget* target){
     this->statePlayer.render(target);
-
 }
 
-void GameState::updateInput(const float& dt)
-{
+void GameState::updateInput(const float& dt){
     this->checkForQuit();
 
-
-    // Update player's input
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) // left 
-    {
+    // Update player's input //
+    
+    // LEFT:
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
         this->statePlayer.move(dt,-1.f,0.f);
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) // up
-    {
+    // UP:
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
         this->statePlayer.move(dt,0.f,-1.f);
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // right
-    {
+    // RIGHT:
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         this->statePlayer.move(dt,1.f,0.f);
     } 
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // down
-    {
+    // DOWN:
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         this->statePlayer.move(dt,0.f,1.f);
     }
 }
