@@ -26,8 +26,9 @@ private:
     sf::Vector2f initialPos = {this->initialX,this->initialY} ; // Initial position 
     
     sf::Sprite sprite ; // the player that the user can move
-    sf::Vector2f pos; // position of the player 
+    sf::Vector2f pos = initialPos; // position of the player 
     std::string lastMovement;
+    
 
 
 
