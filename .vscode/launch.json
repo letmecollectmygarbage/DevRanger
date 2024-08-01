@@ -1,0 +1,53 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Launch Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/DevRanger.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build DevRanger (debug)",
+            "miDebuggerPath": "gdb",
+            "logging": {
+                "engineLogging": true
+            }
+        },
+        {
+            "name": "(gdb) Launch Release",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/DevRanger.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build DevRanger (release)",
+            "miDebuggerPath": "gdb",
+            "logging": {
+                "engineLogging": true
+            }
+        }
+    ]
+}
