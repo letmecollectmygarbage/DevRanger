@@ -16,11 +16,9 @@ void GameWorld::setUpTiles()
     std::string folder = "ressources/Images/" ;
     std::string wall = "wall.png" ;  // 16*16px --> 32*32px bc of scaleFactor
     std::string door = "door.png" ;
-    std::filesystem::path currentPath = std::filesystem::current_path();
-    std::filesystem::path wallPath = currentPath/folder/wall ;
-    std::string wallPathString = wallPath.string();
-    std::filesystem::path doorPath = currentPath/folder/door ;
-    std::string doorPathString = doorPath.string();
+    std::string currentPath = "./" ;
+    std::string wallPath = currentPath+folder+wall ;
+    std::string doorPath = currentPath+folder+door ;
     float scaleFactor = 2.f ; 
     bool resize = true ;
     bool isFree = false ; 
@@ -31,14 +29,14 @@ void GameWorld::setUpTiles()
     std::vector<GameTile *> bottomRow ; 
     for(int i = 0 ; i < gridSize.x ; i++){
         // create top wall 
-        firstRow.push_back(new GameTile(wallPathString,posFirstRow,isFree,isExit,scaleFactor,resize)); // bc each tile is a 32x32px
-        bottomRow.push_back(new GameTile(wallPathString,posBottomRow,isFree,isExit,scaleFactor,resize)); // 32 * gridSize.x = 800
+        firstRow.push_back(new GameTile(wallPath,posFirstRow,isFree,isExit,scaleFactor,resize)); // bc each tile is a 32x32px
+        bottomRow.push_back(new GameTile(wallPath,posBottomRow,isFree,isExit,scaleFactor,resize)); // 32 * gridSize.x = 800
         
         posFirstRow.x += 32.f ; // increment by width of tile
         posBottomRow.x = posFirstRow.x ; // symmetrical with top wall
     }
 
-    firstRow[8]->setUpSprite(doorPathString,scaleFactor,resize) ;  // TODO : find a way to set isExit attribute to true for this one
+    firstRow[8]->setUpSprite(doorPath,scaleFactor,resize) ;  // TODO : find a way to set isExit attribute to true for this one
     tiles.push_back(firstRow); 
     tiles.push_back(bottomRow);
 }
