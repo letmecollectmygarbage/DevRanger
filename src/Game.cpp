@@ -6,17 +6,27 @@
 void Game::initWindow()
 {
 	this->videoMode = sf::VideoMode::getDesktopMode();
+	resX = videoMode.width ;
+	resY = videoMode.height ; 
+	std::cout << "[INFO] resX = " << resX <<", resY = "<<resY <<"\n";
 	this->framerate_limit = 60 ; 
 	bool isVSyncEnabled = true;
 	this->VSync = true ;
 	this->window = new sf::RenderWindow(this->videoMode, this->title, sf::Style::Fullscreen);
 	this->window->setFramerateLimit(this->framerate_limit);
 	this->window->setVerticalSyncEnabled(VSync);
+	// create a view with the rectangular area of the 2D world to show
+	float rectLeft = 0.f;
+    float rectTop = 0.f;
+    float rectWidth = resX / 4 ;
+    float rectHeight = resY / 4 ; 
+    view = sf::View(sf::FloatRect(rectLeft, rectTop, rectWidth, rectHeight));
+	window->setView(view);
 }
 
 // Initializes states of the game.
 void Game::initStates(){
-	GameState* newState = new GameState(this->window);
+	GameState* newState = new GameState(this->window,this->view);
 	this->states.push(newState);
 }
 

@@ -29,6 +29,9 @@ private:
 	void initStates();
 
 public:
+	// attributes 
+	sf::View view;
+
 	//Constructors/Destructors
 	Game();
 	virtual ~Game();
