@@ -39,7 +39,7 @@ class Entity
 
     float width; // width of entity
     float height; // height of entity
-    sf::Vector2f size ; // size (width,height) of the player
+    sf::Vector2f size ; // size (width,height) of the entity
 
     float initialX; // Initial X position
     float initialY;  // Initial Y position
@@ -53,7 +53,7 @@ class Entity
 
 
     public:
-        sf::Vector2f pos = initialPos; // current position of the entity
+        sf::Vector2f pos ; // current position of the entity
         Entity();
         virtual ~Entity(); // Declare the destructor as virtual for proper polymorphism
 
