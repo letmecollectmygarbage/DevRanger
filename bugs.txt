@@ -9,6 +9,8 @@ bug #3 (solved):
     (see line: // player going IDLE)
     reason: dir_x=dir_y=0 isn't produced by an event so the move method isn't called ?
 
+bug #4 (solved):
+    description: Make the camera follow the player 
 --------------
 ------------------------------------------
 ------------------------------------------UNSOLVED BUGS------------------------------------------
@@ -29,3 +31,4 @@ bug #1:
         Example use: create one GameTileTemplate instance as a base building block for the wall.
             Then access its texture attribute to create all
             the remainings blocks
+
