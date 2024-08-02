@@ -1,7 +1,7 @@
 #include "GameState.h"
 
-GameState::GameState(sf::RenderWindow* window)
-    : State(window)
+GameState::GameState(sf::RenderWindow* window, sf::View view)
+    : State(window,view)
 {
 
 }
@@ -50,4 +50,6 @@ void GameState::updateInput(const float& dt){
     else{
         this->statePlayer.move(dt,0.f,0.f);
     }
+    view.setCenter(this->statePlayer.pos);
+    window->setView(this->view);
 }

@@ -8,14 +8,13 @@ class GameState :
     {
 
         private:
-            Entity whiteRectangle ; // to replace by actual hero
             Player statePlayer ; // is this my player from Player class? 
 
 
 
 
         public:
-            GameState(sf::RenderWindow* window);
+            GameState(sf::RenderWindow* window, sf::View view);
             virtual ~GameState();
 
             // Functions
