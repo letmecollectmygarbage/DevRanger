@@ -46,13 +46,14 @@ class Entity
     sf::Vector2f initialPos; // Initial position (initialX,initialY)
     
     sf::Sprite sprite ; // current sprite of the entity
-    sf::Vector2f pos = initialPos; // current position of the entity
+    
     std::string lastMovement; // last movement of the entity ("UP","DOWN","IDLE",...)
 
 
 
 
     public:
+        sf::Vector2f pos = initialPos; // current position of the entity
         Entity();
         virtual ~Entity(); // Declare the destructor as virtual for proper polymorphism
 
