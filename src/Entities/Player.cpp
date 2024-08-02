@@ -81,13 +81,13 @@ void Player::render(sf::RenderTarget* target){
 *   dir_y belonging to [-1;1]
 *   Note: you only enter this function when Z,Q,S or D is pressed.
 */
-void Player::move(const float& dt, const float dir_x, const float dir_y){
+void Player::move(const float& deltaTime, const float dir_x, const float dir_y){
 
     if(dir_x == 0.f && dir_y == 0.f) nextSpriteIDLE();
     else nextSprite(dir_x, dir_y);
     
 
-    sprite.move(dir_x*movementSpeed*dt,dir_y*movementSpeed*dt);
+    sprite.move(dir_x*movementSpeed*deltaTime,dir_y*movementSpeed*deltaTime);
     pos = sprite.getPosition(); // update current position of player
 }
 

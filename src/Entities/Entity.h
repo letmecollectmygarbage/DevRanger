@@ -58,9 +58,9 @@ class Entity
         virtual ~Entity(); // Declare the destructor as virtual for proper polymorphism
 
         // Functions 
-        virtual void update(const float& dt) ;
+        virtual void update(const float& deltaTime) ;
         virtual void render(sf::RenderTarget* target) ;
-        virtual void move(const float& dt, const float x, const float y);
+        virtual void move(const float& deltaTime, const float x, const float y);
 };
 
 #endif

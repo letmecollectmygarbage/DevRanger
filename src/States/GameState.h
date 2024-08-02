@@ -8,19 +8,16 @@ class GameState :
     {
 
         private:
-            Player statePlayer ; // is this my player from Player class? 
-
-
-
+            // Player used for this state. Useful if you want to control another player during the game. (cv. GTA5).
+            Player statePlayer ; 
 
         public:
             GameState(sf::RenderWindow* window, sf::View view);
             virtual ~GameState();
 
-            // Functions
-            
-            void endState();
 
+             
+            void endState();
             void updateInput(const float& dt);
             void update(const float& dt);
             void render(sf::RenderTarget* target = nullptr);

@@ -49,9 +49,9 @@ Game::~Game(){
 }
 
 
-/*Updates dt variable with time taken to update & render 1 frame.*/
+/*Updates deltaTime variable with time taken to update & render 1 frame.*/
 void Game::updateDt(){
-	this->dt = this->dtClock.restart().asSeconds();
+	this->deltaTime = this->deltaTimeClock.restart().asSeconds();
 }
 
 // Closes game window if sf::Event::Closed is in the event queue
@@ -68,7 +68,7 @@ void Game::update(){
 	// if there is at least one state in the stack:
 	if(!this->states.empty()){
 		// updates current state with state's specialized update method:
-		this->states.top()->update(this->dt) ; 
+		this->states.top()->update(this->deltaTime) ; 
 		// leave current state:
 		if(this->states.top()->getQuit()){
 			this->states.top()->endState(); // put endState on top of stack and execute it

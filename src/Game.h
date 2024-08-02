@@ -19,8 +19,8 @@ private:
 	sf::Event sfEvent; 
 	GameWorld gameWorld ; 
 
-	sf::Clock dtClock;
-	float dt;
+	sf::Clock deltaTimeClock;
+	float deltaTime;
 
 	std::stack<State*> states ; // a stack containing every game state
 	//Initialization
@@ -30,7 +30,7 @@ private:
 
 public:
 	// attributes 
-	sf::View gameView;
+	sf::View gameView ;
 
 	//Constructors/Destructors
 	Game();
