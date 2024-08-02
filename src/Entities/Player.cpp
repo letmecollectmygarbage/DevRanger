@@ -1,5 +1,6 @@
 #include "Player.h"
 
+// Constructor. Initializes player attributes and sprites. 
 Player::Player() 
 {
     imagesPerMovement = 6 ; // according to what I have in Images/Player/Moves
@@ -82,7 +83,9 @@ void Player::render(sf::RenderTarget* target){
 */
 void Player::move(const float& dt, const float dir_x, const float dir_y){
 
-    nextSprite(dir_x, dir_y);
+    if(dir_x == 0.f && dir_y == 0.f) nextSpriteIDLE();
+    else nextSprite(dir_x, dir_y);
+    
 
     sprite.move(dir_x*movementSpeed*dt,dir_y*movementSpeed*dt);
     pos = sprite.getPosition(); // update current position of player
@@ -101,8 +104,9 @@ void Player::nextSprite(float dir_x, float dir_y){
     else if(dir_x == -1.f && dir_y == 0.f){movement = "LEFT";}
     else if(dir_x == 1.f && dir_y == 0.f){movement = "RIGHT";}
     else if(dir_x == 0.f && dir_y == 1.f){movement = "DOWN";}
-
-
+    else{
+        std::cerr << "[Player::nextSprite] Unhandled dirx,dir_y combination \n";
+    }
 
     // hero walks in the same direction as last input
     if(lastMovement == movement){ 
@@ -124,6 +128,23 @@ void Player::nextSprite(float dir_x, float dir_y){
         lastMovement = movement;
     }
     return;
+}
+
+
+void Player::nextSpriteIDLE()
+{
+    std::string movement = "IDLE";
+    // if already IDLE, do nothing
+    if(lastMovement == movement){return;}
+    else{
+        if(lastMovement =="UP") sprite = spriteMap[movement][3];
+        else if(lastMovement =="DOWN") sprite = spriteMap[movement][0];
+        else if(lastMovement == "LEFT") sprite = spriteMap[movement][1];
+        else if(lastMovement == "RIGHT") sprite = spriteMap[movement][2];
+        else{std::cout << "[Player::nextSpriteIDLE] lastMovement unknown \n";}
+        sprite.setPosition(pos);
+    }
+    return ;
 }
 
 

@@ -46,4 +46,8 @@ void GameState::updateInput(const float& dt){
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         this->statePlayer.move(dt,0.f,1.f);
     }
+    // no key pressed, IDLE
+    else{
+        this->statePlayer.move(dt,0.f,0.f);
+    }
 }

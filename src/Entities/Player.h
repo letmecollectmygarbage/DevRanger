@@ -20,6 +20,7 @@ public:
     void render(sf::RenderTarget* target);
     void move(const float& dt, const float dir_x,const float dir_y);
     void nextSprite(float dir_x, float dir_y);
+    void nextSpriteIDLE();
 };
 
 #endif

@@ -4,9 +4,20 @@
 ------------------------------------------
 --------------
 
+bug #3 (solved): 
+    description: [Player::move] player never goes back in IDLE mode
+    (see line: // player going IDLE)
+    reason: dir_x=dir_y=0 isn't produced by an event so the move method isn't called ?
+
+--------------
+------------------------------------------
+------------------------------------------UNSOLVED BUGS------------------------------------------
+------------------------------------------
+--------------
+
 bug #0: 
     description: game seems to launch slower on windows g++ 13.1 than on Linux g++ 17 (or so)
-    fix idea : remove the use of the filesystem header which is experimental for C++13 but not C++17
+    fix idea (done but did not fix bug): remove the use of the filesystem header which is experimental for C++13 but not C++17
 
 bug #1: 
     description: GameTile objects waste memory when building repetitive patterns (walls for example). It's not necessary have 
@@ -18,20 +29,3 @@ bug #1:
         Example use: create one GameTileTemplate instance as a base building block for the wall.
             Then access its texture attribute to create all
             the remainings blocks
-
-bug #2:
-    description: [Player::move] can be easily optimized
-    fix : improve efficiency by adding return at the end of each 'if' branch so it doesn't check other 'else if'
-
-bug #3: 
-    description: [Player::move] player never goes back in IDLE mode
-    (see line: // player going IDLE)
-    reason: dir_x=dir_y=0 isn't produced by an event so the move method isn't called ?
-    fix: ?
-
-
---------------
-------------------------------------------
-------------------------------------------UNSOLVED BUGS------------------------------------------
-------------------------------------------
---------------
