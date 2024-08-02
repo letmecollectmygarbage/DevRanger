@@ -30,7 +30,7 @@ private:
 
 public:
 	// attributes 
-	sf::View view;
+	sf::View gameView;
 
 	//Constructors/Destructors
 	Game();

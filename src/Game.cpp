@@ -20,13 +20,13 @@ void Game::initWindow()
     float rectTop = 0.f;
     float rectWidth = resX / 4 ;
     float rectHeight = resY / 4 ; 
-    view = sf::View(sf::FloatRect(rectLeft, rectTop, rectWidth, rectHeight));
-	window->setView(view);
+    gameView = sf::View(sf::FloatRect(rectLeft, rectTop, rectWidth, rectHeight));
+	window->setView(gameView);
 }
 
 // Initializes states of the game.
 void Game::initStates(){
-	GameState* newState = new GameState(this->window,this->view);
+	GameState* newState = new GameState(this->window,this->gameView);
 	this->states.push(newState);
 }
 
