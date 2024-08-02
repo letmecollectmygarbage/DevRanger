@@ -5,9 +5,10 @@
 
 class GameWorld
 {
-    sf::Vector2i exitPos ; 
-    void setUpInitialState();
-    void setUpTiles();
+    private : 
+        sf::Vector2i exitPos ; 
+        void setUpInitialState();
+        void setUpTiles();
 
 
 
