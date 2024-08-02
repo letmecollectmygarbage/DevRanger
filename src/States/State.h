@@ -15,6 +15,7 @@ class State
 	public:
 		sf::View view;
 		sf::RenderWindow* window ;
+		
 		State(sf::RenderWindow* window, sf::View view);
 		virtual ~State();
 
