@@ -7,13 +7,17 @@
 class State
 {
 	private:
-		sf::RenderWindow* window ;
+		
+		
 		std::vector<sf::Texture> textures;
 		bool quit;
 
 	public:
-		State(sf::RenderWindow* window);
+		sf::View view;
+		sf::RenderWindow* window ;
+		State(sf::RenderWindow* window, sf::View view);
 		virtual ~State();
+
 
 		const bool& getQuit() const;
 
