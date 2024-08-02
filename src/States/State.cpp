@@ -1,5 +1,6 @@
 #include "State.h"
 
+// Constructor
 State::State(sf::RenderWindow* window, sf::View view)
 {
 	this->window = window;
@@ -7,6 +8,7 @@ State::State(sf::RenderWindow* window, sf::View view)
 	this->quit = false ; 
 }
 
+// Destructor
 State::~State(){	
 }
 
