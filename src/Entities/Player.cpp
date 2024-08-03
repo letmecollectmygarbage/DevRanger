@@ -14,7 +14,8 @@ Player::Player()
     initialY = 0.f ;  
     initialPos = {initialX,initialY} ; 
     lastMovement = "IDLE" ; 
-    initSprites();
+    entityImagesFolder = "Player/Moves/" ; 
+    this->initSprites(); // to call last, after all attributes are set
     
 }
 
@@ -43,7 +44,6 @@ void Player::move(const float& deltaTime, const float dir_x, const float dir_y){
 
     if(dir_x == 0.f && dir_y == 0.f) nextSpriteIDLE();
     else nextSprite(dir_x, dir_y);
-    
 
     sprite.move(dir_x*movementSpeed*deltaTime,dir_y*movementSpeed*deltaTime);
     pos = sprite.getPosition(); // update current position of player
