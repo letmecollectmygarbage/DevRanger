@@ -36,5 +36,11 @@ desktop.ini
 *.dll
 LICENSE
 
+#draw.io
+*.bkp // .io auto backup files
+*.png // don't store generated images on the cloud because it's heavier and thus pollutes more
+        // and dev can always generate the image from the .drawio file
+
 # confidentiality issues (exposes username of dev's PC)
 src/Doxyfile 
+
