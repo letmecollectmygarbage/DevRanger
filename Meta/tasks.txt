@@ -6,6 +6,13 @@
 
 
 
+task #0 (solved): [Meta/Organization] Organize the code better
+        a) Put all the code in a src/ folder (done)
+        b) Make an in-line doc of every method (done)
+        c) Made a class diagram (did it with draw.io & doxygen)
+
+task #5 (solved): Improve hero's movement
+            a) make hero go in IDLE position when  dir_x = dir_y = 0
 
 
 --------------
@@ -13,11 +20,6 @@
 ------------------------------------------TASKS TO DO------------------------------------------
 ------------------------------------------
 --------------
-
-task #0 : [Meta/Organization] Organize the code better
-        a) Put all the code in a src/ folder (done)
-        b) Make an in-line doc of every method
-        c) Make a class diagram (try to make automatically thanks to doxygen)
 
 task #1 : Play music 
         a) Find 3 free songs 
@@ -42,9 +44,6 @@ task #4 : Make a gate system where the hero will have to code to get through and
         a) Implement a way to receive user input 
         b) Implement a way to compile the code made by the user 
         c) Implement a way to test the program made by the user
-
-task #5 : Improve hero's movement
-            a) make hero go in IDLE position when  dir_x = dir_y = 0
 
 task #6 : block player with walls (collision detection)
 
