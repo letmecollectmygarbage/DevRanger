@@ -16,7 +16,7 @@ private:
 public:
     Player();
     ~Player();
-    int initPlayerSprites();
+    
     void render(sf::RenderTarget* target);
     void move(const float& deltaTime, const float dir_x,const float dir_y);
     void nextSprite(float dir_x, float dir_y);

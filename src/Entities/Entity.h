@@ -61,6 +61,7 @@ class Entity
         virtual void update(const float& deltaTime) ;
         virtual void render(sf::RenderTarget* target) ;
         virtual void move(const float& deltaTime, const float x, const float y);
+        int initSprites();
 };
 
 #endif
