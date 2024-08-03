@@ -5,6 +5,7 @@
 
 Entity::Entity()
 {
+    lastMovement = "IDLE" ;
 }
 
 Entity::~Entity()
@@ -38,30 +39,30 @@ int Entity::initSprites(){
 
 
 
-    std::string filename,imagesFolder,imagesPlayerFolder;
+    std::string filename;
     std::string currentPath = "./" ;
-    imagesFolder = "ressources/Images/" ;
-    imagesPlayerFolder = "Player/Moves/" ; 
-    std::string folderPath = currentPath+imagesFolder+imagesPlayerFolder; 
-    lastMovement = "IDLE" ; // initiated as IDLE down
-    // LOAD EVERY TEXTURE NECESSARY FOR HERO MOVEMENT //
-    // IDLE:
+    std::string imgPath = currentPath+imagesFolder+entityImagesFolder; 
+    std::cout<< "[INFO] [Entity::initSprites()] imgPath = " << imgPath << "\n";
+    
+    // LOAD EVERY TEXTURE OF THE ENTITY //
     
     // For every different movement
-    for(int j = 0 ; j < numberOfDifferentMovements ; j++){
-        // define mvmtID of image
-        if(j==0){mvmtID = "IDLE";}
-        else if(j==1){mvmtID = "UP";}
-        else if(j==2){mvmtID = "DOWN";}
-        else if(j==3){mvmtID = "LEFT";}
-        else if(j==4){mvmtID = "RIGHT";}
+    // for(int j = 0 ; j < numberOfDifferentMovements ; j++){
+    //     // define mvmtID of image
+    //     if(j==0){mvmtID = "IDLE";}
+    //     else if(j==1){mvmtID = "UP";}
+    //     else if(j==2){mvmtID = "DOWN";}
+    //     else if(j==3){mvmtID = "LEFT";}
+    //     else if(j==4){mvmtID = "RIGHT";}
+    for(auto move : movements){
+        mvmtID = move ;
         // Initialize the vectors in the maps
         textureMap[mvmtID] = std::vector<sf::Texture>(imagesPerMovement);
         spriteMap[mvmtID] = std::vector<sf::Sprite>(imagesPerMovement);
         // For the number of sprites each movement has
         for(int i = 0 ; i < imagesPerMovement ; i++){
             filename = mvmtID + +"_"+std::to_string(i+1) + ".png" ; 
-            if(!textureMap[mvmtID][i].loadFromFile(folderPath+filename)){
+            if(!textureMap[mvmtID][i].loadFromFile(imgPath+filename)){
                 std::cerr << "The image"+mvmtID+"_"+ std::to_string(i) + " was not found \n" ;
                 return -1 ; 
             }
@@ -71,6 +72,6 @@ int Entity::initSprites(){
 
     // make hero start IDLE facing the user
     sprite = spriteMap["IDLE"][0] ; // IDLE facing down
-    std::cerr << "[INFO] Player::initSprites() achieved" << "\n" ; 
+    std::cerr << "[INFO] Entity::initSprites() achieved" << "\n" ; 
     return 0 ;
 }
