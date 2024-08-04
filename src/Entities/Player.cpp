@@ -14,7 +14,7 @@ Player::Player()
     initialY = 0.f ;  
     initialPos = {initialX,initialY} ; 
     lastMovement = "IDLE" ; 
-    entityImagesFolder = "Player/Moves/" ; 
+    entityImagesFolder = "Player/Moves/" ; // 40x64 px
     this->initSprites(); // to call last, after all attributes are set
     
 }
