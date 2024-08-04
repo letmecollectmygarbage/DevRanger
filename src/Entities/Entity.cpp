@@ -45,15 +45,7 @@ int Entity::initSprites(){
     std::cout<< "[INFO] [Entity::initSprites()] imgPath = " << imgPath << "\n";
     
     // LOAD EVERY TEXTURE OF THE ENTITY //
-    
-    // For every different movement
-    // for(int j = 0 ; j < numberOfDifferentMovements ; j++){
-    //     // define mvmtID of image
-    //     if(j==0){mvmtID = "IDLE";}
-    //     else if(j==1){mvmtID = "UP";}
-    //     else if(j==2){mvmtID = "DOWN";}
-    //     else if(j==3){mvmtID = "LEFT";}
-    //     else if(j==4){mvmtID = "RIGHT";}
+
     for(auto move : movements){
         mvmtID = move ;
         // Initialize the vectors in the maps
