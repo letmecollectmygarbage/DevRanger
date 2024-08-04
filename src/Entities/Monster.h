@@ -14,6 +14,8 @@ private:
 
 
 public:
+    // default constructor 
+    Monster();
 
 };
 
