@@ -3,6 +3,7 @@
 // Constructor. Initializes player attributes and sprites. 
 Player::Player() 
 {
+    movements = {"IDLE","UP","DOWN","LEFT","RIGHT"}; 
     imagesPerMovement = 6 ; // according to what I have in Images/Player/Moves
     movementSpeed = 300.f ; 
     numberOfDifferentMovements = 5 ; // idle, left,right,up,down
@@ -28,9 +29,7 @@ Player::~Player()
 
 
 
-void Player::render(sf::RenderTarget* target){
-    target->draw(this->sprite);
-}
+
 
 /*
 *   This is the function that makes the hero move. 
