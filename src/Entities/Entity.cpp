@@ -18,9 +18,9 @@ void Entity::update(const float &deltaTime)
 
 }
 
-void Entity::render(sf::RenderTarget* target)
-{
-    target->draw(this->shape);
+
+void Entity::render(sf::RenderTarget* target){
+    target->draw(this->sprite);
 }
 
 void Entity::move(const float& deltaTime, const float dir_x, const float dir_y)
