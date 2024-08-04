@@ -3,6 +3,7 @@
 
 #include "../Entities/Player.h"
 
+#include "../Entities/Monster.h"
 
 class State
 {
