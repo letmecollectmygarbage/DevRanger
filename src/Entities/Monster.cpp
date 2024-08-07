@@ -20,3 +20,23 @@ Monster::Monster()
     this->initSprites(); // to call last, after all attributes are set
     
 }
+
+void Monster::move(const float& deltaTime, const float dir_x, const float dir_y)
+{
+    /*
+    *       -1 <= dir_x <= 1
+    *       -1 <= dir_y <= 1
+    */
+    time1 = clock.getElapsedTime();
+    sf::Vector2f position = sprite.getPosition(); // = (15, 55)
+    if(time1.asSeconds() > 5)
+    { 
+
+        std::cerr << "Monster.pos :" ;
+        std::cerr << position.x << "," << position.y << "\n" ;
+        clock.restart();
+    }
+    
+
+    sprite.move(dir_x*this->movementSpeed*deltaTime,dir_y*this->movementSpeed*deltaTime);
+}

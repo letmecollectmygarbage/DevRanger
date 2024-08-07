@@ -16,6 +16,7 @@ private:
 public:
     // default constructor 
     Monster();
+    void move(const float& deltaTime, const float x, const float y);
 
 };
 
