@@ -29,10 +29,10 @@ void Entity::move(const float& deltaTime, const float dir_x, const float dir_y)
     *       -1 <= dir_x <= 1
     *       -1 <= dir_y <= 1
     */
-    this->shape.move(dir_x*this->movementSpeed*deltaTime,dir_y*this->movementSpeed*deltaTime);
+    this->sprite.move(dir_x*this->movementSpeed*deltaTime,dir_y*this->movementSpeed*deltaTime);
 }
 
-// Initializes sprites of the hero
+// Initializes sprites of the hero or monster
 int Entity::initSprites(){
     // Number of movements for each walk cycle and IDLE. Must all be equal to use a map
     std::string mvmtID ; 
@@ -62,8 +62,13 @@ int Entity::initSprites(){
         }
     }
 
-    // make hero start IDLE facing the user
+    // make entity start IDLE facing the user
     sprite = spriteMap["IDLE"][0] ; // IDLE facing down
     std::cerr << "[INFO] Entity::initSprites() achieved" << "\n" ; 
     return 0 ;
+}
+
+
+sf::Sprite Entity::getSprite(){
+    return sprite ;
 }
