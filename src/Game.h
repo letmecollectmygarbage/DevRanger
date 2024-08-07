@@ -39,7 +39,7 @@ public:
 	//Functions
 
 	//Update
-	void updateDt();
+	void updateDeltaTime();
 	void updateSFMLEvents();
 	void update();
 

@@ -50,7 +50,7 @@ Game::~Game(){
 
 
 /*Updates deltaTime variable with time taken to update & render 1 frame.*/
-void Game::updateDt(){
+void Game::updateDeltaTime(){
 	this->deltaTime = this->deltaTimeClock.restart().asSeconds();
 }
 
@@ -98,7 +98,7 @@ void Game::render(){
 
 void Game::run(){
 	while (this->window->isOpen()){
-		this->updateDt();
+		this->updateDeltaTime();
 		this->update();
 		this->render();
 	}
