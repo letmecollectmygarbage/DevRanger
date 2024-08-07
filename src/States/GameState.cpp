@@ -19,10 +19,12 @@ void GameState::endState(){
 // Checks for user input and does something else
 void GameState::update(const float &deltaTime){
     this->updateInput(deltaTime);  
+    this->updateMonsterMoveDirection(deltaTime);
 }
 
 void GameState::render(sf::RenderTarget* target){
     this->statePlayer.render(target);
+    this->stateMonster.render(target);
 }
 
 // Update player's input
@@ -53,4 +55,37 @@ void GameState::updateInput(const float& deltaTime){
     }
     view.setCenter(this->statePlayer.pos);
     window->setView(this->view);
+}
+
+// Calculates monster to hero direction 
+// move monster in this direction to attack hero
+// AB' = (xB - xA, yB - yA)  0
+void GameState::updateMonsterMoveDirection(const float& deltaTime){
+    this->checkForQuit();
+    
+    
+    sf::Vector2f moveToHero = statePlayer.pos - stateMonster.getSprite().getPosition() ; 
+    sf::Vector2f nullVector = {0.f,0.f};
+    if(moveToHero == nullVector) return ; // so div never equals 0
+
+    float dir_x, dir_y =0.f ; 
+    float div ; // what I divide dir_x & dir_y with to 1-norm them
+    div = std::max(std::abs(moveToHero.x),std::abs(moveToHero.y)); // strictly positive
+    dir_x = moveToHero.x/std::abs(div) ;
+    dir_y = moveToHero.y/std::abs(div) ; 
+    stateMonster.move(deltaTime,dir_x,dir_y); 
+
+    // DEBUG PRINT STATEMENTS
+    time1 = clock.getElapsedTime();
+    if(time1.asSeconds() > 5)
+    { 
+        std::cerr << "[GameState::updateMonsterMoveDirection] " ;
+        std::cerr << "statePlayer.pos : " << statePlayer.pos.x << ","  ;
+        std::cerr << statePlayer.pos.y << " | stateMonster.pos :" ;
+        std::cerr << stateMonster.pos.x << "," << stateMonster.pos.y ;
+        std::cerr << " | moveToHero : " << moveToHero.x << ","  ;
+        std::cerr  << moveToHero.y << "\n" ;
+        std::cerr << "dir_x , dir_y : " << dir_x << " , " << dir_y <<"\n" ; 
+        clock.restart();
+    }
 }
