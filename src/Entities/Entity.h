@@ -65,8 +65,13 @@ class Entity
         // Functions 
         virtual void update(const float& deltaTime) ;
         virtual void render(sf::RenderTarget* target) ;
-        virtual void move(const float& deltaTime, const float x, const float y);
+        void move(const float& deltaTime, const float x, const float y);
         int initSprites();
+        sf::Clock clock; // // starts the clock
+        sf::Time time1,time2 ; // 
+
+        // getters / setters 
+        sf::Sprite getSprite();
 };
 
 #endif
