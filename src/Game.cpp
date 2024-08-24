@@ -16,10 +16,11 @@ void Game::initWindow()
 	this->window->setFramerateLimit(this->framerate_limit);
 	this->window->setVerticalSyncEnabled(VSync);
 	// create a view with the rectangular area of the 2D world to show
+	int viewScaleFactor = 4 ;
 	float rectLeft = 0.f;
     float rectTop = 0.f;
-    float rectWidth = resX / 4 ;
-    float rectHeight = resY / 4 ; 
+    float rectWidth = resX / viewScaleFactor ;
+    float rectHeight = resY / viewScaleFactor ; 
     gameView = sf::View(sf::FloatRect(rectLeft, rectTop, rectWidth, rectHeight));
 	window->setView(gameView);
 }
