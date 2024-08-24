@@ -11,7 +11,7 @@
 * @param resize (bool): If enabled, the sprite will be resized.
 * @return True if texture is found, False otherwise.
 */
-GameTile::GameTile(std::string textureName, sf::Vector2f pos, bool isFree, bool isExit, float scaleFactor, bool resize)
+GameTile::GameTile(std::string textureName, sf::Vector2f pos, bool isFree, float scaleFactor, bool resize)
 {
 
     if(!setUpSprite(textureName,scaleFactor,resize))
@@ -22,7 +22,6 @@ GameTile::GameTile(std::string textureName, sf::Vector2f pos, bool isFree, bool 
     // after this point, the sprite is created with appropriate texture
     this->sprite.setPosition(pos);
     this->isFree = isFree;
-    this->isExit = isExit ;
 }
 
 /*
