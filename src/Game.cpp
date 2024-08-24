@@ -6,8 +6,8 @@
 void Game::initWindow()
 {
 	this->videoMode = sf::VideoMode::getDesktopMode();
-	resX = videoMode.width ;
-	resY = videoMode.height ; 
+	resX = videoMode.width;
+	resY = videoMode.height; 
 	std::cout << "[INFO] resX = " << resX <<", resY = "<<resY <<"\n";
 	this->framerate_limit = 60 ; 
 	bool isVSyncEnabled = true;
@@ -16,12 +16,12 @@ void Game::initWindow()
 	this->window->setFramerateLimit(this->framerate_limit);
 	this->window->setVerticalSyncEnabled(VSync);
 	// create a view with the rectangular area of the 2D world to show
-	int viewScaleFactor = 4 ;
-	float rectLeft = 0.f;
-    float rectTop = 0.f;
-    float rectWidth = resX / viewScaleFactor ;
-    float rectHeight = resY / viewScaleFactor ; 
-    gameView = sf::View(sf::FloatRect(rectLeft, rectTop, rectWidth, rectHeight));
+	viewScaleFactor = 4 ;
+	originViewRect = {0.f,0.f};
+    rectWidth = resX / viewScaleFactor ;
+    rectHeight = resY / viewScaleFactor ; 
+	sizeViewRect = {rectWidth,rectHeight};
+    gameView = sf::View(sf::FloatRect(originViewRect,sizeViewRect));
 	window->setView(gameView);
 }
 

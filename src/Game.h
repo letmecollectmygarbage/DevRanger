@@ -8,20 +8,25 @@
 class Game
 {
 private:
-	//Variables
+	/// Window parameters ///
 	sf::RenderWindow *window;
 	sf::VideoMode videoMode ; 
 	int resX ; // X resolution of the game's window
 	int resY  ; // Y resolution of the game's window
+	int viewScaleFactor ;
+	float rectWidth ; 
+	float rectHeight ;
+	sf::Vector2f sizeViewRect ;
+	sf::Vector2f originViewRect ; 
+	bool VSync ; // True = enabled
+	
 	std::string title = "DevRanger"; // game's name
 	int framerate_limit ;
-	bool VSync ; // True = enabled
-	sf::Event sfEvent; 
+	
 	GameWorld gameWorld ; 
-
+	sf::Event sfEvent; 
 	sf::Clock deltaTimeClock;
 	float deltaTime;
-
 	std::stack<State*> states ; // a stack containing every game state
 	//Initialization
 
