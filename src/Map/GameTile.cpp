@@ -11,10 +11,11 @@
 * @param resize (bool): If enabled, the sprite will be resized.
 * @return True if texture is found, False otherwise.
 */
-GameTile::GameTile(std::string textureName,int numSprites, sf::Vector2f pos){
+GameTile::GameTile(std::string textureName,int numSprites, sf::Vector2f pos, bool isFree){
 
     this->numSprites = numSprites ; 
     this->pos = pos ; 
+    this->isFree = isFree ; 
 
     if(!setUpSprite(textureName)){
         // image file not found

@@ -15,28 +15,28 @@ void GameWorld::setUpTiles()
     std::string wall1 = repo_img+walls+"1"+ext ;
     std::string wall2 = repo_img+walls+"2"+ext ;
     std::string wall3 = repo_img+walls+"3"+ext ;
-
+    bool isFree = false ; // walls are obstacles
     
     sf::Vector2f pos = {0.f,0.f};
     int num_walls_h = 10 ; // number of sprites for the horizontal walls
     // horizontal walls
-    GameTile* top_wall_1 = new GameTile(wall1,num_walls_h,pos);
-    GameTile* top_wall_2 = new GameTile(wall2,num_walls_h,pos);
-    GameTile* top_wall_3 = new GameTile(wall3,num_walls_h,pos);
-    GameTile* btm_wall_1 = new GameTile(wall1,num_walls_h,pos); 
-    GameTile* btm_wall_2 = new GameTile(wall2,num_walls_h,pos); 
-    GameTile* btm_wall_3 = new GameTile(wall3,num_walls_h,pos); 
+    GameTile* top_wall_1 = new GameTile(wall1,num_walls_h,pos,isFree);
+    GameTile* top_wall_2 = new GameTile(wall2,num_walls_h,pos,isFree);
+    GameTile* top_wall_3 = new GameTile(wall3,num_walls_h,pos,isFree);
+    GameTile* btm_wall_1 = new GameTile(wall1,num_walls_h,pos,isFree); 
+    GameTile* btm_wall_2 = new GameTile(wall2,num_walls_h,pos,isFree); 
+    GameTile* btm_wall_3 = new GameTile(wall3,num_walls_h,pos,isFree); 
 
     // vertical walls 
     int num_walls_v = 2 ; // number of sprites for the vertical walls
-    GameTile* left_wall_1 = new GameTile(wall1,num_walls_h,pos);
-    GameTile* left_wall_2 = new GameTile(wall2,num_walls_h,pos);
-    GameTile* left_wall_3 = new GameTile(wall3,num_walls_h,pos);
-    GameTile* right_wall_1 = new GameTile(wall1,num_walls_h,pos);
-    GameTile* right_wall_2 = new GameTile(wall2,num_walls_h,pos);
-    GameTile* right_wall_3 = new GameTile(wall3,num_walls_h,pos);
-    float width = top_wall_1->sprites[0].getTextureRect().width ;
-    float height = top_wall_1->sprites[0].getTextureRect().height ;
+    GameTile* left_wall_1 = new GameTile(wall1,num_walls_h,pos,isFree);
+    GameTile* left_wall_2 = new GameTile(wall2,num_walls_h,pos,isFree);
+    GameTile* left_wall_3 = new GameTile(wall3,num_walls_h,pos,isFree);
+    GameTile* right_wall_1 = new GameTile(wall1,num_walls_h,pos,isFree);
+    GameTile* right_wall_2 = new GameTile(wall2,num_walls_h,pos,isFree);
+    GameTile* right_wall_3 = new GameTile(wall3,num_walls_h,pos,isFree);
+    float width = top_wall_1->sprites[0].getTextureRect().width ; // sprite width
+    float height = top_wall_1->sprites[0].getTextureRect().height ; // sprite height
 
     // position every tile of top wall correctly with following pattern: wall1, wall2, wall3 and repeat
     
@@ -84,8 +84,6 @@ void GameWorld::setUpTiles()
         pos.y += height ;
     }
 
-
-    
     // add tiles pointers to the tiles vector which is the only one rendered 
     tiles.push_back(top_wall_1); 
     tiles.push_back(top_wall_2);
@@ -105,7 +103,7 @@ void GameWorld::setUpTiles()
 
 GameWorld::GameWorld()
 {
-    gridSize = {25,12}; // to multiply by 50 to get resolution in px (cf : GameTile::setUpSprite(std::string textureName))
+    //gridSize = {25,12}; 
     setUpTiles();
 }
 
