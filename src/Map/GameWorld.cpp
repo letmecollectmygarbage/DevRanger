@@ -8,7 +8,7 @@ void GameWorld::setUpTiles()
 {
     tiles.clear();
     std::string repo_img = "./ressources/Images/" ;
-    std::string walls = "walls_32x32/" ;  // 30*30px 
+    std::string walls = "walls_32x32/" ;  
     std::string ext = ".png" ;
 
 
