@@ -7,14 +7,15 @@
 class GameTile
 {
     public : 
-        bool isFree ; // we can pass through it or not
-        sf::Vector2f pos ;
-        sf::Texture texture ; // what we put on the rectangle 
-        sf::Sprite sprite ; // A sprite is nothing more than a textured rectangle.
-        GameTile(std::string textureName, sf::Vector2f pos, bool isFree, float scaleFactor, bool resize);
-        bool setUpSprite(std::string, float scaleFactor, bool resize); // set up sprites and resize texture if needed
-        sf::Texture resizeTexture(const sf::Texture& originalTexture, float scaleFactor) ;
+        sf::Vector2f pos ; // probably to remove
+        int numSprites ; // number of sprites in the vector
+        std::vector<sf::Sprite> sprites ; // vector of sprites sharing the same texture
+        sf::Texture texture ; 
+        /// Methods ///
+        // constructor 
 
+        GameTile(std::string textureName,int numSprites, sf::Vector2f pos);
+        bool setUpSprite(std::string textureFilename); // set up sprites and resize texture if needed
 };
 
 #endif

@@ -11,17 +11,19 @@
 * @param resize (bool): If enabled, the sprite will be resized.
 * @return True if texture is found, False otherwise.
 */
-GameTile::GameTile(std::string textureName, sf::Vector2f pos, bool isFree, float scaleFactor, bool resize)
-{
+GameTile::GameTile(std::string textureName,int numSprites, sf::Vector2f pos){
 
-    if(!setUpSprite(textureName,scaleFactor,resize))
-    {
+    this->numSprites = numSprites ; 
+    this->pos = pos ; 
+
+    if(!setUpSprite(textureName)){
         // image file not found
         return ; 
     }
-    // after this point, the sprite is created with appropriate texture
-    this->sprite.setPosition(pos);
-    this->isFree = isFree;
+    // after this point, the sprite vector is created with appropriate texture
+    for(int i = 0 ; i < numSprites ; i++){
+        sprites[i].setPosition(pos); // stack them all on the same pos first
+    }
 }
 
 /*
@@ -31,55 +33,16 @@ GameTile::GameTile(std::string textureName, sf::Vector2f pos, bool isFree, float
 * is enabled, the texture is first resized. 
 * 
 * @param textureFilename (std::string): filename (filepath) of the texture 
-* @param scaleFactor (float): original dimensions will be multiplied by this factor. 
-* @param resize (bool): if enabled, the sprite will be resized.
 * @return True if texture is found, False otherwise.
 */
-bool GameTile::setUpSprite(std::string textureFilename,float scaleFactor, bool resize){
-    if(!this->texture.loadFromFile(textureFilename)) return false; // loading image failed
-    if(resize) this->texture = resizeTexture(this->texture,scaleFactor);
-    
-    this->texture.setSmooth(true); // blurs edges
-    this->sprite.setTexture(this->texture);
-    sf::Vector2u textureSize = this->texture.getSize(); 
+bool GameTile::setUpSprite(std::string textureFilename){
+
+    sf::Sprite sprite ; 
+    if(!texture.loadFromFile(textureFilename)) return false; // loading image failed
+    texture.setSmooth(true); // blurs edges
+    for(int i = 0 ; i < numSprites ; i++){
+        sprite.setTexture(texture);
+        sprites.push_back(sprite);
+    }
     return true;
 }
-
-sf::Texture GameTile::resizeTexture(const sf::Texture& originalTexture, float scaleFactor){
-    /*
-    *   Useful to avoid "manually" resizing an image file too little compared to game's window
-    *
-    *
-    */
-
-    // Get the original texture size
-    sf::Vector2u originalSize = originalTexture.getSize();
-
-    // Create a black image with desired size
-    sf::Image resizedImage;
-    resizedImage.create(static_cast<unsigned int>(originalSize.x * scaleFactor), 
-                        static_cast<unsigned int>(originalSize.y * scaleFactor));
-
-    // Copy pixels from the original texture to the resized image 
-    for (unsigned int y = 0; y < originalSize.y; y++) 
-    {
-        for (unsigned int x = 0; x < originalSize.x; x++) 
-        {
-            sf::Color pixelColor = originalTexture.copyToImage().getPixel(x, y);
-            for (float dy = 0; dy < scaleFactor; dy++) 
-            {
-                for (float dx = 0; dx < scaleFactor; dx++) 
-                {
-                    resizedImage.setPixel(static_cast<unsigned int>(x * scaleFactor + dx),
-                                          static_cast<unsigned int>(y * scaleFactor + dy),pixelColor);
-                }
-            }
-        }
-    }
-    // Create a new texture from the resized image
-    sf::Texture resizedTexture;
-    resizedTexture.loadFromImage(resizedImage);
-    return resizedTexture;
-}
-
-
