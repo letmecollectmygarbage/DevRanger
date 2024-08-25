@@ -50,7 +50,8 @@ void GameWorld::setUpTiles()
     }
 
     // position every tile of bottom wall correctly with following pattern: wall1, wall2, wall3 and repeat
-    pos = {0.f,300.f}; // arbitrary magic number
+    float y = 3 * height * num_walls_h - height ; 
+    pos = {0.f,y}; // y is determined to match the end of vertical walls
     for(int i = 0 ; i < num_walls_h ; i++){
         btm_wall_1->sprites[i].setPosition(pos);
         pos.x += width ;
