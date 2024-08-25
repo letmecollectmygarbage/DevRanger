@@ -22,8 +22,8 @@ bug #0:
     fix idea (done but did not fix bug): remove the use of the filesystem header which is experimental for C++13 but not C++17
     Note : must use C++13.1 to use distributed SFML library
 
-bug #1: 
-    description: GameTile objects waste memory when building repetitive patterns (walls for example). It's not necessary have 
+bug #1 (solved): 
+    description: GameTile objects waste memory when building repetitive patterns (walls for example). It's not necessary to have 
         as many textures as sprites if the applied texture is always the same image and size. 
     fix: only call GameTile once, then access its texture attribute to create many more sprites.
         A new class will be created like GameTile but without the texture attribute, we'll call it 
