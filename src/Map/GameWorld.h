@@ -1,5 +1,4 @@
 #include "GameTile.h"
-#include "StaticGameTile.h"
 
 #ifndef GAMEWORLD_H
 #define GAMEWORLD_H
@@ -13,7 +12,7 @@ class GameWorld
 
 
     public : 
-        std::vector<StaticGameTile*> tiles ; 
+        std::vector<GameTile*> tiles ; 
         sf::Vector2i gridSize ; // x = width , y = length 
         GameWorld();
 

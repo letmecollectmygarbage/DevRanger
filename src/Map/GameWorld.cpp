@@ -18,11 +18,11 @@ void GameWorld::setUpTiles()
     float scaleFactor = 2.f ; 
     sf::Vector2f posFirstRow = {0.f,0.f};
     sf::Vector2f posBottomRow = {0.f,568.f}; // objective height = 600px here
-    //std::vector<StaticGameTile *> firstRow ; // row != column
-    //std::vector<StaticGameTile *> bottomRow ; 
+    //std::vector<GameTile *> firstRow ; // row != column
+    //std::vector<GameTile *> bottomRow ; 
     int numSprites = 10 ; 
-    StaticGameTile* topWall = new StaticGameTile(wallPath,numSprites,posFirstRow);
-    StaticGameTile* bottomWall = new StaticGameTile(wallPath,numSprites,posBottomRow);
+    GameTile* topWall = new GameTile(wallPath,numSprites,posFirstRow);
+    GameTile* bottomWall = new GameTile(wallPath,numSprites,posBottomRow);
     for(int i = 0 ; i < numSprites ; i++){
         topWall->sprites[i].setPosition(posFirstRow);
         bottomWall->sprites[i].setPosition(posBottomRow);
