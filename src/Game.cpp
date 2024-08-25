@@ -85,9 +85,17 @@ void Game::update(){
 // clear window, draw, display
 void Game::render(){
 	this->window->clear();
-	for(int i = 0 ; i < gameWorld.gridSize.x ; i++){
-		this->window->draw(gameWorld.tiles[0][i]->sprite); // draws firstRow
-		this->window->draw(gameWorld.tiles[1][i]->sprite); // draws bottomRow
+	// for(int i = 0 ; i < gameWorld.gridSize.x ; i++){
+	// 	this->window->draw(gameWorld.tiles[0][i]->sprite); // draws firstRow
+	// 	this->window->draw(gameWorld.tiles[1][i]->sprite); // draws bottomRow
+	// }
+	int numVectors = gameWorld.tiles.size(); 
+	int numSprites = gameWorld.tiles[0]->sprites.size();
+	for(int i = 0 ; i < numVectors ; i++){
+		numSprites = gameWorld.tiles[i]->sprites.size();
+		for(int j = 0 ; j < numSprites ; j++ ){
+		this->window->draw(gameWorld.tiles[i]->sprites[j]);
+		}
 	}
 
 	//Render items
