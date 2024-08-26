@@ -30,24 +30,28 @@ void GameState::render(sf::RenderTarget* target){
 // Update player's input
 void GameState::updateInput(const float& deltaTime){
     this->checkForQuit();
-
+    
     // Update player's input //
     
     // LEFT:
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
         this->statePlayer.move(deltaTime,-1.f,0.f);
+        if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,1.f,0.f);
     }
     // UP:
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
         this->statePlayer.move(deltaTime,0.f,-1.f);
+        if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,0.f,1.f);
     }
     // RIGHT:
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         this->statePlayer.move(deltaTime,1.f,0.f);
+        if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,-1.f,0.f);
     } 
     // DOWN:
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         this->statePlayer.move(deltaTime,0.f,1.f);
+        if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,0.f,-1.f);
     }
     // no key pressed, IDLE
     else{
@@ -91,4 +95,16 @@ void GameState::updateMonsterMoveDirection(const float& deltaTime){
 void GameState::receiveMap(std::vector<GameTile*> tiles){
     this->tiles = tiles ;
 
+
+}
+
+bool GameState::isPlayerTouchingWall(){
+    sf::FloatRect playerRect = statePlayer.getSprite().getGlobalBounds();
+    for(GameTile* tile : tiles){
+        for(sf::Sprite sprite : tile->sprites){
+            sf::FloatRect wallRect = sprite.getGlobalBounds();
+            if(playerRect.intersects(wallRect)) return true ;
+        }
+    }
+    return false ; 
 }

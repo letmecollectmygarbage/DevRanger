@@ -25,6 +25,7 @@ class GameState :
             void update(const float& deltaTime);
             void render(sf::RenderTarget* target = nullptr);
             void receiveMap(std::vector<GameTile*> tiles);
+            bool isPlayerTouchingWall();
     };
 
 #endif
