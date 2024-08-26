@@ -11,12 +11,13 @@ Player::Player()
     height = 50.f ; 
     size = {width,height}; 
     shape.setSize(size); 
-    initialX = 0.f ;
-    initialY = 0.f ;  
+    initialX = 400.f ;
+    initialY = 400.f ;  
     initialPos = {initialX,initialY} ; 
     lastMovement = "IDLE" ; 
     entityImagesFolder = "Player/Moves/" ; // 40x64 px
     this->initSprites(); // to call last, after all attributes are set
+    sprite.setPosition(initialPos);
     
 }
 
