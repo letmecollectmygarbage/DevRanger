@@ -13,6 +13,8 @@ class GameState :
             Monster stateMonster ;
             sf::Clock clock; // // starts the clock
             sf::Time time1,time2 ; // 
+            std::vector<GameTile*> tiles ; // copy of the vector generated in GameWorld
+            
         public:
             GameState(sf::RenderWindow* window, sf::View view);
             virtual ~GameState();
@@ -22,6 +24,7 @@ class GameState :
             void updateMonsterMoveDirection(const float& deltaTime);
             void update(const float& deltaTime);
             void render(sf::RenderTarget* target = nullptr);
+            void receiveMap(std::vector<GameTile*> tiles);
     };
 
 #endif

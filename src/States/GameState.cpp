@@ -62,8 +62,6 @@ void GameState::updateInput(const float& deltaTime){
 // AB' = (xB - xA, yB - yA)  0
 void GameState::updateMonsterMoveDirection(const float& deltaTime){
     this->checkForQuit();
-    
-    
     sf::Vector2f moveToHero = statePlayer.pos - stateMonster.getSprite().getPosition() ; 
     sf::Vector2f nullVector = {0.f,0.f};
     if(moveToHero == nullVector) return ; // so div never equals 0
@@ -76,16 +74,23 @@ void GameState::updateMonsterMoveDirection(const float& deltaTime){
     stateMonster.move(deltaTime,dir_x,dir_y); 
 
     // DEBUG PRINT STATEMENTS
-    time1 = clock.getElapsedTime();
-    if(time1.asSeconds() > 5)
-    { 
-        std::cerr << "[GameState::updateMonsterMoveDirection] " ;
-        std::cerr << "statePlayer.pos : " << statePlayer.pos.x << ","  ;
-        std::cerr << statePlayer.pos.y << " | stateMonster.pos :" ;
-        std::cerr << stateMonster.pos.x << "," << stateMonster.pos.y ;
-        std::cerr << " | moveToHero : " << moveToHero.x << ","  ;
-        std::cerr  << moveToHero.y << "\n" ;
-        std::cerr << "dir_x , dir_y : " << dir_x << " , " << dir_y <<"\n" ; 
-        clock.restart();
-    }
+    // time1 = clock.getElapsedTime();
+    // if(time1.asSeconds() > 5)
+    // { 
+    //     std::cerr << "[GameState::updateMonsterMoveDirection] " ;
+    //     std::cerr << "statePlayer.pos : " << statePlayer.pos.x << ","  ;
+    //     std::cerr << statePlayer.pos.y << " | stateMonster.pos :" ;
+    //     std::cerr << stateMonster.pos.x << "," << stateMonster.pos.y ;
+    //     std::cerr << " | moveToHero : " << moveToHero.x << ","  ;
+    //     std::cerr  << moveToHero.y << "\n" ;
+    //     std::cerr << "dir_x , dir_y : " << dir_x << " , " << dir_y <<"\n" ; 
+    //     clock.restart();
+    // }
+}
+
+void GameState::receiveMap(std::vector<GameTile*> tiles){
+    this->tiles = tiles ;
+    sf::Vector2f pos = this->tiles[0]->sprites[6].getPosition();
+	std::cout << "Position of first tile : " << pos.x<<","<<pos.y << "\n";
+
 }
