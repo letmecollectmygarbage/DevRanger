@@ -90,7 +90,5 @@ void GameState::updateMonsterMoveDirection(const float& deltaTime){
 
 void GameState::receiveMap(std::vector<GameTile*> tiles){
     this->tiles = tiles ;
-    sf::Vector2f pos = this->tiles[0]->sprites[6].getPosition();
-	std::cout << "Position of first tile : " << pos.x<<","<<pos.y << "\n";
 
 }
