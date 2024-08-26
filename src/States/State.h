@@ -4,6 +4,7 @@
 #include "../Entities/Player.h"
 
 #include "../Entities/Monster.h"
+#include "../Map/GameWorld.h"
 
 class State
 {
