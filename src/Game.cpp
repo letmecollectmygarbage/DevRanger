@@ -36,6 +36,9 @@ Game::Game(){
 	this->initWindow();
 	this->initStates();
 	this->gameWorld = GameWorld();
+	GameState* gameState = states.top();
+	gameState->receiveMap(this->gameWorld.tiles);
+
 }
 
 // Destructor for exiting the game.

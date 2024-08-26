@@ -27,7 +27,7 @@ private:
 	sf::Event sfEvent; 
 	sf::Clock deltaTimeClock;
 	float deltaTime;
-	std::stack<State*> states ; // a stack containing every game state
+	std::stack<GameState*> states ; // a stack containing every game state
 	//Initialization
 
 	void initWindow();
