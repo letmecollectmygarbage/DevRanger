@@ -48,9 +48,9 @@ int Entity::initSprites(){
 
     for(auto move : movements){
         mvmtID = move ;
-        // Initialize the vectors in the maps
-        textureMap[mvmtID] = std::vector<sf::Texture>(imagesPerMovement);
-        spriteMap[mvmtID] = std::vector<sf::Sprite>(imagesPerMovement);
+        // Initialize sf::Sprite & sf::Texture vectors
+        textureMap[mvmtID] = std::vector<sf::Texture>(imagesPerMovement); 
+        spriteMap[mvmtID] = std::vector<sf::Sprite>(imagesPerMovement); 
         // For the number of sprites each movement has
         for(int i = 0 ; i < imagesPerMovement ; i++){
             filename = mvmtID + +"_"+std::to_string(i+1) + ".png" ; 

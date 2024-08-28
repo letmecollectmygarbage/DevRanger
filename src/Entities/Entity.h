@@ -28,6 +28,7 @@ class Entity
 
     sf::RectangleShape shape ; 
     float movementSpeed ; 
+    int health ; // number of health points the entity has
     int imagesPerMovement ; // according to what I have in Images/<entity>/Moves
     int numberOfDifferentMovements; // also according to what I have in Images/<entity>/Moves
 
@@ -52,6 +53,7 @@ class Entity
     std::string imagesFolder = "ressources/Images/" ; // root image folder
     std::string entityImagesFolder ; // entity related images
     std::vector<std::string> movements ; // all movements the entity can do (depends on the sprites we will find)
+    
 
 
 
@@ -72,6 +74,12 @@ class Entity
 
         // getters / setters 
         sf::Sprite getSprite();
+        int getHealth(){return health ;}
+        void setHealth(int health){
+            if(health >= 0) this->health = health ;
+            else{this->health = 0;}
+            std::cout<< "Health set to : " << health << "\n" ; 
+        }
 };
 
 #endif
