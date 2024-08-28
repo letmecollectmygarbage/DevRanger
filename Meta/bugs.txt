@@ -3,6 +3,16 @@
 ------------------------------------------SOLVED BUGS------------------------------------------
 ------------------------------------------
 --------------
+bug #0 (solved): 
+    description: game seems to launch slower on windows 11 g++ 13.1 than on Linux VM Ubuntu 22 g++ 17 (or so)
+    fix idea (done but did not fix bug): remove the use of the filesystem header which is experimental for C++13 but not C++17
+    Note : must use C++13.1 to use distributed SFML library
+    Fix : removing the call to the method resizing textures did the trick 
+
+bug #1 (solved): 
+    description: GameTile objects waste memory when building repetitive patterns (walls for example). It's not necessary to have 
+        as many textures as sprites if the applied texture is always the same image and size. 
+    fix: every GameTile object will hold one texture and a vector of sprites generated from this texture.
 
 bug #3 (solved): 
     description: [Player::move] player never goes back in IDLE mode
@@ -17,19 +27,7 @@ bug #4 (solved):
 ------------------------------------------
 --------------
 
-bug #0: 
-    description: game seems to launch slower on windows 11 g++ 13.1 than on Linux VM Ubuntu 22 g++ 17 (or so)
-    fix idea (done but did not fix bug): remove the use of the filesystem header which is experimental for C++13 but not C++17
-    Note : must use C++13.1 to use distributed SFML library
 
-bug #1 (solved): 
-    description: GameTile objects waste memory when building repetitive patterns (walls for example). It's not necessary to have 
-        as many textures as sprites if the applied texture is always the same image and size. 
-    fix: only call GameTile once, then access its texture attribute to create many more sprites.
-        A new class will be created like GameTile but without the texture attribute, we'll call it 
-        GameTile and the original GameTile class will be renamed GameTileTemplate. GameTileTemplate will
-        be a specialization of GameTile. 
-        Example use: create one GameTileTemplate instance as a base building block for the wall.
-            Then access its texture attribute to create all
-            the remainings blocks
+
+
 
