@@ -57,13 +57,14 @@ void GameState::updateInput(const float& deltaTime){
     else{
         this->statePlayer.move(deltaTime,0.f,0.f);
     }
+    if(isPlayerTouchingMonster()) MonsterAttacksPlayer();
     view.setCenter(this->statePlayer.pos);
     window->setView(this->view);
 }
 
 // Calculates monster to hero direction 
 // move monster in this direction to attack hero
-// AB' = (xB - xA, yB - yA)  0
+// AB' = (xB - xA, yB - yA)  
 void GameState::updateMonsterMoveDirection(const float& deltaTime){
     this->checkForQuit();
     sf::Vector2f moveToHero = statePlayer.pos - stateMonster.getSprite().getPosition() ; 
@@ -107,4 +108,31 @@ bool GameState::isPlayerTouchingWall(){
         }
     }
     return false ; 
+}
+
+bool GameState::isPlayerTouchingMonster(){
+    sf::FloatRect playerRect = statePlayer.getSprite().getGlobalBounds();
+    sf::FloatRect monsterRect = stateMonster.getSprite().getGlobalBounds();
+    if(playerRect.intersects(monsterRect)) return true ;
+    return false ; 
+}
+
+void GameState::MonsterAttacksPlayer(){
+    static bool firstAttack = true ;
+    if(firstAttack){
+        int hp = statePlayer.getHealth() -10 ; 
+        statePlayer.setHealth(hp) ;
+        firstAttack = false ;
+    }
+    
+    else{
+        time1 = clock.getElapsedTime();
+        if(time1.asSeconds() > 5){
+            int hp = statePlayer.getHealth() -10 ; 
+            statePlayer.setHealth(hp) ;
+            clock.restart();
+        }
+        else{return;}
+    }
+
 }

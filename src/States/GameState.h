@@ -26,6 +26,8 @@ class GameState :
             void render(sf::RenderTarget* target = nullptr);
             void receiveMap(std::vector<GameTile*> tiles);
             bool isPlayerTouchingWall();
+            bool isPlayerTouchingMonster();
+            void MonsterAttacksPlayer();
     };
 
 #endif
