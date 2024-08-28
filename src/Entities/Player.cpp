@@ -47,12 +47,20 @@ void Player::render(sf::RenderTarget* target){
 *   Note: you only enter this function when Z,Q,S or D is pressed.
 */
 void Player::move(const float& deltaTime, const float dir_x, const float dir_y){
-
+    float k = 0 ; 
     if(dir_x == 0.f && dir_y == 0.f) nextSpriteIDLE();
     else nextSprite(dir_x, dir_y);
 
     sprite.move(dir_x*movementSpeed*deltaTime,dir_y*movementSpeed*deltaTime);
     pos = sprite.getPosition(); // update current position of player
+    // update positions of hearts 
+    float width_heart = health_hearts[0].getGlobalBounds().getSize().x ; 
+    // dispose 3 hearts horizontally 
+    for(int i = 0 ; i < 3 ; i++){
+        float x = pos.x+(width_heart*k) + 100.f ; 
+        health_hearts[i].setPosition(x,pos.y-100);
+        k++;
+    }
 }
 
 void Player::nextSprite(float dir_x, float dir_y){
@@ -112,25 +120,22 @@ void Player::nextSpriteIDLE()
 }
 
 
-void Player::init_life_display()
-{
+void Player::init_life_display(){
+    // Initialize the life display of the hero
     std::string path_to_heart_img = "./"+imagesFolder+"Player/heart.png";
+    sf::Sprite heart_sprite ;
+    sf::Vector2f pos_player = sprite.getPosition();
     if(!heart_texture.loadFromFile(path_to_heart_img)){
         std::cout << "Player constructor failed loading img from : " << path_to_heart_img << "\n";
         return ;
     }
     else{std::cout << "Player() : heart texture loaded from : "<<"./"+imagesFolder+"Player/heart.png \n";}
-    sf::Sprite heart_sprite ;
-
     heart_texture.setSmooth(true); // blurs edges
     heart_sprite.setTexture(heart_texture); 
+    float width_heart = heart_sprite.getGlobalBounds().getSize().x ; 
     // dispose 3 hearts horizontally 
-    sf::Vector2f pos_player = sprite.getPosition();
-    heart_sprite.setPosition(pos_player.x+100,pos_player.y-100);
-    health_hearts.push_back(heart_sprite);
-    heart_sprite.setPosition(pos_player.x+140,pos_player.y-100);
-    health_hearts.push_back(heart_sprite);
-    heart_sprite.setPosition(pos_player.x+180,pos_player.y-100);
-    health_hearts.push_back(heart_sprite);
-    
+    for(float i = 0 ; i < 3 ; i++){
+        heart_sprite.setPosition(pos_player.x+(width_heart*i),pos_player.y-100);
+        health_hearts.push_back(heart_sprite);
+    }
 }
