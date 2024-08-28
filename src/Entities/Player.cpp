@@ -17,27 +17,9 @@ Player::Player()
     initialPos = {initialX,initialY} ; 
     lastMovement = "IDLE" ; 
     entityImagesFolder = "Player/Moves/" ; // 40x64 px
-    this->initSprites(); // to call last, after all attributes are set
-    sprite.setPosition(initialPos);
-    std::string path_to_heart_img = "./"+imagesFolder+"Player/heart.png";
-    if(!heart_texture.loadFromFile(path_to_heart_img)){
-        std::cout << "Player constructor failed loading img from : " << path_to_heart_img << "\n";
-        return ;
-    }
-    else{std::cout << "Player() : heart texture loaded from : "<<"./"+imagesFolder+"Player/heart.png \n";}
-    sf::Sprite heart_sprite ;
+    initSprites(); // to call last, after all attributes are set
+    init_life_display();
 
-
-    heart_texture.setSmooth(true); // blurs edges
-    heart_sprite.setTexture(heart_texture); 
-    // dispose 3 hearts horizontally 
-    sf::Vector2f pos_player = sprite.getPosition();
-    heart_sprite.setPosition(pos_player.x+100,pos_player.y-100);
-    health_hearts.push_back(heart_sprite);
-    heart_sprite.setPosition(pos_player.x+140,pos_player.y-100);
-    health_hearts.push_back(heart_sprite);
-    heart_sprite.setPosition(pos_player.x+180,pos_player.y-100);
-    health_hearts.push_back(heart_sprite);
 }
 
 Player::~Player() 
@@ -132,5 +114,23 @@ void Player::nextSpriteIDLE()
 
 void Player::init_life_display()
 {
+    std::string path_to_heart_img = "./"+imagesFolder+"Player/heart.png";
+    if(!heart_texture.loadFromFile(path_to_heart_img)){
+        std::cout << "Player constructor failed loading img from : " << path_to_heart_img << "\n";
+        return ;
+    }
+    else{std::cout << "Player() : heart texture loaded from : "<<"./"+imagesFolder+"Player/heart.png \n";}
+    sf::Sprite heart_sprite ;
+
+    heart_texture.setSmooth(true); // blurs edges
+    heart_sprite.setTexture(heart_texture); 
+    // dispose 3 hearts horizontally 
+    sf::Vector2f pos_player = sprite.getPosition();
+    heart_sprite.setPosition(pos_player.x+100,pos_player.y-100);
+    health_hearts.push_back(heart_sprite);
+    heart_sprite.setPosition(pos_player.x+140,pos_player.y-100);
+    health_hearts.push_back(heart_sprite);
+    heart_sprite.setPosition(pos_player.x+180,pos_player.y-100);
+    health_hearts.push_back(heart_sprite);
     
 }
