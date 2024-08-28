@@ -6,6 +6,7 @@ Player::Player()
     movements = {"IDLE","UP","DOWN","LEFT","RIGHT"}; 
     imagesPerMovement = 6 ; // according to what I have in Images/Player/Moves
     movementSpeed = 300.f ; 
+    health = 100 ; 
     numberOfDifferentMovements = 5 ; // idle, left,right,up,down
     width = 50.f ; 
     height = 50.f ; 
@@ -18,7 +19,25 @@ Player::Player()
     entityImagesFolder = "Player/Moves/" ; // 40x64 px
     this->initSprites(); // to call last, after all attributes are set
     sprite.setPosition(initialPos);
-    
+    std::string path_to_heart_img = "./"+imagesFolder+"Player/heart.png";
+    if(!heart_texture.loadFromFile(path_to_heart_img)){
+        std::cout << "Player constructor failed loading img from : " << path_to_heart_img << "\n";
+        return ;
+    }
+    else{std::cout << "Player() : heart texture loaded from : "<<"./"+imagesFolder+"Player/heart.png \n";}
+    sf::Sprite heart_sprite ;
+
+
+    heart_texture.setSmooth(true); // blurs edges
+    heart_sprite.setTexture(heart_texture); 
+    // dispose 3 hearts horizontally 
+    sf::Vector2f pos_player = sprite.getPosition();
+    heart_sprite.setPosition(pos_player.x+100,pos_player.y-100);
+    health_hearts.push_back(heart_sprite);
+    heart_sprite.setPosition(pos_player.x+140,pos_player.y-100);
+    health_hearts.push_back(heart_sprite);
+    heart_sprite.setPosition(pos_player.x+180,pos_player.y-100);
+    health_hearts.push_back(heart_sprite);
 }
 
 Player::~Player() 
@@ -26,7 +45,12 @@ Player::~Player()
     // Destructor for Player, if needed
 }
 
-
+void Player::render(sf::RenderTarget* target){
+    target->draw(this->sprite);
+    for(sf::Sprite heart : this->health_hearts){
+        target->draw(heart);
+    }
+}
 
 
 
@@ -106,3 +130,7 @@ void Player::nextSpriteIDLE()
 }
 
 
+void Player::init_life_display()
+{
+    
+}
