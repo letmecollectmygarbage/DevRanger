@@ -32,6 +32,7 @@ task #2 : Make monsters that attack our hero
         a) Find some free sprites on the web and use them
         b) Make the hero lose life and eventually die with every collision with the monsters
         c) Give characteristics to monsters and our hero (HP, attack, defense, walking speed, ...)
+        d) Display health on the top right corner
 
 task #3 : Give weapons to our hero so he can defend himself from the monsters
         a) Default weapon will be a bow with unlimited arrows but limited range 
