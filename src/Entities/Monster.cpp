@@ -6,6 +6,7 @@ Monster::Monster()
     movements = {"IDLE"} ;
     imagesPerMovement = 1 ; // according to what I have in entityImagesFolder
     movementSpeed = 50.f ; 
+    health = 1 ; 
     numberOfDifferentMovements = 1 ; // idle
     width = 50.f ; 
     height = 50.f ; 
