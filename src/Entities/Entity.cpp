@@ -89,7 +89,6 @@ void Entity::manageSuffering(){
     }  
     time = clock.getElapsedTime();
     if(time.asSeconds() > 0.5f){
-        std::cout << "Time = " << time.asSeconds() << " entity will not suffer anymore. \n" ;
         setSuffering(false);
     }
 }
