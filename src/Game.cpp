@@ -29,6 +29,7 @@ void Game::initWindow()
 void Game::initStates(){
 	GameState* newState = new GameState(this->window,this->gameView);
 	this->states.push(newState);
+
 }
 
 //Constructor.
@@ -88,10 +89,6 @@ void Game::update(){
 // clear window, draw, display
 void Game::render(){
 	this->window->clear();
-	// for(int i = 0 ; i < gameWorld.gridSize.x ; i++){
-	// 	this->window->draw(gameWorld.tiles[0][i]->sprite); // draws firstRow
-	// 	this->window->draw(gameWorld.tiles[1][i]->sprite); // draws bottomRow
-	// }
 	int numVectors = gameWorld.tiles.size(); 
 	int numSprites = gameWorld.tiles[0]->sprites.size();
 	for(int i = 0 ; i < numVectors ; i++){
