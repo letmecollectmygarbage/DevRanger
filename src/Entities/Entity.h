@@ -71,16 +71,17 @@ class Entity
         void move(const float& deltaTime, const float x, const float y);
         int initSprites();
         sf::Clock clock; // // starts the clock
+        
         sf::Time time1,time2 ; // 
+        bool suffering ; // determines wether the Entity is suffering from an attack or not
 
         // getters / setters 
         sf::Sprite getSprite();
-        int getHealth(){return health ;}
-        void setHealth(int health){
-            if(health >= 0) this->health = health ;
-            else{this->health = 0;}
-            std::cout<< "Health set to : " << health << "\n" ; 
-        }
+        bool getSuffering();
+        void setSuffering(bool suffering);
+        void manageSuffering();
+        int getHealth();
+        void setHealth(int health);
 };
 
 #endif

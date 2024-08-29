@@ -73,3 +73,29 @@ int Entity::initSprites(){
 sf::Sprite Entity::getSprite(){
     return sprite ;
 }
+
+bool Entity::getSuffering(){return suffering;}
+void Entity::setSuffering(bool suffering){
+    this->suffering = suffering ; 
+}
+void Entity::manageSuffering(){
+    // Makes entity suffer for a certain period of time, no more
+    static sf::Clock clock ;
+    sf::Time time ;
+    if(!suffering){ 
+        // Entity is not suffering, nothing to do here
+        clock.restart();
+        return ;
+    }  
+    time = clock.getElapsedTime();
+    if(time.asSeconds() > 0.5f){
+        std::cout << "Time = " << time.asSeconds() << " entity will not suffer anymore. \n" ;
+        setSuffering(false);
+    }
+}
+
+int Entity::getHealth(){return health ;}
+void Entity::setHealth(int health){
+            if(health >= 0) this->health = health ;
+            else{this->health = 0;}
+        }
