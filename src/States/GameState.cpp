@@ -58,6 +58,7 @@ void GameState::updateInput(const float& deltaTime){
         this->statePlayer.move(deltaTime,0.f,0.f);
     }
     if(isPlayerTouchingMonster()) MonsterAttacksPlayer();
+    statePlayer.manageSuffering();
     view.setCenter(this->statePlayer.pos);
     window->setView(this->view);
 }
@@ -131,6 +132,7 @@ void GameState::MonsterAttacksPlayer(){
         if(time1.asSeconds() > attackTimeout){
             int hp = statePlayer.getHealth() -10 ; 
             statePlayer.setHealth(hp) ;
+            statePlayer.setSuffering(true);
             clock.restart();
             statePlayer.manage_life_display();
         }
