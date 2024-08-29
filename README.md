@@ -7,10 +7,10 @@ The goal is to unlock access to the whole map by helping the goodies and defeati
 This is the command to compile and generate the executable game file : 
 
 ~~~~Linux~~~~
-g++ -o DevRanger.exe src/main.cpp src/Game.cpp src/States/GameState.cpp src/Entities/Entity.cpp src/Entities/Player.cpp src/Entities/Monster.cpp src/Map/GameWorld.cpp src/Map/GameTile.cpp  src/States/State.cpp  -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+g++ -o DevRanger.exe src/main.cpp src/Game.cpp src/States/GameState.cpp src/States/Menu.cpp src/Entities/Entity.cpp src/Entities/Player.cpp src/Entities/Monster.cpp src/Map/GameWorld.cpp src/Map/GameTile.cpp  src/States/State.cpp  -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
 ~~~~Windows~~~~
-g++ -o DevRanger.exe src/main.cpp src/Game.cpp src/States/GameState.cpp src/Entities/Entity.cpp src/Entities/Player.cpp src/Entities/Monster.cpp src/Map/GameWorld.cpp src/Map/GameTile.cpp  src/States/State.cpp -IC:\SFML\include\ -LC:\SFML\lib\ -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+g++ -o DevRanger.exe src/main.cpp src/Game.cpp src/States/GameState.cpp src/States/Menu.cpp src/Entities/Entity.cpp src/Entities/Player.cpp src/Entities/Monster.cpp src/Map/GameWorld.cpp src/Map/GameTile.cpp  src/States/State.cpp -IC:\SFML\include\ -LC:\SFML\lib\ -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
 VSCode Build shortcuts: 
 Build and start debugging: Press 'F5'
