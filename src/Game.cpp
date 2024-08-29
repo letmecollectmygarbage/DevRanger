@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "Map/GameWorld.h"
+
 
 
 // Initalizes window of the game
@@ -36,9 +36,7 @@ void Game::initStates(){
 Game::Game(){
 	this->initWindow();
 	this->initStates();
-	this->gameWorld = GameWorld();
 	GameState* gameState = states.top();
-	gameState->receiveMap(this->gameWorld.tiles);
 
 }
 
@@ -89,14 +87,7 @@ void Game::update(){
 // clear window, draw, display
 void Game::render(){
 	this->window->clear();
-	int numVectors = gameWorld.tiles.size(); 
-	int numSprites = gameWorld.tiles[0]->sprites.size();
-	for(int i = 0 ; i < numVectors ; i++){
-		numSprites = gameWorld.tiles[i]->sprites.size();
-		for(int j = 0 ; j < numSprites ; j++ ){
-		this->window->draw(gameWorld.tiles[i]->sprites[j]);
-		}
-	}
+
 
 	//Render items
 	if(!this->states.empty()){
