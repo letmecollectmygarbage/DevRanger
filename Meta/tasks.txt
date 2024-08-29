@@ -33,6 +33,7 @@ task #2 : Make monsters that attack our hero
         b) Make the hero lose life and eventually die with every collision with the monsters
         c) Give characteristics to monsters and our hero (HP, attack, defense, walking speed, ...)
         d) Display health on the top right corner
+        e) Make a menu state to retry after hero's death
 
 task #3 : Give weapons to our hero so he can defend himself from the monsters
         a) Default weapon will be a bow with unlimited arrows but limited range 
