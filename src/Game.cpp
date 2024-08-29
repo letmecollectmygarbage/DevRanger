@@ -25,18 +25,13 @@ void Game::initWindow()
 	window->setView(gameView);
 }
 
-// Initializes states of the game.
-void Game::initStates(){
-	GameState* newState = new GameState(this->window,this->gameView);
-	this->states.push(newState);
 
-}
 
 //Constructor.
 Game::Game(){
 	this->initWindow();
-	this->initStates();
-	GameState* gameState = states.top();
+	GameState* gameState = new GameState(this->window,this->gameView);
+	this->states.push(gameState);
 
 }
 
@@ -74,8 +69,8 @@ void Game::update(){
 		this->states.top()->update(this->deltaTime) ; 
 		// leave current state:
 		if(this->states.top()->getQuit()){
-			this->states.top()->endState(); // put endState on top of stack and execute it
-			delete this->states.top(); // delete endState's data
+			this->states.top()->endState(); // save progression 
+			delete this->states.top(); //
 			this->states.pop(); // remove pointer to endState
 		}
 	}
