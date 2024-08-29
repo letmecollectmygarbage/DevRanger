@@ -29,6 +29,7 @@ class Entity
     sf::RectangleShape shape ; 
     float movementSpeed ; 
     int health ; // number of health points the entity has
+    int maxHealth ; // number of health points the entity starts with 
     int imagesPerMovement ; // according to what I have in Images/<entity>/Moves
     int numberOfDifferentMovements; // also according to what I have in Images/<entity>/Moves
 
