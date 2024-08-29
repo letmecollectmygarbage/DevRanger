@@ -18,6 +18,7 @@ Player::Player()
     initialPos = {initialX,initialY} ; 
     lastMovement = "IDLE" ; 
     entityImagesFolder = "Player/Moves/" ; // 40x64 px
+    suffering = false ; 
     initSprites(); // to call last, after all attributes are set
     init_life_display();
 
@@ -29,10 +30,12 @@ Player::~Player()
 }
 
 void Player::render(sf::RenderTarget* target){
+    if(suffering) target->draw(hurt);
     target->draw(this->sprite);
     for(sf::Sprite heart : this->health_hearts){
         target->draw(heart);
     }
+    
 }
 
 
@@ -65,6 +68,7 @@ void Player::move(const float& deltaTime, const float dir_x, const float dir_y){
         health_hearts[k].setPosition(x,pos.y-100);
         k++;
     }
+    hurt.setPosition(pos);
 }
 
 void Player::nextSprite(float dir_x, float dir_y){
@@ -165,4 +169,48 @@ void Player::manage_life_display(){
             health_hearts.push_back(heart_sprite);
         }
     }
+}
+
+// Initializes sprites of the hero or monster
+int Player::initSprites(){
+    // Number of movements for each walk cycle and IDLE. Must all be equal to use a map
+    std::string mvmtID ; 
+
+
+
+    std::string filename;
+    std::string currentPath = "./" ;
+    std::string imgPath = currentPath+imagesFolder+entityImagesFolder; 
+    std::cout<< "[INFO] [Entity::initSprites()] imgPath = " << imgPath << "\n";
+    
+    // LOAD EVERY TEXTURE OF THE ENTITY //
+
+    for(auto move : movements){
+        mvmtID = move ;
+        // Initialize sf::Sprite & sf::Texture vectors
+        textureMap[mvmtID] = std::vector<sf::Texture>(imagesPerMovement); 
+        spriteMap[mvmtID] = std::vector<sf::Sprite>(imagesPerMovement); 
+        // For the number of sprites each movement has
+        for(int i = 0 ; i < imagesPerMovement ; i++){
+            filename = mvmtID + +"_"+std::to_string(i+1) + ".png" ; 
+            if(!textureMap[mvmtID][i].loadFromFile(imgPath+filename)){
+                std::cerr << "The image"+mvmtID+"_"+ std::to_string(i) + " was not found \n" ;
+                return -1 ; 
+            }
+            spriteMap[mvmtID][i].setTexture(textureMap[mvmtID][i]);
+        }
+    }
+    // Load hurt sprite
+    std::string blood_path = currentPath+imagesFolder+"Player/blood.png" ;
+    if(!hurt_texture.loadFromFile(blood_path)){
+        std::cerr << "Failed loading hurt_texture from : "<< blood_path << "\n" ; 
+        return -1 ; 
+    }
+    hurt.setTexture(hurt_texture);
+
+    // make entity start IDLE facing the user
+    sprite = spriteMap["IDLE"][0] ; // IDLE facing down
+    std::cerr << "[INFO] Entity::initSprites() achieved" << "\n" ; 
+    sprite.setPosition(initialPos);
+    return 0 ;
 }
