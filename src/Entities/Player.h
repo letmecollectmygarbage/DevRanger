@@ -19,6 +19,7 @@ public:
     void nextSpriteIDLE();
     void render(sf::RenderTarget* target);
     void init_life_display();
+    void manage_life_display();
 };
 
 #endif

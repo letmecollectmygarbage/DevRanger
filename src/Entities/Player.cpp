@@ -5,8 +5,9 @@ Player::Player()
 {
     movements = {"IDLE","UP","DOWN","LEFT","RIGHT"}; 
     imagesPerMovement = 6 ; // according to what I have in Images/Player/Moves
-    movementSpeed = 300.f ; 
-    health = 100 ; 
+    movementSpeed = 300.f ;
+    maxHealth = 100 ; 
+    health = maxHealth ; 
     numberOfDifferentMovements = 5 ; // idle, left,right,up,down
     width = 50.f ; 
     height = 50.f ; 
@@ -53,12 +54,15 @@ void Player::move(const float& deltaTime, const float dir_x, const float dir_y){
 
     sprite.move(dir_x*movementSpeed*deltaTime,dir_y*movementSpeed*deltaTime);
     pos = sprite.getPosition(); // update current position of player
-    // update positions of hearts 
+    // update positions of hearts if hero still has some lives
+    if (health_hearts.size() == 0){
+        return ; 
+    }
     float width_heart = health_hearts[0].getGlobalBounds().getSize().x ; 
     // dispose 3 hearts horizontally 
-    for(int i = 0 ; i < 3 ; i++){
-        float x = pos.x+(width_heart*k) + 100.f ; 
-        health_hearts[i].setPosition(x,pos.y-100);
+    for(sf::Sprite heart : health_hearts){
+        float x = pos.x+(width_heart*k) + 40.f ; 
+        health_hearts[k].setPosition(x,pos.y-100);
         k++;
     }
 }
@@ -137,5 +141,28 @@ void Player::init_life_display(){
     for(float i = 0 ; i < 3 ; i++){
         heart_sprite.setPosition(pos_player.x+(width_heart*i),pos_player.y-100);
         health_hearts.push_back(heart_sprite);
+    }
+}
+
+void Player::manage_life_display(){
+    // Handles how many hearts you see depending on remaining health
+    float life_ratio = static_cast<float>(health)/static_cast<float>(maxHealth) ; 
+    int num_hearts ; // number of hearts that should be displayed
+    if(life_ratio > 0.66f) num_hearts = 3 ; 
+    else if(life_ratio > 0.33f && life_ratio <0.66f) num_hearts = 2 ; 
+    else if(life_ratio < 0.33f && life_ratio >0.f) num_hearts=1 ; 
+    else{num_hearts = 0 ; }
+
+    // Verify that num_hearts hearts are visible as they should be
+    if(health_hearts.size()==num_hearts) return ; 
+    else{
+        health_hearts.clear();
+        sf::Sprite heart_sprite ;
+        heart_sprite.setTexture(heart_texture);
+        float width_heart = heart_sprite.getGlobalBounds().getSize().x ;
+        for(float i=0 ; i < num_hearts ; i++){
+            heart_sprite.setPosition(pos.x+(width_heart*i),pos.y-100);
+            health_hearts.push_back(heart_sprite);
+        }
     }
 }
