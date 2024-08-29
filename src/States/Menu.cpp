@@ -3,9 +3,10 @@
 Menu::Menu(sf::RenderWindow* window, sf::View view)
     : State(window,view)
 {
+    std::cout << "Entering Menu constructor \n";
     choices.push_back("Retry");
     choices.push_back("Exit DevRanger");
-    if (!font.loadFromFile("arial.ttf")){
+    if (!font.loadFromFile("./ressources/Fonts/arial.ttf")){
         std::cout << "Menu() failed loading font \n";
         return ;
     }
@@ -28,6 +29,10 @@ Menu::Menu(sf::RenderWindow* window, sf::View view)
 
 // Destructor 
 Menu::~Menu(){
+}
+
+void Menu::endState(){
+    std::cout << "[Menu] endState is reached !" << "\n" ;
 }
 
 void Menu::update(const float &deltaTime){

@@ -18,9 +18,11 @@ class Menu :
             
         public:
             Menu(sf::RenderWindow* window, sf::View view);
+            ~Menu();
             void update(const float &deltaTime);
             void render(sf::RenderTarget* target);
             void updateInput(const float& deltaTime);
+            void endState();
 
     };
 
