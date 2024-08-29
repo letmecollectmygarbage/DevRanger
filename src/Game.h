@@ -2,7 +2,9 @@
 #define GAME_H
 
 #include "States/GameState.h"
+#include "States/Menu.h"
 #include "Map/GameWorld.h"
+
 #include "wtypes.h" // to get screen resolution
 
 class Game
@@ -36,6 +38,7 @@ private:
 public:
 	// attributes 
 	sf::View gameView ;
+	sf::View menuView ; 
 
 	//Constructors/Destructors
 	Game();

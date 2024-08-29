@@ -22,6 +22,7 @@ void Game::initWindow()
     rectHeight = resY / viewScaleFactor ; 
 	sizeViewRect = {rectWidth,rectHeight};
     gameView = sf::View(sf::FloatRect(originViewRect,sizeViewRect));
+	menuView = sf::View(sf::FloatRect(originViewRect,sizeViewRect));
 	window->setView(gameView);
 }
 
@@ -30,6 +31,8 @@ void Game::initWindow()
 //Constructor.
 Game::Game(){
 	this->initWindow();
+	Menu* menuState = new Menu(this->window,this->menuView);
+	this->states.push(menuState);
 	GameState* gameState = new GameState(this->window,this->gameView);
 	this->states.push(gameState);
 
@@ -71,7 +74,7 @@ void Game::update(){
 		if(this->states.top()->getQuit()){
 			this->states.top()->endState(); // save progression 
 			delete this->states.top(); //
-			this->states.pop(); // remove pointer to endState
+			this->states.pop(); // remove current state from stack
 		}
 	}
 	// Application End (stack of states is empty)
