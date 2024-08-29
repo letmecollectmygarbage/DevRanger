@@ -118,21 +118,25 @@ bool GameState::isPlayerTouchingMonster(){
 }
 
 void GameState::MonsterAttacksPlayer(){
+    // Consequences of an attack from the monster on the player
+    int attackTimeout = 1 ; 
     static bool firstAttack = true ;
     if(firstAttack){
         int hp = statePlayer.getHealth() -10 ; 
         statePlayer.setHealth(hp) ;
         firstAttack = false ;
     }
-    
     else{
         time1 = clock.getElapsedTime();
-        if(time1.asSeconds() > 5){
+        if(time1.asSeconds() > attackTimeout){
             int hp = statePlayer.getHealth() -10 ; 
             statePlayer.setHealth(hp) ;
             clock.restart();
+            statePlayer.manage_life_display();
         }
-        else{return;}
+        else{return;} // no attack
     }
+    
+
 
 }
