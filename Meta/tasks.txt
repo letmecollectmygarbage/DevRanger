@@ -34,6 +34,7 @@ task #2 : Make monsters that attack our hero
         c) Give characteristics to monsters and our hero (HP, attack, defense, walking speed, ...)
         d) Display health on the top right corner
         e) Make a menu state to retry after hero's death
+                - display a bunch of sprites as background
 
 task #3 : Give weapons to our hero so he can defend himself from the monsters
         a) Default weapon will be a bow with unlimited arrows but limited range 
@@ -51,4 +52,4 @@ task #6 : block player with walls (collision detection)
 
 task #7:  put map generation from GameWorld into its own game state (??? whatever it means)
 
-
+task #8 : try changing view between Menu state and Game state
