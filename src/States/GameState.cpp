@@ -16,7 +16,7 @@ GameState::~GameState(){
 
 //State before quitting where you can save hero's progression for example
 void GameState::endState(){
-    std::cout << "endState is reached !" << "\n" ;
+    std::cout << "[GameState] endState is reached !" << "\n" ;
 }
 
 // Checks for user input and does something else
