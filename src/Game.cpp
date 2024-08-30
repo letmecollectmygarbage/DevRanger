@@ -16,13 +16,13 @@ void Game::initWindow()
 	this->window->setFramerateLimit(this->framerate_limit);
 	this->window->setVerticalSyncEnabled(VSync);
 	// create a view with the rectangular area of the 2D world to show
-	viewScaleFactor = 4 ;
+	viewScaleFactor = 1 ;
 	originViewRect = {0.f,0.f};
     rectWidth = resX / viewScaleFactor ;
     rectHeight = resY / viewScaleFactor ; 
 	sizeViewRect = {rectWidth,rectHeight};
     gameView = sf::View(sf::FloatRect(originViewRect,sizeViewRect));
-	menuView = sf::View(sf::FloatRect(originViewRect,sizeViewRect));
+	menuView = sf::View(sf::FloatRect(originViewRect,{800.f,600.f})); // this has no impact
 	window->setView(gameView);
 }
 
@@ -74,6 +74,7 @@ void Game::update(){
 		if(this->states.top()->getQuit()){
 			this->states.top()->endState(); // save progression 
 			delete this->states.top(); //
+			setWindowView(gameView); // this only recenters view, does not impact res like I want
 			this->states.pop(); // remove current state from stack
 		}
 	}
@@ -100,4 +101,8 @@ void Game::run(){
 		this->update();
 		this->render();
 	}
+}
+
+void Game::setWindowView(sf::View view){
+	this->window->setView(view);
 }

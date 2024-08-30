@@ -45,6 +45,7 @@ public:
 	virtual ~Game();
 
 	//Functions
+	void setWindowView(sf::View view);
 
 	//Update
 	void updateDeltaTime();
