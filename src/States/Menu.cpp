@@ -91,11 +91,5 @@ void Menu::updateInput(const float& deltaTime){
     static bool btn_released = false ; 
     static int i = 0 ; 
     this->checkForQuit();
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
-        while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){ // wait until key is released
-            btn_pushed = true ; 
-        }
-        btn_released = true ; 
-    }
 }
 
