@@ -18,7 +18,19 @@ const bool &State::getQuit() const{
 }
 
 void State::checkForQuit(){
+	static bool btn_pushed = false ; 
+    static bool btn_released = false ; 
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
-		this->quit=true; // exits game 
+		btn_pushed = true ; 
+		return ; 
+	}
+	if(btn_pushed && not(btn_released)){
+		if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) btn_released = true ; 
+		return ; 
+	}
+	if(btn_pushed && btn_released){
+		this->quit=true; // exits game
+		btn_pushed=false ; // reset for next state in stack
+		btn_released=false ; // reset for next state in stack
 	}
 }
