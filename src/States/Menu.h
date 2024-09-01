@@ -10,7 +10,8 @@ class Menu :
         private:
             std::string choice ;
             bool quit ; 
-            std::vector<std::string> choices ; 
+            std::vector<std::string> choices ; // vector of choices
+            int num_choice ; // choice index in the choices vector
             sf::Texture selectionArrowTexture ; // texture of the arrow used to indicate user's choice
             sf::Sprite selectionArrow ; // sprite of the arrow used to indicate user's choice
             sf::Font font;
@@ -27,6 +28,10 @@ class Menu :
             void render(sf::RenderTarget* target);
             void updateInput(const float& deltaTime);
             void endState();
+            void moveSelectionArrow();
+            bool acquireInput(sf::Keyboard::Key key);
+            
+            
 
     };
 

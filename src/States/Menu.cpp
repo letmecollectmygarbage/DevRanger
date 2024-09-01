@@ -7,8 +7,7 @@ Menu::Menu(sf::RenderWindow* window, sf::View view)
     std::cout << "Entering Menu constructor \n";
     int resX = 1920 ; 
     int resY = 1080 ; 
-    
-
+    std::string arrowTextureFilename = "./ressources/Images/arrow_GUI.png" ;
     sf::Vector2f pos = {0.f,0.f} ;  
     std::string textureFilename = "./ressources/Images/background_96x96.png" ;
     sf::Sprite sprite ; 
@@ -39,17 +38,23 @@ Menu::Menu(sf::RenderWindow* window, sf::View view)
         std::cout << "Menu() failed loading font \n";
         return ;
     }
-        // set the character size
+    // set the character size
     sf::Text choice_text ;
-    sf::Vector2f pos_text = {0.f,0.f};
+    sf::Vector2f pos_text = {resX/2.f-100.f, resY/2.f-100.f};
     int policeSize = 30 ;
     for(std::string choice : choices){
         choice_text = sf::Text(choice,font,policeSize);
-        choice_text.setFillColor(sf::Color::Green);
+        choice_text.setFillColor(sf::Color::Black);
         choice_text.setPosition(pos_text);
         pos_text.y = pos_text.y + 50.f ; 
         choices_text.push_back(choice_text);
     }
+    if(!selectionArrowTexture.loadFromFile(arrowTextureFilename)){ // loading image failed
+        std::cout << "[Menu] Failed loading sprite \n";
+        return ;
+    }
+    selectionArrow.setTexture(selectionArrowTexture);
+    moveSelectionArrow();
 }
 
 
@@ -80,16 +85,62 @@ void Menu::render(sf::RenderTarget* target){
         target->draw(choice);
     }
     target->draw(test_text);
-
-
+    target->draw(selectionArrow);
 }
-
-
 
 void Menu::updateInput(const float& deltaTime){
     static bool btn_pushed = false ; 
     static bool btn_released = false ; 
     static int i = 0 ; 
     this->checkForQuit();
+    if(acquireInput(sf::Keyboard::Down) || acquireInput(sf::Keyboard::S)){
+        num_choice++;
+    }
+    if(acquireInput(sf::Keyboard::Up) || acquireInput(sf::Keyboard::Z)){
+        num_choice--;
+    }
+    moveSelectionArrow();
+}
+
+void Menu::moveSelectionArrow(){
+    // Places the arrow next to choice #choice
+    if(num_choice < 0) num_choice = choices.size()-1 ; 
+    else if(num_choice > choices.size()-1) num_choice = 0 ; 
+    sf::Vector2f posArrow = choices_text[num_choice].getPosition();
+    posArrow.x -= 50.f ;
+    selectionArrow.setPosition(posArrow);
+}
+
+/**
+ * @brief Handles single key press detection for a specified key, ensuring that each key press
+ *        is registered only once per full press-release cycle.
+ *
+ * This function tracks the state of a key press, ensuring that the key is considered "pressed" 
+ * only once per physical press and release action. It avoids multiple detections if the key is 
+ * held down continuously.
+ *
+ * @param key The specific key to monitor
+ * @return Returns `true` when a full press-release cycle of the specified key is detected.
+ *         Returns `false` if the cycle is incomplete or ongoing.
+ */
+bool Menu::acquireInput(sf::Keyboard::Key key){
+	static bool btn_pushed = false ; 
+    static bool btn_released = false ; 
+    static sf::Keyboard::Key last_key = sf::Keyboard::Unknown ; 
+	if(sf::Keyboard::isKeyPressed(key)){
+		btn_pushed = true ; 
+        last_key = key ;
+		return false ; 
+	}
+	if(btn_pushed && not(btn_released)){
+		if(!sf::Keyboard::isKeyPressed(last_key)) btn_released = true ; 
+		return false; 
+	}
+	if(btn_pushed && btn_released){
+		btn_pushed=false ; // reset for next call
+		btn_released=false ; // reset for next call 
+        return true ; 
+	}
+    return false ; 
 }
 
