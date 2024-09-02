@@ -92,12 +92,30 @@ void Menu::updateInput(const float& deltaTime){
     static bool btn_pushed = false ; 
     static bool btn_released = false ; 
     static int i = 0 ; 
+    sf::Keyboard::Key keyDown = sf::Keyboard::Down ;
+    sf::Keyboard::Key keyUp = sf::Keyboard::Up ; 
+    sf::Keyboard::Key keyZ = sf::Keyboard::Z ; 
+    sf::Keyboard::Key keyS = sf::Keyboard::S ; 
+
+
     this->checkForQuit();
-    if(acquireInput(sf::Keyboard::Down) || acquireInput(sf::Keyboard::S)){
-        num_choice++;
-    }
-    if(acquireInput(sf::Keyboard::Up) || acquireInput(sf::Keyboard::Z)){
+    // Scroll down menu
+    if(sf::Keyboard::isKeyPressed(keyDown)){
+        acquireInput(keyDown); 
         num_choice--;
+    }
+    if(sf::Keyboard::isKeyPressed(keyS)){
+        acquireInput(keyS);
+        num_choice--; 
+    }
+    // Scroll up menu
+    if(sf::Keyboard::isKeyPressed(keyZ)){
+        acquireInput(keyZ);
+        num_choice++; 
+    }
+    if(sf::Keyboard::isKeyPressed(keyUp)){
+        acquireInput(keyUp);
+        num_choice++; 
     }
     moveSelectionArrow();
 }
@@ -117,30 +135,20 @@ void Menu::moveSelectionArrow(){
  *
  * This function tracks the state of a key press, ensuring that the key is considered "pressed" 
  * only once per physical press and release action. It avoids multiple detections if the key is 
- * held down continuously.
+ * held down longer than one framecycle.
  *
  * @param key The specific key to monitor
- * @return Returns `true` when a full press-release cycle of the specified key is detected.
- *         Returns `false` if the cycle is incomplete or ongoing.
+ * @return Returns void if key is released. Otherwise stays blocked.
  */
-bool Menu::acquireInput(sf::Keyboard::Key key){
-	static bool btn_pushed = false ; 
-    static bool btn_released = false ; 
-    static sf::Keyboard::Key last_key = sf::Keyboard::Unknown ; 
-	if(sf::Keyboard::isKeyPressed(key)){
-		btn_pushed = true ; 
-        last_key = key ;
-		return false ; 
-	}
-	if(btn_pushed && not(btn_released)){
-		if(!sf::Keyboard::isKeyPressed(last_key)) btn_released = true ; 
-		return false; 
-	}
-	if(btn_pushed && btn_released){
-		btn_pushed=false ; // reset for next call
-		btn_released=false ; // reset for next call 
-        return true ; 
-	}
-    return false ; 
+
+
+void Menu::acquireInput(sf::Keyboard::Key key){
+    while(sf::Keyboard::isKeyPressed(key)==true){
+        // stay in loop while key is pressed
+    }
+    // exit when key is released
 }
 
+int Menu::getNum_choice(){
+    return num_choice ;
+}

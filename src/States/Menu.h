@@ -29,8 +29,8 @@ class Menu :
             void updateInput(const float& deltaTime);
             void endState();
             void moveSelectionArrow();
-            bool acquireInput(sf::Keyboard::Key key);
-            
+            int getNum_choice();
+            void acquireInput(sf::Keyboard::Key key);
             
 
     };
