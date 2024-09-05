@@ -11,6 +11,9 @@ private:
     sf::Texture hurt_texture ; //texture to use when Player is hurt
     sf::Sprite hurt ; // sprite to use when Player is hurt
     
+    std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites ; // dictionnary of fireball name (pink,red,blue) vs sprite
+
+    
     
 
 public:

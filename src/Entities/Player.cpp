@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <iterator> 
 
 // Constructor. Initializes player attributes and sprites. 
 Player::Player() 
@@ -175,12 +176,14 @@ void Player::manage_life_display(){
 int Player::initSprites(){
     // Number of movements for each walk cycle and IDLE. Must all be equal to use a map
     std::string mvmtID ; 
-
+    std::vector<std::string> fireballs_colors = {"pink/","red/","blue/"} ; 
+    int N_fireballs = 6 ; // number of sprites for each fireball 
 
 
     std::string filename;
     std::string currentPath = "./" ;
     std::string imgPath = currentPath+imagesFolder+entityImagesFolder; 
+    std::string fireballPath = "./" + imagesFolder+"Player/fireball/" ;
     std::cout<< "[INFO] [Entity::initSprites()] imgPath = " << imgPath << "\n";
     
     // LOAD EVERY TEXTURE OF THE ENTITY //
@@ -207,6 +210,25 @@ int Player::initSprites(){
         return -1 ; 
     }
     hurt.setTexture(hurt_texture);
+
+    // loading fireballs textures and sprites
+    for(std::vector<std::string>::iterator color = fireballs_colors.begin() ; color != fireballs_colors.end() ; color++){
+        std::vector<sf::Texture> texture_vector ;
+        std::vector<sf::Sprite> sprite_vector ; 
+        for(int i = 0 ; i < N_fireballs ; i++){
+            sf::Texture fireballTexture ;
+            sf::Sprite fireballSprite ;
+            std::string path = fireballPath+*color+"/"+std::to_string(i+1)+".png" ;
+            if(!fireballTexture.loadFromFile(path)){
+                std::cerr << "Failed loading texture for fireball #"<<i<<" from: "<<path<< "\n" ;
+            }
+            fireballSprite.setTexture(fireballTexture) ;
+            texture_vector.push_back(fireballTexture) ;
+            sprite_vector.push_back(fireballSprite);
+        }
+        this->fireball_color_sprites[*color] = sprite_vector ;
+    }
+    
 
     // make entity start IDLE facing the user
     sprite = spriteMap["IDLE"][0] ; // IDLE facing down
