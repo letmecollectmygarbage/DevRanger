@@ -53,3 +53,5 @@ task #6 : block player with walls (collision detection)
 task #7:  put map generation from GameWorld into its own game state (??? whatever it means)
 
 task #8 : try changing view between Menu state and Game state
+
+task #9 : move pictures from root Images folder into subfolders
