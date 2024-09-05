@@ -36,6 +36,8 @@ void Player::render(sf::RenderTarget* target){
     for(sf::Sprite heart : this->health_hearts){
         target->draw(heart);
     }
+    sf::Sprite fireball = this->fireball_color_sprites["blue"][0] ; 
+    target->draw(fireball);
     
 }
 
@@ -176,7 +178,7 @@ void Player::manage_life_display(){
 int Player::initSprites(){
     // Number of movements for each walk cycle and IDLE. Must all be equal to use a map
     std::string mvmtID ; 
-    std::vector<std::string> fireballs_colors = {"pink/","red/","blue/"} ; 
+    std::vector<std::string> fireballs_colors = {"pink","red","blue"} ; 
     int N_fireballs = 6 ; // number of sprites for each fireball 
 
 
@@ -211,24 +213,33 @@ int Player::initSprites(){
     }
     hurt.setTexture(hurt_texture);
 
-    // loading fireballs textures and sprites
+    // FIREBALLS //
+    // loading fireballs textures
     for(std::vector<std::string>::iterator color = fireballs_colors.begin() ; color != fireballs_colors.end() ; color++){
         std::vector<sf::Texture> texture_vector ;
-        std::vector<sf::Sprite> sprite_vector ; 
         for(int i = 0 ; i < N_fireballs ; i++){
             sf::Texture fireballTexture ;
-            sf::Sprite fireballSprite ;
             std::string path = fireballPath+*color+"/"+std::to_string(i+1)+".png" ;
             if(!fireballTexture.loadFromFile(path)){
                 std::cerr << "Failed loading texture for fireball #"<<i<<" from: "<<path<< "\n" ;
+                return -1 ; 
             }
-            fireballSprite.setTexture(fireballTexture) ;
-            texture_vector.push_back(fireballTexture) ;
+            texture_vector.push_back(fireballTexture);
+        }
+        std::cout << "*color=" << *color << "\n" ; 
+        this->fireball_color_textures[*color] = texture_vector ;
+    }
+    // loading fireballs sprites
+    for(std::vector<std::string>::iterator color = fireballs_colors.begin() ; color != fireballs_colors.end() ; color++){
+        std::vector<sf::Sprite> sprite_vector ; 
+        for(int i = 0 ; i < N_fireballs ; i++){
+            sf::Sprite fireballSprite ;
+            fireballSprite.setTexture(fireball_color_textures[*color][i]) ;
+            fireballSprite.setPosition(initialPos);
             sprite_vector.push_back(fireballSprite);
         }
         this->fireball_color_sprites[*color] = sprite_vector ;
     }
-    
 
     // make entity start IDLE facing the user
     sprite = spriteMap["IDLE"][0] ; // IDLE facing down
