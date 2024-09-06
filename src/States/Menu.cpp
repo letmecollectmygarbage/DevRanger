@@ -34,6 +34,9 @@ Menu::Menu(sf::RenderWindow* window, sf::View view)
     }
     choices.push_back("Retry");
     choices.push_back("Exit DevRanger");
+    choices.push_back("Save game");
+    choices.push_back("Load game");
+    choices.push_back("Credits");
     if (!font.loadFromFile("./ressources/Fonts/arial.ttf")){
         std::cout << "Menu() failed loading font \n";
         return ;
@@ -89,33 +92,30 @@ void Menu::render(sf::RenderTarget* target){
 }
 
 void Menu::updateInput(const float& deltaTime){
-    static bool btn_pushed = false ; 
-    static bool btn_released = false ; 
-    static int i = 0 ; 
+
     sf::Keyboard::Key keyDown = sf::Keyboard::Down ;
     sf::Keyboard::Key keyUp = sf::Keyboard::Up ; 
     sf::Keyboard::Key keyZ = sf::Keyboard::Z ; 
     sf::Keyboard::Key keyS = sf::Keyboard::S ; 
 
-
     this->checkForQuit();
     // Scroll down menu
     if(sf::Keyboard::isKeyPressed(keyDown)){
         acquireInput(keyDown); 
-        num_choice--;
+        num_choice++;
     }
     if(sf::Keyboard::isKeyPressed(keyS)){
         acquireInput(keyS);
-        num_choice--; 
+        num_choice++;
     }
     // Scroll up menu
     if(sf::Keyboard::isKeyPressed(keyZ)){
         acquireInput(keyZ);
-        num_choice++; 
+        num_choice--;
     }
     if(sf::Keyboard::isKeyPressed(keyUp)){
         acquireInput(keyUp);
-        num_choice++; 
+        num_choice--;
     }
     moveSelectionArrow();
 }
