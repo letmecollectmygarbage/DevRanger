@@ -6,6 +6,10 @@
 // Player class is a specialization of Entity class
 class Player : public Entity {
 private:
+    bool alive ; // Determines if hero is alive or dead (to implement)
+    bool fireballBurning = false ; // 
+    float time_to_live_fireball ; // in seconds
+    std::string dirFireball ; // direction of the fireball "up", "down", "left" or "right"
     sf::Texture heart_texture ; // original img of a 2D heart 
     std::vector<sf::Sprite> health_hearts ; 
     sf::Texture hurt_texture ; //texture to use when Player is hurt
@@ -14,6 +18,8 @@ private:
     std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites ; // dictionnary of fireball name (pink,red,blue) vs sprite
     std::map<std::string,std::vector<sf::Texture>> fireball_color_textures ; // dictionnary of fireball name (pink,red,blue) vs texture
     sf::Sprite fireball ; // only fireball displayed
+    std::string lastMovement; // last movement of the player ("UP","DOWN","LEFT","RIGHT","IDLE")
+    std::string lastMovingMovement ; // same set as lastMovement excluding "IDLE" (used for fireball direction)
 
     
     
@@ -37,7 +43,13 @@ public:
     
     
     void manage_life_display(); // called when attacked
-    void attack(float deltaTime); // called when attack
+    void attack(); // called when attack
+    void manageFireballLifetime(float seconds_to_live); // manages lifetime of fireball
+    void manageFireballTrajectory(); 
+
+    // getters/setters
+
+
     
 };
 
