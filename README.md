@@ -21,7 +21,7 @@ Compiler : g++.exe (MinGW-W64 x86_64-msvcrt-posix-seh, built by Brecht Sanders) 
 Credits : 
     SFML tutorial about game states : https://www.youtube.com/watch?v=WFJW9M852Ko (author : Suraj Sharma)
     SFML tutorial about maps : https://www.youtube.com/watch?v=_RLFI1D99Ow (author : Zenva)
-    Sprites of the hero (opengameart.org) (author : Fry) (link : https://opengameart.org/users/fry)       
-
-
-
+    Sprites of the hero (opengameart.org) (author : Fry) (link : https://opengameart.org/users/fry)  
+    Sprites of the menu arrow (opengameart.org) (author : INFECTiON656) (link : https://opengameart.org/users/infection656)     
+    Sprites of menu background, walls (opengameart.org) (author : Ivan Voirol) (link : https://opengameart.org/users/ivan-voirol)
+    Sprites for hero's fireball : Game Developer Studio (www.gamedeveloperstudio.com) (author : Robert Brooks)
