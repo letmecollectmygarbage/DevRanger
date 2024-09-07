@@ -13,6 +13,7 @@ private:
     
     std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites ; // dictionnary of fireball name (pink,red,blue) vs sprite
     std::map<std::string,std::vector<sf::Texture>> fireball_color_textures ; // dictionnary of fireball name (pink,red,blue) vs texture
+    sf::Sprite fireball ; // only fireball displayed
 
     
     
@@ -21,13 +22,22 @@ public:
     Player();
     ~Player();
     
-    void move(const float& deltaTime, const float dir_x,const float dir_y);
-    int initSprites();
-    void nextSprite(float dir_x, float dir_y);
-    void nextSpriteIDLE();
-    void render(sf::RenderTarget* target);
-    void init_life_display();
-    void manage_life_display();
+    int initSprites(); // First method called 
+    void init_life_display(); // Second method called
+
+    // Called every frame //
+
+    void render(sf::RenderTarget* target); 
+    void move(const float& deltaTime, const float dir_x,const float dir_y); 
+
+    // Called potentially every frame //
+
+    void nextSprite(float dir_x, float dir_y); 
+    void nextSpriteIDLE(); 
+    
+    
+    void manage_life_display(); // called when attacked
+    void attack(float deltaTime); // called when attack
     
 };
 

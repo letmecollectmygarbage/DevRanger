@@ -7,6 +7,7 @@ Player::Player()
     movements = {"IDLE","UP","DOWN","LEFT","RIGHT"}; 
     imagesPerMovement = 6 ; // according to what I have in Images/Player/Moves
     movementSpeed = 300.f ;
+    time_to_live_fireball = 5 ; 
     maxHealth = 100 ; 
     health = maxHealth ; 
     numberOfDifferentMovements = 5 ; // idle, left,right,up,down
@@ -36,9 +37,12 @@ void Player::render(sf::RenderTarget* target){
     for(sf::Sprite heart : this->health_hearts){
         target->draw(heart);
     }
-    sf::Sprite fireball = this->fireball_color_sprites["blue"][0] ; 
-    target->draw(fireball);
-    
+
+    if(fireballBurning){
+        target->draw(this->fireball);
+        manageFireballTrajectory();
+    this->manageFireballLifetime(time_to_live_fireball);
+    }
 }
 
 
@@ -74,6 +78,11 @@ void Player::move(const float& deltaTime, const float dir_x, const float dir_y){
     hurt.setPosition(pos);
 }
 
+/*
+*   Subroutine of Player::move()
+*   Goals : - slow down the 6 frame movement cycle
+*   - render movement cyclically
+*/
 void Player::nextSprite(float dir_x, float dir_y){
     static int cyclePos = 0 ; // position in the current movement cycle (0->5)
     static int i = 0 ; 
@@ -88,7 +97,7 @@ void Player::nextSprite(float dir_x, float dir_y){
     else if(dir_x == 1.f && dir_y == 0.f){movement = "RIGHT";}
     else if(dir_x == 0.f && dir_y == 1.f){movement = "DOWN";}
     else{
-        std::cerr << "[Player::nextSprite] Unhandled dirx,dir_y combination \n";
+        std::cerr << "[Player::nextSprite] Unhandled dir_x,dir_y combination \n";
     }
 
     // hero walks in the same direction as last input
@@ -114,6 +123,11 @@ void Player::nextSprite(float dir_x, float dir_y){
 }
 
 
+/*
+*   Method to transition from moving mode
+*   to IDLE mode. Does nothing if already 
+*   IDLE.   
+*/
 void Player::nextSpriteIDLE()
 {
     std::string movement = "IDLE";
@@ -124,13 +138,18 @@ void Player::nextSpriteIDLE()
         else if(lastMovement =="DOWN") sprite = spriteMap[movement][0];
         else if(lastMovement == "LEFT") sprite = spriteMap[movement][1];
         else if(lastMovement == "RIGHT") sprite = spriteMap[movement][2];
-        else{std::cout << "[Player::nextSpriteIDLE] lastMovement unknown \n";}
+        else{std::cerr << "[Player::nextSpriteIDLE] lastMovement unknown \n";}
         sprite.setPosition(pos);
+        lastMovingMovement = lastMovement ; // save Player's direction before going "IDLE" (used for fireball)
     }
     return ;
 }
 
-
+/*
+*   Method to initialize hearts sprites (part of HUD)
+*   to IDLE mode. Does nothing if already 
+*   IDLE.   
+*/
 void Player::init_life_display(){
     // Initialize the life display of the hero
     std::string path_to_heart_img = "./"+imagesFolder+"Player/heart.png";
@@ -151,14 +170,23 @@ void Player::init_life_display(){
     }
 }
 
+/*
+*   
+*   Handles how many hearts you see depending on remaining health (1,2 or 3)
+*   Player dies when he has no hearts left (Game over). 
+*   
+*   
+*/
 void Player::manage_life_display(){
-    // Handles how many hearts you see depending on remaining health
     float life_ratio = static_cast<float>(health)/static_cast<float>(maxHealth) ; 
     int num_hearts ; // number of hearts that should be displayed
     if(life_ratio > 0.66f) num_hearts = 3 ; 
     else if(life_ratio > 0.33f && life_ratio <0.66f) num_hearts = 2 ; 
     else if(life_ratio < 0.33f && life_ratio >0.f) num_hearts=1 ; 
-    else{num_hearts = 0 ; }
+    else{
+        num_hearts = 0 ;
+        this->alive = false ; // Game over
+    }
 
     // Verify that num_hearts hearts are visible as they should be
     if(health_hearts.size()==num_hearts) return ; 
@@ -174,7 +202,7 @@ void Player::manage_life_display(){
     }
 }
 
-// Initializes sprites of the hero or monster
+// Initializes sprites of the hero
 int Player::initSprites(){
     // Number of movements for each walk cycle and IDLE. Must all be equal to use a map
     std::string mvmtID ; 
@@ -239,11 +267,64 @@ int Player::initSprites(){
             sprite_vector.push_back(fireballSprite);
         }
         this->fireball_color_sprites[*color] = sprite_vector ;
+        
     }
+    this->fireball=fireball_color_sprites["pink"][0] ;
 
     // make entity start IDLE facing the user
     sprite = spriteMap["IDLE"][0] ; // IDLE facing down
     std::cerr << "[INFO] Entity::initSprites() achieved" << "\n" ; 
     sprite.setPosition(initialPos);
     return 0 ;
+}
+
+/*
+*   This method allows the hero to throw a fireball.
+*   Only one fireball can exist at a time.
+*   Fireball can go LEFT,RIGHT,UP or DOWN
+*   Player can throw another fireball as soon as
+*   the previous one is extinguished.
+*   Fireballs extinguish after 5s
+*
+*/
+void Player::attack(){
+
+    fireballBurning = true ; 
+    dirFireball = lastMovingMovement ; // direction of player
+    std::cout << "dirFireball " << dirFireball << std::endl ; 
+}
+
+void Player::manageFireballLifetime(float seconds_to_live){
+    // Makes fireball burn for seconds_to_live seconds 
+    // Must be called every frame
+    static sf::Clock clock ;
+    sf::Time time ; 
+    if(!fireballBurning){ 
+        // Fireball shouldn't burn, nothing to do here
+        clock.restart();
+    }  
+    else{
+        time = clock.getElapsedTime(); // first value = time for 1 frame (not 0)
+        std::cout << "time="<<time.asMilliseconds()<<"\n";
+        if(time.asSeconds() > seconds_to_live){
+            fireballBurning = false ;
+            clock.restart(); // reset clock 
+        }
+    }
+}
+
+void Player::manageFireballTrajectory(){
+    if(!fireballBurning) return ; // nothing to do here
+    if(dirFireball=="up"){
+        std::cout << "up" << "\n";
+    }
+    else if(dirFireball=="down"){
+        std::cout << "down" << "\n";
+    }
+    else if(dirFireball=="left"){
+        std::cout <<"left" <<"\n";
+    }
+    else if(dirFireball=="right"){
+        std::cout << "right" << "\n";
+    }
 }
