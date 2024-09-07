@@ -6,6 +6,7 @@
 // Monster class is a specialization of Entity class
 class Monster : public Entity {
 private:
+    std::string lastMovement  ; // last movement of the player ("UP","DOWN","LEFT","RIGHT","IDLE")
     
     
 
