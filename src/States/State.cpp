@@ -1,11 +1,13 @@
 #include "State.h"
 
 // Constructor
-State::State(sf::RenderWindow* window, sf::View view)
-{
+State::State(sf::RenderWindow* window, sf::View view){
 	this->window = window;
 	this->view = view ;
 	this->quit = false ; 
+	// Goal : switch view between each state
+	// sf::Vector2f viewSize = view.getSize();
+	// stateView = sf::View(sf::FloatRect({0.f,0.f},viewSize));
 }
 
 // Destructor
@@ -17,20 +19,23 @@ const bool &State::getQuit() const{
 	return this->quit;
 }
 
+
+/*
+*	Switches game to next state in the stack if the Escape 
+*	key is pressed.
+*
+*/
 void State::checkForQuit(){
-	static bool btn_pushed = false ; 
-    static bool btn_released = false ; 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
-		btn_pushed = true ; 
-		return ; 
+	static sf::Keyboard::Key escapeKey = sf::Keyboard::Escape ;
+	if(sf::Keyboard::isKeyPressed(escapeKey)){
+		while(sf::Keyboard::isKeyPressed(escapeKey)){}
+		this->quit=true; // exits state 
 	}
-	if(btn_pushed && not(btn_released)){
-		if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) btn_released = true ; 
-		return ; 
-	}
-	if(btn_pushed && btn_released){
-		this->quit=true; // exits game
-		btn_pushed=false ; // reset for next state in stack
-		btn_released=false ; // reset for next state in stack
-	}
+}
+
+void State::acquireInput(sf::Keyboard::Key key){
+    while(sf::Keyboard::isKeyPressed(key)==true){
+        // stay in loop while key is pressed
+    }
+    // exit when key is released
 }
