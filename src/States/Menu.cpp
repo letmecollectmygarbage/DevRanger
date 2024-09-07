@@ -142,12 +142,7 @@ void Menu::moveSelectionArrow(){
  */
 
 
-void Menu::acquireInput(sf::Keyboard::Key key){
-    while(sf::Keyboard::isKeyPressed(key)==true){
-        // stay in loop while key is pressed
-    }
-    // exit when key is released
-}
+
 
 int Menu::getNum_choice(){
     return num_choice ;

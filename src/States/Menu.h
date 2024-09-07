@@ -30,7 +30,7 @@ class Menu :
             void endState();
             void moveSelectionArrow();
             int getNum_choice();
-            void acquireInput(sf::Keyboard::Key key);
+            
             
 
     };
