@@ -3,28 +3,18 @@
 
 #include "Player.h"
 
-Entity::Entity()
-{
-    lastMovement = "IDLE" ;
-}
+Entity::Entity(){}
 
-Entity::~Entity()
-{
-}
+Entity::~Entity(){}
 
 // Does NOTHING !
-void Entity::update(const float &deltaTime)
-{
-
-}
-
+void Entity::update(const float &deltaTime){}
 
 void Entity::render(sf::RenderTarget* target){
     target->draw(this->sprite);
 }
 
-void Entity::move(const float& deltaTime, const float dir_x, const float dir_y)
-{
+void Entity::move(const float& deltaTime, const float dir_x, const float dir_y){
     /*
     *       -1 <= dir_x <= 1
     *       -1 <= dir_y <= 1
@@ -36,9 +26,6 @@ void Entity::move(const float& deltaTime, const float dir_x, const float dir_y)
 int Entity::initSprites(){
     // Number of movements for each walk cycle and IDLE. Must all be equal to use a map
     std::string mvmtID ; 
-
-
-
     std::string filename;
     std::string currentPath = "./" ;
     std::string imgPath = currentPath+imagesFolder+entityImagesFolder; 
@@ -74,7 +61,10 @@ sf::Sprite Entity::getSprite(){
     return sprite ;
 }
 
-bool Entity::getSuffering(){return suffering;}
+bool Entity::getSuffering(){
+    return suffering;
+}
+
 void Entity::setSuffering(bool suffering){
     this->suffering = suffering ; 
 }

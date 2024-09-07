@@ -49,7 +49,7 @@ class Entity
     
     sf::Sprite sprite ; // current sprite of the entity
     
-    std::string lastMovement; // last movement of the entity ("UP","DOWN","IDLE",...)
+    
     
     std::string imagesFolder = "ressources/Images/" ; // root image folder
     std::string entityImagesFolder ; // entity related images
