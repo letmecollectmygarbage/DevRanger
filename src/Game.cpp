@@ -63,7 +63,10 @@ void Game::updateSFMLEvents(){
 	}
 }
 
-
+/*
+*	Call update methods of current state.
+*	Switches current state if state quits
+*/
 void Game::update(){
 	this->updateSFMLEvents();
 	// if there is at least one state in the stack:
@@ -73,7 +76,8 @@ void Game::update(){
 		// leave current state:
 		if(this->states.top()->getQuit()){
 			this->states.top()->endState(); // save progression 
-			delete this->states.top(); //
+			delete this->states.top(); 
+			
 			setWindowView(gameView); // this only recenters view, does not impact res like I want
 			this->states.pop(); // remove current state from stack
 		}
