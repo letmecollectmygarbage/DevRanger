@@ -40,6 +40,7 @@ void GameState::render(sf::RenderTarget* target){
 
 // Update player's input
 void GameState::updateInput(const float& deltaTime){
+    static sf::Keyboard::Key space = sf::Keyboard::Space ;
     this->checkForQuit();
     
     // Update player's input //
@@ -63,6 +64,11 @@ void GameState::updateInput(const float& deltaTime){
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         this->statePlayer.move(deltaTime,0.f,1.f);
         if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,0.f,-1.f);
+    }
+    // ATTACK:
+    else if(sf::Keyboard::isKeyPressed(space)){
+        acquireInput(space);
+        this->statePlayer.attack();
     }
     // no key pressed, IDLE
     else{
