@@ -28,6 +28,9 @@ bug #4 (solved):
 --------------
 
 
-
+bug #5 : 
+    description: when user presses space to attack without releasing key, frame is frozen until key is released
+    note : monster catches up for the time lost thx to deltaTime
+    possible fix : find a non blocking way to do the same thing (modify acquireInput() method )
 
 
