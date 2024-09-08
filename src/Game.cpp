@@ -38,6 +38,15 @@ Game::Game(){
 
 }
 
+// Implement singleton pattern //
+
+// Define the static member
+Game Game::gameInstance;
+
+Game& Game::getInstance(){
+	return gameInstance;
+}
+
 // Destructor for exiting the game.
 // Frees the memory of every state of the game.
 Game::~Game(){

@@ -10,6 +10,7 @@
 class Game
 {
 private:
+	static Game gameInstance ; // unique game instance (singleton)
 	/// Window parameters ///
 	sf::RenderWindow *window;
 	sf::VideoMode videoMode ; 
@@ -33,12 +34,12 @@ private:
 	//Initialization
 
 	void initWindow();
-	void initStates();
 
 public:
 	// attributes 
 	sf::View gameView ;
 	sf::View menuView ; 
+	static Game& getInstance(); // Return reference instead of object
 
 	//Constructors/Destructors
 	Game();

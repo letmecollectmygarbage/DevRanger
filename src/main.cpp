@@ -3,8 +3,7 @@
 
 int main()
 {
-	Game game;
-	game.run();
+	Game::getInstance().run();
 
 	return 0;
 }
