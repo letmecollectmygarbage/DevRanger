@@ -11,6 +11,8 @@ class Game
 {
 private:
 	static Game gameInstance ; // unique game instance (singleton)
+	Game(const Game&) = delete; // Delete copy constructor
+    Game& operator=(const Game&) = delete; // Delete copy assignment
 	/// Window parameters ///
 	sf::RenderWindow *window;
 	sf::VideoMode videoMode ; 
