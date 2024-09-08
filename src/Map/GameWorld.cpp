@@ -1,6 +1,15 @@
 #include "GameWorld.h"
 
+// define static member 
+GameWorld GameWorld::instance;
 
+GameWorld::GameWorld(){
+    setUpTiles();
+}
+
+GameWorld& GameWorld::getInstance(){
+    return instance ;
+}
 
 
 
@@ -101,9 +110,5 @@ void GameWorld::setUpTiles()
     
 }
 
-GameWorld::GameWorld()
-{
-    //gridSize = {25,12}; 
-    setUpTiles();
-}
+
 

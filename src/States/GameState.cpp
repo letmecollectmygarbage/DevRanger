@@ -2,11 +2,10 @@
 #include "../Map/GameWorld.h"
 
 GameState::GameState(sf::RenderWindow* window, sf::View view)
-    : State(window,view)
+    : State(window,view) 
 {
-    this->gameWorld = GameWorld();
-    receiveMap(gameWorld.tiles);
-
+    gameWorld = &GameWorld::getInstance(); // Initialize the class member
+    receiveMap(gameWorld->tiles);
 }
 
 // Destructor (but does nothing yet)
@@ -28,12 +27,12 @@ void GameState::update(const float &deltaTime){
 void GameState::render(sf::RenderTarget* target){
     this->statePlayer.render(target);
     this->stateMonster.render(target);
-    int numVectors = gameWorld.tiles.size(); 
-	int numSprites = gameWorld.tiles[0]->sprites.size();
+    int numVectors = gameWorld->tiles.size(); 
+	int numSprites = gameWorld->tiles[0]->sprites.size();
 	for(int i = 0 ; i < numVectors ; i++){
-		numSprites = gameWorld.tiles[i]->sprites.size();
+		numSprites = gameWorld->tiles[i]->sprites.size();
 		for(int j = 0 ; j < numSprites ; j++ ){
-		this->window->draw(gameWorld.tiles[i]->sprites[j]);
+		this->window->draw(gameWorld->tiles[i]->sprites[j]);
 		}
 	}
 }
