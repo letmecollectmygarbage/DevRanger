@@ -22,6 +22,7 @@ void GameState::endState(){
 void GameState::update(const float &deltaTime){
     this->updateInput(deltaTime);  
     this->updateMonsterMoveDirection(deltaTime);
+    this->statePlayer.update(deltaTime);
 }
 
 void GameState::render(sf::RenderTarget* target){
