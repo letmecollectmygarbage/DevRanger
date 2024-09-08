@@ -34,6 +34,7 @@ public:
     // Called every frame //
 
     void render(sf::RenderTarget* target); 
+    void update(const float &deltaTime);
     void move(const float& deltaTime, const float dir_x,const float dir_y); 
 
     // Called potentially every frame //
@@ -45,7 +46,7 @@ public:
     void manage_life_display(); // called when attacked
     void attack(); // called when attack
     void manageFireballLifetime(float seconds_to_live); // manages lifetime of fireball
-    void manageFireballTrajectory(); 
+    void manageFireballTrajectory(float deltaTime); 
 
     // getters/setters
 

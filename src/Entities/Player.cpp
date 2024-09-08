@@ -19,6 +19,7 @@ Player::Player()
     initialY = 400.f ;  
     initialPos = {initialX,initialY} ; 
     lastMovement = "IDLE" ; 
+    lastMovingMovement = "UP" ; // in case a fireball is launched before moving
     entityImagesFolder = "Player/Moves/" ; // 40x64 px
     suffering = false ; 
     initSprites(); // to call last, after all attributes are set
@@ -32,19 +33,24 @@ Player::~Player()
 }
 
 void Player::render(sf::RenderTarget* target){
+    // BACKGROUND 
     if(suffering) target->draw(hurt);
     target->draw(this->sprite);
     for(sf::Sprite heart : this->health_hearts){
         target->draw(heart);
     }
-
+    // FOREGROUND
     if(fireballBurning){
         target->draw(this->fireball);
-        manageFireballTrajectory();
-    this->manageFireballLifetime(time_to_live_fireball);
     }
 }
 
+void Player::update(const float &deltaTime){
+
+    manageFireballTrajectory(deltaTime);
+    manageFireballLifetime(time_to_live_fireball);
+
+}
 
 
 
@@ -156,10 +162,9 @@ void Player::init_life_display(){
     sf::Sprite heart_sprite ;
     sf::Vector2f pos_player = sprite.getPosition();
     if(!heart_texture.loadFromFile(path_to_heart_img)){
-        std::cout << "Player constructor failed loading img from : " << path_to_heart_img << "\n";
+        std::cerr << "Player constructor failed loading img from : " << path_to_heart_img << "\n";
         return ;
     }
-    else{std::cout << "Player() : heart texture loaded from : "<<"./"+imagesFolder+"Player/heart.png \n";}
     heart_texture.setSmooth(true); // blurs edges
     heart_sprite.setTexture(heart_texture); 
     float width_heart = heart_sprite.getGlobalBounds().getSize().x ; 
@@ -214,7 +219,6 @@ int Player::initSprites(){
     std::string currentPath = "./" ;
     std::string imgPath = currentPath+imagesFolder+entityImagesFolder; 
     std::string fireballPath = "./" + imagesFolder+"Player/fireball/" ;
-    std::cout<< "[INFO] [Entity::initSprites()] imgPath = " << imgPath << "\n";
     
     // LOAD EVERY TEXTURE OF THE ENTITY //
 
@@ -254,7 +258,6 @@ int Player::initSprites(){
             }
             texture_vector.push_back(fireballTexture);
         }
-        std::cout << "*color=" << *color << "\n" ; 
         this->fireball_color_textures[*color] = texture_vector ;
     }
     // loading fireballs sprites
@@ -291,7 +294,7 @@ void Player::attack(){
 
     fireballBurning = true ; 
     dirFireball = lastMovingMovement ; // direction of player
-    std::cout << "dirFireball " << dirFireball << std::endl ; 
+    fireball.setPosition(pos); // initiate fireball at current player's position
 }
 
 void Player::manageFireballLifetime(float seconds_to_live){
@@ -305,7 +308,6 @@ void Player::manageFireballLifetime(float seconds_to_live){
     }  
     else{
         time = clock.getElapsedTime(); // first value = time for 1 frame (not 0)
-        std::cout << "time="<<time.asMilliseconds()<<"\n";
         if(time.asSeconds() > seconds_to_live){
             fireballBurning = false ;
             clock.restart(); // reset clock 
@@ -313,18 +315,18 @@ void Player::manageFireballLifetime(float seconds_to_live){
     }
 }
 
-void Player::manageFireballTrajectory(){
+void Player::manageFireballTrajectory(float deltaTime){
     if(!fireballBurning) return ; // nothing to do here
-    if(dirFireball=="up"){
-        std::cout << "up" << "\n";
+    if(dirFireball=="UP"){
+        this->fireball.move(0.f,-1.f*this->movementSpeed*deltaTime);
     }
-    else if(dirFireball=="down"){
-        std::cout << "down" << "\n";
+    else if(dirFireball=="DOWN"){
+        this->fireball.move(0.f,1.f*this->movementSpeed*deltaTime);
     }
-    else if(dirFireball=="left"){
-        std::cout <<"left" <<"\n";
+    else if(dirFireball=="LEFT"){
+        this->fireball.move(-1.f*this->movementSpeed*deltaTime,0.f);
     }
-    else if(dirFireball=="right"){
-        std::cout << "right" << "\n";
+    else if(dirFireball=="RIGHT"){
+        this->fireball.move(1.f*this->movementSpeed*deltaTime,0.f);
     }
 }
