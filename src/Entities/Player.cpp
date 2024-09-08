@@ -7,6 +7,8 @@ Player::Player()
     movements = {"IDLE","UP","DOWN","LEFT","RIGHT"}; 
     imagesPerMovement = 6 ; // according to what I have in Images/Player/Moves
     movementSpeed = 300.f ;
+    fireballs_colors = {"pink","red","blue"} ; 
+    N_fireballs = 6 ; // number of sprites for each fireball
     time_to_live_fireball = 5 ; 
     maxHealth = 100 ; 
     health = maxHealth ; 
@@ -211,8 +213,6 @@ void Player::manage_life_display(){
 int Player::initSprites(){
     // Number of movements for each walk cycle and IDLE. Must all be equal to use a map
     std::string mvmtID ; 
-    std::vector<std::string> fireballs_colors = {"pink","red","blue"} ; 
-    int N_fireballs = 6 ; // number of sprites for each fireball 
 
 
     std::string filename;
@@ -245,7 +245,18 @@ int Player::initSprites(){
     }
     hurt.setTexture(hurt_texture);
 
+    // make player start IDLE facing user
+    sprite = spriteMap["IDLE"][0] ; // IDLE facing down
+    std::cerr << "[INFO] Entity::initSprites() achieved" << "\n" ; 
+    sprite.setPosition(initialPos);
+
     // FIREBALLS //
+    initSpritesFireballs();
+    return 0 ;
+}
+
+void Player::initSpritesFireballs(){ 
+    std::string fireballPath = "./" + imagesFolder+"Player/fireball/" ;
     // loading fireballs textures
     for(std::string color : fireballs_colors){
         std::vector<sf::Texture> texture_vector ;
@@ -254,7 +265,7 @@ int Player::initSprites(){
             std::string path = fireballPath+color+"/"+std::to_string(i+1)+".png" ;
             if(!fireballTexture.loadFromFile(path)){
                 std::cerr << "Failed loading texture for fireball #"<<i<<" from: "<<path<< "\n" ;
-                return -1 ; 
+                return ; 
             }
             texture_vector.push_back(fireballTexture);
         }
@@ -275,15 +286,6 @@ int Player::initSprites(){
         
     }
     this->fireball=fireball_color_sprites["pink"][0] ; // initialize fireball
-
-    // make entity start IDLE facing the user
-    sprite = spriteMap["IDLE"][0] ; // IDLE facing down
-    std::cerr << "[INFO] Entity::initSprites() achieved" << "\n" ; 
-    sprite.setPosition(initialPos);
-    return 0 ;
-}
-
-void Player::initSpritesFireballs(){
     
 }
 
