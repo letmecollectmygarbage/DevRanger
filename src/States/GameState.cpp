@@ -74,8 +74,11 @@ void GameState::updateInput(const float& deltaTime){
     else{
         this->statePlayer.move(deltaTime,0.f,0.f);
     }
-    if(isPlayerTouchingMonster()) MonsterAttacksPlayer();
-    statePlayer.manageSuffering();
+    if(isPlayerTouchingMonster()){
+        MonsterAttacksPlayer();
+        if(statePlayer.getSuffering()) statePlayer.manageSuffering(true); // make sure he suffers for an additional 0.5s
+    } 
+    statePlayer.manageSuffering(false);
     view.setCenter(this->statePlayer.pos);
     window->setView(this->view);
 }
