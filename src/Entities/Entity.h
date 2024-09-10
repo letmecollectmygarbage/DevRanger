@@ -79,7 +79,7 @@ class Entity
         sf::Sprite getSprite();
         bool getSuffering();
         void setSuffering(bool suffering);
-        void manageSuffering();
+        void manageSuffering(bool reset);
         int getHealth();
         void setHealth(int health);
 };

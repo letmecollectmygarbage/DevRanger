@@ -3,7 +3,10 @@
 
 #include "Entity.h"
 
-Entity::Entity(){}
+Entity::Entity(){
+    imagesPerMovement=0;
+    initSprites();
+}
 
 Entity::~Entity(){}
 
@@ -48,11 +51,12 @@ int Entity::initSprites(){
             spriteMap[mvmtID][i].setTexture(textureMap[mvmtID][i]);
         }
     }
-
     // make entity start IDLE facing the user
-    sprite = spriteMap["IDLE"][0] ; // IDLE facing down
-    std::cerr << "[INFO] Entity::initSprites() achieved" << "\n" ; 
-    sprite.setPosition(initialPos);
+    if(spriteMap.size()>0){
+        sprite = spriteMap["IDLE"][0] ; // IDLE facing down
+        std::cerr << "[INFO] Entity::initSprites() achieved" << "\n" ; 
+        sprite.setPosition(initialPos);
+    }
     return 0 ;
 }
 
@@ -68,19 +72,39 @@ bool Entity::getSuffering(){
 void Entity::setSuffering(bool suffering){
     this->suffering = suffering ; 
 }
-void Entity::manageSuffering(){
-    // Makes entity suffer for a certain period of time, no more
+
+// Makes entity suffer for a certain period of time, no more
+// Call reset in case Player is attacked twice in a 0.5s delay to
+// make sure that he will stay suffering for an additional 0.5s
+void Entity::manageSuffering(bool reset){
+    // Unhandled case : (example):
+    // Player attacked at T=0
+    // suffering=true
+    // Player attacked at T=0.4s
+    // suffering=false at T=0.5s
+
     static sf::Clock clock ;
+    static bool counting = false ; 
     sf::Time time ;
     if(!suffering){ 
         // Entity is not suffering, nothing to do here
-        clock.restart();
+        clock.restart(); // restart in preparation of call when suffering==true
         return ;
-    }  
-    time = clock.getElapsedTime();
-    if(time.asSeconds() > 0.5f){
-        setSuffering(false);
     }
+    else{
+        if(reset) clock.restart(); 
+        if(!counting){
+            clock.restart();
+            counting = true ;
+        }
+        time = clock.getElapsedTime();
+        if(time.asSeconds() > 0.5f){
+            setSuffering(false);
+            clock.restart(); // important in case Player is constantly attacked 
+            counting = false ; 
+        }
+    }  
+
 }
 
 int Entity::getHealth(){return health ;}
