@@ -1,7 +1,7 @@
 
 
 
-#include "Player.h"
+#include "Entity.h"
 
 Entity::Entity(){}
 
