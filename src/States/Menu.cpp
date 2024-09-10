@@ -4,7 +4,6 @@ Menu::Menu(sf::RenderWindow* window, sf::View view)
     : State(window,view)
 {
     this->view = view ;  
-    std::cout << "Entering Menu constructor \n";
     int resX = 1920 ; 
     int resY = 1080 ; 
     std::string arrowTextureFilename = "./ressources/Images/arrow_GUI.png" ;
@@ -53,7 +52,7 @@ Menu::Menu(sf::RenderWindow* window, sf::View view)
         choices_text.push_back(choice_text);
     }
     if(!selectionArrowTexture.loadFromFile(arrowTextureFilename)){ // loading image failed
-        std::cout << "[Menu] Failed loading sprite \n";
+        std::cerr << "[Menu] Failed loading sprite \n";
         return ;
     }
     selectionArrow.setTexture(selectionArrowTexture);
@@ -67,7 +66,6 @@ Menu::~Menu(){
 }
 
 void Menu::endState(){
-    std::cout << "[Menu] endState is reached !" << "\n" ;
 }
 
 void Menu::update(const float &deltaTime){
