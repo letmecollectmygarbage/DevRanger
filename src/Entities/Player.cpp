@@ -247,7 +247,6 @@ int Player::initSprites(){
 
     // make player start IDLE facing user
     sprite = spriteMap["IDLE"][0] ; // IDLE facing down
-    std::cerr << "[INFO] Entity::initSprites() achieved" << "\n" ; 
     sprite.setPosition(initialPos);
 
     // FIREBALLS //
