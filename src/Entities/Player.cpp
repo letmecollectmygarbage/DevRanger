@@ -321,7 +321,7 @@ void Player::initSpritesFireballs(){
 *
 */
 void Player::attack(){
-
+    if(fireballBurning) return ; // while fireball is burning, Player cannot attack
     fireballBurning = true ; 
     dirFireball = lastMovingMovement ; // direction of player
     fireball.setPosition(pos); // initiate fireball at current player's position
