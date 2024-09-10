@@ -16,17 +16,21 @@ private:
     std::vector<sf::Sprite> health_hearts ; 
     sf::Texture hurt_texture ; //texture to use when Player is hurt
     sf::Sprite hurt ; // sprite to use when Player is hurt
-    /* dictionnary of fireball color (pink,red,blue) vs sprite
-    * ex : { "pink" : {s1,s2,...,s6} , "red" : {s1,s2,...,s6} , "blue" : {s1,s2,...,s6} }
-      with s1,...,s6 being sprites */
-    std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites ; 
-    /* dictionnary of fireball color (pink,red,blue) vs texture
-    * ex : { "pink" : {t1,t2,...,t6} , "red" : {t1,t2,...,t6} , "blue" : {t1,t2,...,t6} }
-      with s1,...,s6 being textures */
-    std::map<std::string,std::vector<sf::Texture>> fireball_color_textures ; 
+
     sf::Sprite fireball ; // only fireball displayed
     std::string lastMovement; // last movement of the player ("UP","DOWN","LEFT","RIGHT","IDLE")
     std::string lastMovingMovement ; // same set as lastMovement excluding "IDLE" (used for fireball direction)
+
+    /* dictionnary of fireball color (pink,red,blue) vs sprite
+    * ex : { "pink" : {s1,s2,...,s6} , "red" : {s1,s2,...,s6} , "blue" : {s1,s2,...,s6} }
+      with s1,...,s6 being sprites                                                        */
+    std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites ; 
+
+    /* dictionnary of fireball color (pink,red,blue) vs texture
+    * ex : { "pink" : {t1,t2,...,t6} , "red" : {t1,t2,...,t6} , "blue" : {t1,t2,...,t6} }
+      with s1,...,s6 being textures                                                       */
+    std::map<std::string,std::vector<sf::Texture>> fireball_color_textures ; 
+
     // For each orientation of the fireball, we have a corresponding map(color,sprite)
     // ex : {"LEFT":color_sprite_left,"RIGHT":color_sprite_right,...}
     std::map < std::string, std::map<std::string,std::vector<sf::Sprite>> > orientation_map ; 

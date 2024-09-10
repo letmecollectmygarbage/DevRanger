@@ -257,6 +257,10 @@ int Player::initSprites(){
 
 void Player::initSpritesFireballs(){ 
     std::string fireballPath = "./" + imagesFolder+"Player/fireball/" ;
+    std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites_left ; 
+    std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites_right ;
+    std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites_up ;
+    std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites_down ; 
     // loading fireballs textures
     for(std::string color : fireballs_colors){
         std::vector<sf::Texture> texture_vector ;
@@ -274,17 +278,35 @@ void Player::initSpritesFireballs(){
     // loading fireballs sprites
     sf::Vector2f scaleFireball = {0.2f,0.2f} ; // reduce size of fireballs
     for(std::string color : fireballs_colors){
-        std::vector<sf::Sprite> sprite_vector ; 
+        std::vector<sf::Sprite> sprite_vector_left ; 
+        std::vector<sf::Sprite> sprite_vector_right ;
+        std::vector<sf::Sprite> sprite_vector_up ;
+        std::vector<sf::Sprite> sprite_vector_down ;
         for(int i = 0 ; i < N_fireballs ; i++){
             sf::Sprite fireballSprite ;
             fireballSprite.setTexture(fireball_color_textures[color][i]) ;
             fireballSprite.setPosition(initialPos);
             fireballSprite.setScale(scaleFireball);
-            sprite_vector.push_back(fireballSprite);
+            sprite_vector_left.push_back(fireballSprite); // left (original)
+            fireballSprite.setRotation(180.f); // right
+            sprite_vector_right.push_back(fireballSprite);
+            fireballSprite.setRotation(-90.f); // down 
+            sprite_vector_down.push_back(fireballSprite);
+            fireballSprite.setRotation(90.f); // up 
+            sprite_vector_up.push_back(fireballSprite);
         }
-        this->fireball_color_sprites[color] = sprite_vector ;
+        fireball_color_sprites_left[color] = sprite_vector_left;
+        fireball_color_sprites_right[color] = sprite_vector_right ;
+        fireball_color_sprites_up[color]= sprite_vector_up ;
+        fireball_color_sprites_down[color]=sprite_vector_down ; 
+
+        this->fireball_color_sprites[color] = sprite_vector_left ;
         
     }
+    this->orientation_map["LEFT"]=fireball_color_sprites_left ;
+    this->orientation_map["RIGHT"]=fireball_color_sprites_right;
+    this->orientation_map["UP"]=fireball_color_sprites_up;
+    this->orientation_map["DOWN"]=fireball_color_sprites_down;
     this->fireball=fireball_color_sprites["pink"][0] ; // initialize fireball
     
 }
@@ -325,8 +347,15 @@ void Player::manageFireballLifetime(float seconds_to_live){
 
 void Player::manageFireballTrajectory(float deltaTime){
     if(!fireballBurning) return ; // nothing to do here
+    sf::Vector2f lastPosFireball = fireball.getPosition() ; // last known position of fireball
+    std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites = orientation_map[dirFireball];
+    std::string color = "pink" ;
+    static int i = 0 ; 
+    this->fireball = fireball_color_sprites[color][i];
+    this->fireball.setPosition(lastPosFireball);
     if(dirFireball=="UP"){
         this->fireball.move(0.f,-1.f*this->movementSpeed*deltaTime);
+        
     }
     else if(dirFireball=="DOWN"){
         this->fireball.move(0.f,1.f*this->movementSpeed*deltaTime);
@@ -337,4 +366,7 @@ void Player::manageFireballTrajectory(float deltaTime){
     else if(dirFireball=="RIGHT"){
         this->fireball.move(1.f*this->movementSpeed*deltaTime,0.f);
     }
+    i++ ;
+    lastPosFireball = this->fireball.getPosition();
+    if(i > N_fireballs-1) i = 0 ;
 }
