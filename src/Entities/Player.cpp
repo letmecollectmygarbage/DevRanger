@@ -350,12 +350,12 @@ void Player::manageFireballTrajectory(float deltaTime){
     sf::Vector2f lastPosFireball = fireball.getPosition() ; // last known position of fireball
     std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites = orientation_map[dirFireball];
     std::string color = "pink" ;
-    static int i = 0 ; 
+    static int i,j = 0 ; 
     this->fireball = fireball_color_sprites[color][i];
     this->fireball.setPosition(lastPosFireball);
+    int repeat = 4 ; // number of times each sprite is repeated, used to slow down the 6 frame movement cycle
     if(dirFireball=="UP"){
         this->fireball.move(0.f,-1.f*this->movementSpeed*deltaTime);
-        
     }
     else if(dirFireball=="DOWN"){
         this->fireball.move(0.f,1.f*this->movementSpeed*deltaTime);
@@ -366,7 +366,11 @@ void Player::manageFireballTrajectory(float deltaTime){
     else if(dirFireball=="RIGHT"){
         this->fireball.move(1.f*this->movementSpeed*deltaTime,0.f);
     }
-    i++ ;
+    j++;
+    if(j==repeat){
+        i++;
+        j=0;
+    }
     lastPosFireball = this->fireball.getPosition();
     if(i > N_fireballs-1) i = 0 ;
 }
