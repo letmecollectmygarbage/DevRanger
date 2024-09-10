@@ -32,7 +32,6 @@ int Entity::initSprites(){
     std::string filename;
     std::string currentPath = "./" ;
     std::string imgPath = currentPath+imagesFolder+entityImagesFolder; 
-    std::cout<< "[INFO] [Entity::initSprites()] imgPath = " << imgPath << "\n";
     
     // LOAD EVERY TEXTURE OF THE ENTITY //
 
@@ -54,7 +53,6 @@ int Entity::initSprites(){
     // make entity start IDLE facing the user
     if(spriteMap.size()>0){
         sprite = spriteMap["IDLE"][0] ; // IDLE facing down
-        std::cerr << "[INFO] Entity::initSprites() achieved" << "\n" ; 
         sprite.setPosition(initialPos);
     }
     return 0 ;
