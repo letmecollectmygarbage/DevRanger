@@ -1,29 +1,20 @@
 #include "GameTile.h"
 
 /*
-* @brief Creates a GameTile instance. 
-*
-* The resulting object is essentially a sprite with attributes to say if it's free (walkable) or 
-* an exit (to give access to another area of the map for example). 
-* 
-* @param textureFilename (std::string): name of the texture I want to apply on my sprite
-* @param scaleFactor (float): Original dimensions will be multiplied by this factor. 
-* @param resize (bool): If enabled, the sprite will be resized.
+* @brief Creates a GameTile instance.
+* The resulting object is essentially a vector of sprites with attribute to say if it's free (walkable) or not. 
+* @param pathImg (std::string): path to the image which defines my texture
 * @return True if texture is found, False otherwise.
 */
-GameTile::GameTile(std::string textureName,int numSprites, sf::Vector2f pos, bool isFree){
-
-    this->numSprites = numSprites ; 
-    this->pos = pos ; 
-    this->isFree = isFree ; 
-
-    if(!setUpSprite(textureName)){
-        // image file not found
-        return ; 
-    }
-    // after this point, the sprite vector is created with appropriate texture
+GameTile::GameTile(std::string pathImg, int numSprites, sf::Vector2f pos, bool isFree)
+    : numSprites{numSprites}
+    , pos{pos}
+    , isFree{isFree}
+{
+    // image file not found
+    if(!setUpSprite(pathImg)) return ;
     for(int i = 0 ; i < numSprites ; i++){
-        sprites[i].setPosition(pos); // stack them all on the same pos first
+        sprites[i].setPosition(pos); // TODO: remove this
     }
 }
 
