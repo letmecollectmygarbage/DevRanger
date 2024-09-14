@@ -1,14 +1,16 @@
 #include "GameWorld.h"
 
-// define static member 
-GameWorld GameWorld::instance;
 
-GameWorld::GameWorld(){
-    
-    dImg = "./ressources/Images/" ;
-    dMap = "Map/" ;
+
+GameWorld::GameWorld()
+    : dImg{"./ressources/Images/"}
+    , dMap{"Map/"}
+{
     setUpTiles();
 }
+
+// define static member 
+GameWorld GameWorld::instance;
 
 GameWorld& GameWorld::getInstance(){
     return instance ;
