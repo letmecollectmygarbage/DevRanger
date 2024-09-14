@@ -7,20 +7,21 @@
 class Player : public Entity {
 private:
     bool alive ; // Determines if hero is alive or dead (to implement)
-    bool fireballBurning = false ; // 
-    float time_to_live_fireball ; // in seconds
-    std::vector<std::string> fireballs_colors ; // pink,red,blue
-    int N_fireballs ; // number of sprites for each fireball color
-    std::string dirFireball ; // direction of the fireball "up", "down", "left" or "right"
+
     sf::Texture heart_texture ; // original img of a 2D heart 
     std::vector<sf::Sprite> health_hearts ; 
     sf::Texture hurt_texture ; //texture to use when Player is hurt
     sf::Sprite hurt ; // sprite to use when Player is hurt
 
-    sf::Sprite fireball ; // only fireball displayed
     std::string lastMovement; // last movement of the player ("UP","DOWN","LEFT","RIGHT","IDLE")
-    std::string lastMovingMovement ; // same set as lastMovement excluding "IDLE" (used for fireball direction)
+    std::string lastMovingMovement ; // same possibilities as lastMovement excluding "IDLE" (used for fireball direction)
 
+    sf::Sprite fireball ; // only fireball displayed
+    bool fireballBurning ; 
+    float time_to_live_fireball ; // in seconds
+    std::vector<std::string> fireballs_colors ; // pink,red,blue
+    int N_fireballs ; // number of sprites for each fireball color
+    std::string dirFireball ; // direction of the fireball "up", "down", "left" or "right"
     /* dictionnary of fireball color (pink,red,blue) vs sprite
     * ex : { "pink" : {s1,s2,...,s6} , "red" : {s1,s2,...,s6} , "blue" : {s1,s2,...,s6} }
       with s1,...,s6 being sprites                                                        */

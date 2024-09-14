@@ -2,14 +2,19 @@
 #include <iterator> 
 
 // Constructor. Initializes player attributes and sprites. 
-Player::Player() 
+Player::Player()
+    : alive{true}
+    , lastMovement{"IDLE"}
+    , lastMovingMovement{"UP"}
+    , fireballs_colors{"pink","red","blue"}
+    , fireballBurning{false}
+    , time_to_live_fireball{5}
+    , N_fireballs{6}
+
 {
     movements = {"IDLE","UP","DOWN","LEFT","RIGHT"}; 
     imagesPerMovement = 6 ; // according to what I have in Images/Player/Moves
     movementSpeed = 300.f ;
-    fireballs_colors = {"pink","red","blue"} ; 
-    N_fireballs = 6 ; // number of sprites for each fireball
-    time_to_live_fireball = 5 ; 
     maxHealth = 100 ; 
     health = maxHealth ; 
     numberOfDifferentMovements = 5 ; // idle, left,right,up,down
@@ -20,13 +25,10 @@ Player::Player()
     initialX = 400.f ;
     initialY = 400.f ;  
     initialPos = {initialX,initialY} ; 
-    lastMovement = "IDLE" ; 
-    lastMovingMovement = "UP" ; // in case a fireball is launched before moving
     entityImagesFolder = "Player/Moves/" ; // 40x64 px
     suffering = false ; 
     initSprites(); // to call last, after all attributes are set
     init_life_display();
-
 }
 
 Player::~Player() 
