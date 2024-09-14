@@ -35,9 +35,9 @@ class Entity
     // Map to link texture arrays to their movement directions
     std::map<std::string, std::vector<sf::Texture>> textureMap;
 
-    float width; // width of entity
-    float height; // height of entity
-    sf::Vector2f size ; // size (width,height) of the entity
+    // float width; // width of entity
+    // float height; // height of entity
+    // sf::Vector2f size ; // size (width,height) of the entity
 
     float initialX; // Initial X position
     float initialY;  // Initial Y position

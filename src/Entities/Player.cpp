@@ -10,18 +10,13 @@ Player::Player()
     , fireballBurning{false}
     , time_to_live_fireball{5}
     , N_fireballs{6}
-
 {
     movements = {"IDLE","UP","DOWN","LEFT","RIGHT"}; 
     imagesPerMovement = 6 ; // according to what I have in Images/Player/Moves
     movementSpeed = 300.f ;
     maxHealth = 100 ; 
     health = maxHealth ; 
-    numberOfDifferentMovements = 5 ; // idle, left,right,up,down
-    width = 50.f ; 
-    height = 50.f ; 
-    size = {width,height}; 
-    shape.setSize(size); 
+    numberOfDifferentMovements = 5 ; // idle, left,right,up,down 
     initialX = 400.f ;
     initialY = 400.f ;  
     initialPos = {initialX,initialY} ; 
