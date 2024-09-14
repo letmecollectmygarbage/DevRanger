@@ -4,6 +4,9 @@
 GameWorld GameWorld::instance;
 
 GameWorld::GameWorld(){
+    
+    dImg = "./ressources/Images/" ;
+    dMap = "Map/" ;
     setUpTiles();
 }
 
@@ -16,14 +19,13 @@ GameWorld& GameWorld::getInstance(){
 void GameWorld::setUpTiles()
 {
     tiles.clear();
-    std::string repo_img = "./ressources/Images/" ;
     std::string walls = "walls_32x32/" ;  
     std::string ext = ".png" ;
 
 
-    std::string wall1 = repo_img+walls+"1"+ext ;
-    std::string wall2 = repo_img+walls+"2"+ext ;
-    std::string wall3 = repo_img+walls+"3"+ext ;
+    std::string wall1 = dImg+walls+"1"+ext ;
+    std::string wall2 = dImg+walls+"2"+ext ;
+    std::string wall3 = dImg+walls+"3"+ext ;
     bool isFree = false ; // walls are obstacles
     
     sf::Vector2f pos = {0.f,0.f};
@@ -92,6 +94,8 @@ void GameWorld::setUpTiles()
         right_wall_3->sprites[i].setPosition(pos);
         pos.y += height ;
     }
+    // FLOOR 
+    setUpFloorTiles();
 
     // add tiles pointers to the tiles vector which is the only one rendered 
     tiles.push_back(top_wall_1); 
@@ -111,4 +115,39 @@ void GameWorld::setUpTiles()
 }
 
 
+// Sets up sprites for the floor (background)
+void GameWorld::setUpFloorTiles(){
+    std::string fName = "floor.png" ; // filename of floor texture
+    std::string path = dImg + dMap + fName ;
+    int num_blocks_x,num_blocks_y ;
+    sf::Vector2i res = {1920,1080} ; // TODO: check what happens if user's res is lower 
+    res *= 2 ; // temporary fix so floor is visible in every pos of 1st room
+    sf::Vector2f pos_init_player = {400.f,400.f}; // TODO : find a way to get it from Player class
+    sf::Texture txtr = loadTexture(path);
+    sf::Vector2f s_txtr = {static_cast<float>(txtr.getSize().x),static_cast<float>(txtr.getSize().y)}; // size of texture (in pixels)
+    num_blocks_x = res.x/s_txtr.x ; // number of sprites needed to cover res.x pixels with a texture of this width
+    num_blocks_y = res.y/s_txtr.y ; // number of sprites needed to cover res.y pixels with a texture of this height
+    GameTile* floor = new GameTile(path,num_blocks_x*num_blocks_y,{0.f,0.f},true);
+    const sf::Vector2f original_pos = {-932.f,-512.f}; // never modify this one
+    sf::Vector2f pos = original_pos ; 
+    floor->sprites[0].setPosition(pos); // case i = 0 to put outside loop bc of 0% = 0 
+    pos.x += s_txtr.x ; 
+    for(int i=1 ; i < num_blocks_x * num_blocks_y ; i++){
+        if(i % num_blocks_x  == 0){
+            pos.x = original_pos.x ; // reset x coordinate to draw new line
+            pos.y += s_txtr.y ; // adjust y coordinate to draw new line
+        }
+        floor->sprites[i].setPosition(pos);
+        pos.x += s_txtr.x ;
+    }
+    tiles.push_back(floor);
+}
 
+
+sf::Texture GameWorld::loadTexture(std::string txtrName){
+    sf::Texture txtr ; 
+    if(!txtr.loadFromFile(txtrName)){
+        std::cerr << "[GameWorld::loadTexture] Impossible to load texture from "<<txtrName<<"\n";
+    }
+    return txtr ; 
+}

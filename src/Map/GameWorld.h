@@ -8,6 +8,10 @@ class GameWorld
     private : 
 
         void setUpTiles();
+        void setUpFloorTiles();
+        
+        std::string dImg ; // root img directory
+        std::string dMap ; // map textures directory
         static GameWorld instance ; // Static instance for the singleton
         GameWorld(); // private constructor for the singleton pattern
 
@@ -19,7 +23,8 @@ class GameWorld
 
 
     public : 
-        std::vector<GameTile*> tiles ; 
+        std::vector<GameTile*> tiles ;
+        sf::Texture loadTexture(std::string txtrName); 
         
         static GameWorld& getInstance(); // Accessor for the singleton instance
 
