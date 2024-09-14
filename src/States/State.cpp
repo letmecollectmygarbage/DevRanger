@@ -1,13 +1,11 @@
 #include "State.h"
 
 // Constructor
-State::State(sf::RenderWindow* window, sf::View view){
-	this->window = window;
-	this->view = view ;
-	this->quit = false ; 
-	// Goal : switch view between each state
-	// sf::Vector2f viewSize = view.getSize();
-	// stateView = sf::View(sf::FloatRect({0.f,0.f},viewSize));
+State::State(sf::RenderWindow* window, sf::View view)
+    : window{window}
+    , view{view}
+	, quit{false}
+{
 }
 
 // Destructor
