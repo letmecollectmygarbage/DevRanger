@@ -3,8 +3,9 @@
 
 #include "Entity.h"
 
-Entity::Entity(){
-    imagesPerMovement=0;
+Entity::Entity()
+    : imagesPerMovement{0}
+{
     initSprites();
 }
 
