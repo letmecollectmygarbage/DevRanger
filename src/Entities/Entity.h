@@ -2,14 +2,10 @@
 #define ENTITY_H
 
 #include <iostream>
-#include <cstdlib> // for random enemy positions
-#include <ctime> // for random enemy positions
 #include <chrono> // for FPS measurement
 #include <stack>
 #include <vector>
 #include <map>
-#include <array>
-
 
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
