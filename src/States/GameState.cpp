@@ -15,7 +15,6 @@ GameState::~GameState(){
 
 //State before quitting where you can save hero's progression for example
 void GameState::endState(){
-    std::cout << "[GameState] endState is reached !" << "\n" ;
 }
 
 // Checks for user input and does something else
@@ -26,16 +25,19 @@ void GameState::update(const float &deltaTime){
 }
 
 void GameState::render(sf::RenderTarget* target){
-    this->statePlayer.render(target);
-    this->stateMonster.render(target);
+    // BACKGROUND
     int numVectors = gameWorld->tiles.size(); 
-	int numSprites = gameWorld->tiles[0]->sprites.size();
+	int numSprites ;
 	for(int i = 0 ; i < numVectors ; i++){
 		numSprites = gameWorld->tiles[i]->sprites.size();
 		for(int j = 0 ; j < numSprites ; j++ ){
 		this->window->draw(gameWorld->tiles[i]->sprites[j]);
 		}
 	}
+    // FOREGROUND
+    this->statePlayer.render(target);
+    this->stateMonster.render(target);
+    
 }
 
 // Update player's input
@@ -123,9 +125,11 @@ void GameState::receiveMap(std::vector<GameTile*> tiles){
 bool GameState::isPlayerTouchingWall(){
     sf::FloatRect playerRect = statePlayer.getSprite().getGlobalBounds();
     for(GameTile* tile : tiles){
-        for(sf::Sprite sprite : tile->sprites){
-            sf::FloatRect wallRect = sprite.getGlobalBounds();
-            if(playerRect.intersects(wallRect)) return true ;
+        if(!tile->isFree){
+            for(sf::Sprite sprite : tile->sprites){
+                sf::FloatRect wallRect = sprite.getGlobalBounds();
+                if(playerRect.intersects(wallRect)) return true ;
+            }
         }
     }
     return false ; 
