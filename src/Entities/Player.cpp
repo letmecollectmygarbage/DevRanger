@@ -281,6 +281,9 @@ void Player::initSpritesFireballs(){
         for(int i = 0 ; i < N_fireballs ; i++){
             sf::Sprite fireballSprite ;
             fireballSprite.setTexture(fireball_color_textures[color][i]) ;
+            float x = fireballSprite.getGlobalBounds().getSize().x / 2 ;
+            float y = fireballSprite.getGlobalBounds().getSize().y / 2 ;
+            fireballSprite.setOrigin(x,y); // make origin the center of the sprite 
             fireballSprite.setPosition(initialPos);
             fireballSprite.setScale(scaleFireball);
             sprite_vector_left.push_back(fireballSprite); // left (original)
@@ -320,7 +323,10 @@ void Player::attack(){
     if(fireballBurning) return ; // while fireball is burning, Player cannot attack
     fireballBurning = true ; 
     dirFireball = lastMovingMovement ; // direction of player
-    fireball.setPosition(pos); // initiate fireball at current player's position
+    sf::Vector2f posFireball = pos ;
+    posFireball.x += sprite.getGlobalBounds().getSize().x / 2 ; 
+    posFireball.y += sprite.getGlobalBounds().getSize().y / 2 ; 
+    fireball.setPosition(posFireball); // initiate fireball at middle of player's sprite
 }
 
 void Player::manageFireballLifetime(float seconds_to_live){
