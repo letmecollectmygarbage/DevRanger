@@ -4,9 +4,9 @@
 #include "Entity.h"
 
 Entity::Entity()
-    : imagesPerMovement{0}
+    : images_per_movement{0}
 {
-    initSprites();
+    init_sprites();
 }
 
 Entity::~Entity(){}
@@ -23,26 +23,26 @@ void Entity::move(const float& deltaTime, const float dir_x, const float dir_y){
     *       -1 <= dir_x <= 1
     *       -1 <= dir_y <= 1
     */
-    this->sprite.move(dir_x*this->movementSpeed*deltaTime,dir_y*this->movementSpeed*deltaTime);
+    this->sprite.move(dir_x*this->movement_speed*deltaTime,dir_y*this->movement_speed*deltaTime);
 }
 
 // Initializes sprites of the hero or monster
-int Entity::initSprites(){
+int Entity::init_sprites(){
     // Number of movements for each walk cycle and IDLE. Must all be equal to use a map
     std::string mvmtID ; 
     std::string filename;
     std::string currentPath = "./" ;
-    std::string imgPath = currentPath+imagesFolder+entityImagesFolder; 
+    std::string imgPath = currentPath+imagesFolder+entity_images_folder; 
     
     // LOAD EVERY TEXTURE OF THE ENTITY //
 
     for(auto move : movements){
         mvmtID = move ;
         // Initialize sf::Sprite & sf::Texture vectors
-        textureMap[mvmtID] = std::vector<sf::Texture>(imagesPerMovement); 
-        spriteMap[mvmtID] = std::vector<sf::Sprite>(imagesPerMovement); 
+        textureMap[mvmtID] = std::vector<sf::Texture>(images_per_movement); 
+        spriteMap[mvmtID] = std::vector<sf::Sprite>(images_per_movement); 
         // For the number of sprites each movement has
-        for(int i = 0 ; i < imagesPerMovement ; i++){
+        for(int i = 0 ; i < images_per_movement ; i++){
             filename = mvmtID + +"_"+std::to_string(i+1) + ".png" ; 
             if(!textureMap[mvmtID][i].loadFromFile(imgPath+filename)){
                 std::cerr << "The image"+mvmtID+"_"+ std::to_string(i) + " was not found \n" ;
@@ -54,7 +54,7 @@ int Entity::initSprites(){
     // make entity start IDLE facing the user
     if(spriteMap.size()>0){
         sprite = spriteMap["IDLE"][0] ; // IDLE facing down
-        sprite.setPosition(initialPos);
+        sprite.setPosition(initial_pos);
     }
     return 0 ;
 }

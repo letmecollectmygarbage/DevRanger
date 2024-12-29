@@ -7,22 +7,22 @@ Player::Player()
     , lastMovement{"IDLE"}
     , lastMovingMovement{"UP"}
     , fireballs_colors{"pink","red","blue"}
-    , fireballBurning{false}
+    , fireball_burning{false}
     , time_to_live_fireball{5}
     , N_fireballs{6}
 {
     movements = {"IDLE","UP","DOWN","LEFT","RIGHT"}; 
-    imagesPerMovement = 6 ; // according to what I have in Images/Player/Moves
-    movementSpeed = 300.f ;
-    maxHealth = 100 ; 
-    health = maxHealth ; 
-    numberOfDifferentMovements = 5 ; // idle, left,right,up,down 
-    initialX = 400.f ;
-    initialY = 400.f ;  
-    initialPos = {initialX,initialY} ; 
-    entityImagesFolder = "Player/Moves/" ; // 40x64 px
+    images_per_movement = 6 ; // according to what I have in Images/Player/Moves
+    movement_speed = 300.f ;
+    max_health = 100 ; 
+    health = max_health ; 
+    number_of_different_movements = 5 ; // idle, left,right,up,down 
+    initial_x = 400.f ;
+    initial_y = 400.f ;  
+    initial_pos = {initial_x, initial_y} ; 
+    entity_images_folder = "Player/Moves/" ; // 40x64 px
     suffering = false ; 
-    initSprites(); // to call last, after all attributes are set
+    init_sprites(); // to call last, after all attributes are set
     init_life_display();
 }
 
@@ -39,15 +39,15 @@ void Player::render(sf::RenderTarget* target){
         target->draw(heart);
     }
     // FOREGROUND
-    if(fireballBurning){
+    if(fireball_burning){
         target->draw(this->fireball);
     }
 }
 
 void Player::update(const float &deltaTime){
 
-    manageFireballTrajectory(deltaTime);
-    manageFireballLifetime(time_to_live_fireball);
+    manage_fireball_trajectory(deltaTime);
+    manage_fireball_lifetime(time_to_live_fireball);
 
 }
 
@@ -64,18 +64,20 @@ void Player::update(const float &deltaTime){
 */
 void Player::move(const float& deltaTime, const float dir_x, const float dir_y){
     float k = 0 ; 
-    if(dir_x == 0.f && dir_y == 0.f) nextSpriteIDLE();
-    else nextSprite(dir_x, dir_y);
+    if(dir_x == 0.f && dir_y == 0.f) next_sprite_idle();
+    else next_sprite(dir_x, dir_y);
 
-    sprite.move(dir_x*movementSpeed*deltaTime,dir_y*movementSpeed*deltaTime);
+    sprite.move(dir_x*movement_speed*deltaTime,dir_y*movement_speed*deltaTime);
     pos = sprite.getPosition(); // update current position of player
     // update positions of hearts if hero still has some lives
-    if (health_hearts.size() == 0){
+    if (health_hearts.size() == 0)
+    {
         return ; 
     }
     float width_heart = health_hearts[0].getGlobalBounds().getSize().x ; 
     // dispose 3 hearts horizontally 
-    for(sf::Sprite heart : health_hearts){
+    for(sf::Sprite heart : health_hearts)
+    {
         float x = pos.x+(width_heart*k) + 40.f ; 
         health_hearts[k].setPosition(x,pos.y-100);
         k++;
@@ -88,7 +90,7 @@ void Player::move(const float& deltaTime, const float dir_x, const float dir_y){
 *   Goals : - slow down the 6 frame movement cycle
 *   - render movement cyclically
 */
-void Player::nextSprite(float dir_x, float dir_y){
+void Player::next_sprite(float dir_x, float dir_y){
     static int cyclePos = 0 ; // position in the current movement cycle (0->5)
     static int i = 0 ; 
     int repeat = 4 ; // number of times each sprite is repeated, used to slow down the 6 frame movement cycle
@@ -102,7 +104,7 @@ void Player::nextSprite(float dir_x, float dir_y){
     else if(dir_x == 1.f && dir_y == 0.f){movement = "RIGHT";}
     else if(dir_x == 0.f && dir_y == 1.f){movement = "DOWN";}
     else{
-        std::cerr << "[Player::nextSprite] Unhandled dir_x,dir_y combination \n";
+        std::cerr << "[Player::next_sprite] Unhandled dir_x,dir_y combination \n";
     }
 
     // hero walks in the same direction as last input
@@ -133,7 +135,7 @@ void Player::nextSprite(float dir_x, float dir_y){
 *   to IDLE mode. Does nothing if already 
 *   IDLE.   
 */
-void Player::nextSpriteIDLE()
+void Player::next_sprite_idle()
 {
     std::string movement = "IDLE";
     // if already IDLE, do nothing
@@ -143,7 +145,7 @@ void Player::nextSpriteIDLE()
         else if(lastMovement =="DOWN") sprite = spriteMap[movement][0];
         else if(lastMovement == "LEFT") sprite = spriteMap[movement][1];
         else if(lastMovement == "RIGHT") sprite = spriteMap[movement][2];
-        else{std::cerr << "[Player::nextSpriteIDLE] lastMovement unknown \n";}
+        else{std::cerr << "[Player::next_sprite_idle] lastMovement unknown \n";}
         sprite.setPosition(pos);
         lastMovingMovement = lastMovement ; // save Player's direction before going "IDLE" (used for fireball)
     }
@@ -182,7 +184,7 @@ void Player::init_life_display(){
 *   
 */
 void Player::manage_life_display(){
-    float life_ratio = static_cast<float>(health)/static_cast<float>(maxHealth) ; 
+    float life_ratio = static_cast<float>(health)/static_cast<float>(max_health) ; 
     int num_hearts ; // number of hearts that should be displayed
     if(life_ratio > 0.66f) num_hearts = 3 ; 
     else if(life_ratio > 0.33f && life_ratio <0.66f) num_hearts = 2 ; 
@@ -207,14 +209,14 @@ void Player::manage_life_display(){
 }
 
 // Initializes sprites of the hero
-int Player::initSprites(){
+int Player::init_sprites(){
     // Number of movements for each walk cycle and IDLE. Must all be equal to use a map
     std::string mvmtID ; 
 
 
     std::string filename;
     std::string currentPath = "./" ;
-    std::string imgPath = currentPath+imagesFolder+entityImagesFolder; 
+    std::string imgPath = currentPath+imagesFolder+entity_images_folder; 
     std::string fireballPath = "./" + imagesFolder+"Player/fireball/" ;
     
     // LOAD EVERY TEXTURE OF THE ENTITY //
@@ -222,10 +224,10 @@ int Player::initSprites(){
     for(auto move : movements){
         mvmtID = move ;
         // Initialize sf::Sprite & sf::Texture vectors
-        textureMap[mvmtID] = std::vector<sf::Texture>(imagesPerMovement); 
-        spriteMap[mvmtID] = std::vector<sf::Sprite>(imagesPerMovement); 
+        textureMap[mvmtID] = std::vector<sf::Texture>(images_per_movement); 
+        spriteMap[mvmtID] = std::vector<sf::Sprite>(images_per_movement); 
         // For the number of sprites each movement has
-        for(int i = 0 ; i < imagesPerMovement ; i++){
+        for(int i = 0 ; i < images_per_movement ; i++){
             filename = mvmtID + +"_"+std::to_string(i+1) + ".png" ; 
             if(!textureMap[mvmtID][i].loadFromFile(imgPath+filename)){
                 std::cerr << "The image"+mvmtID+"_"+ std::to_string(i) + " was not found \n" ;
@@ -244,7 +246,7 @@ int Player::initSprites(){
 
     // make player start IDLE facing user
     sprite = spriteMap["IDLE"][0] ; // IDLE facing down
-    sprite.setPosition(initialPos);
+    sprite.setPosition(initial_pos);
 
     // FIREBALLS //
     initSpritesFireballs();
@@ -284,7 +286,7 @@ void Player::initSpritesFireballs(){
             float x = fireballSprite.getGlobalBounds().getSize().x / 2 ;
             float y = fireballSprite.getGlobalBounds().getSize().y / 2 ;
             fireballSprite.setOrigin(x,y); // make origin the center of the sprite 
-            fireballSprite.setPosition(initialPos);
+            fireballSprite.setPosition(initial_pos);
             fireballSprite.setScale(scaleFireball);
             sprite_vector_left.push_back(fireballSprite); // left (original)
             fireballSprite.setRotation(180.f); // right
@@ -320,8 +322,8 @@ void Player::initSpritesFireballs(){
 *
 */
 void Player::attack(){
-    if(fireballBurning) return ; // while fireball is burning, Player cannot attack
-    fireballBurning = true ; 
+    if(fireball_burning) return ; // while fireball is burning, Player cannot attack
+    fireball_burning = true ; 
     dirFireball = lastMovingMovement ; // direction of player
     sf::Vector2f posFireball = pos ;
     posFireball.x += sprite.getGlobalBounds().getSize().x / 2 ; 
@@ -329,26 +331,26 @@ void Player::attack(){
     fireball.setPosition(posFireball); // initiate fireball at middle of player's sprite
 }
 
-void Player::manageFireballLifetime(float seconds_to_live){
+void Player::manage_fireball_lifetime(float seconds_to_live){
     // Makes fireball burn for seconds_to_live seconds 
     // Must be called every frame
     static sf::Clock clock ;
     sf::Time time ; 
-    if(!fireballBurning){ 
+    if(!fireball_burning){ 
         // Fireball shouldn't burn, nothing to do here
         clock.restart();
     }  
     else{
         time = clock.getElapsedTime(); // first value = time for 1 frame (not 0)
         if(time.asSeconds() > seconds_to_live){
-            fireballBurning = false ;
+            fireball_burning = false ;
             clock.restart(); // reset clock 
         }
     }
 }
 
-void Player::manageFireballTrajectory(float deltaTime){
-    if(!fireballBurning) return ; // nothing to do here
+void Player::manage_fireball_trajectory(float deltaTime){
+    if(!fireball_burning) return ; // nothing to do here
     sf::Vector2f lastPosFireball = fireball.getPosition() ; // last known position of fireball
     std::map<std::string,std::vector<sf::Sprite>> fireball_color_sprites = orientation_map[dirFireball];
     std::string color = "pink" ;
@@ -357,16 +359,16 @@ void Player::manageFireballTrajectory(float deltaTime){
     this->fireball.setPosition(lastPosFireball);
     int repeat = 4 ; // number of times each sprite is repeated, used to slow down the 6 frame movement cycle
     if(dirFireball=="UP"){
-        this->fireball.move(0.f,-1.f*this->movementSpeed*deltaTime);
+        this->fireball.move(0.f,-1.f*this->movement_speed*deltaTime);
     }
     else if(dirFireball=="DOWN"){
-        this->fireball.move(0.f,1.f*this->movementSpeed*deltaTime);
+        this->fireball.move(0.f,1.f*this->movement_speed*deltaTime);
     }
     else if(dirFireball=="LEFT"){
-        this->fireball.move(-1.f*this->movementSpeed*deltaTime,0.f);
+        this->fireball.move(-1.f*this->movement_speed*deltaTime,0.f);
     }
     else if(dirFireball=="RIGHT"){
-        this->fireball.move(1.f*this->movementSpeed*deltaTime,0.f);
+        this->fireball.move(1.f*this->movement_speed*deltaTime,0.f);
     }
     j++;
     if(j==repeat){

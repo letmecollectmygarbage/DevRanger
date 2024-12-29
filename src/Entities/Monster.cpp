@@ -4,17 +4,17 @@
 Monster::Monster() 
 {
     movements = {"IDLE"} ;
-    imagesPerMovement = 1 ; // according to what I have in entityImagesFolder
-    movementSpeed = 50.f ; 
+    images_per_movement = 1 ; // according to what I have in entity_images_folder
+    movement_speed = 50.f ; 
     health = 1 ; 
-    numberOfDifferentMovements = 1 ; // idle 
-    initialX = 0.f ;
-    initialY = 0.f ;  
-    initialPos = {initialX,initialY} ; 
-    pos = initialPos ;
+    number_of_different_movements = 1 ; // idle 
+    initial_x = 0.f ;
+    initial_y = 0.f ;  
+    initial_pos = {initial_x,initial_y} ; 
+    pos = initial_pos ;
     lastMovement = "IDLE" ; 
-    entityImagesFolder = "Monster/" ; // 68x71 px
-    this->initSprites(); // to call last, after all attributes are set
+    entity_images_folder = "Monster/" ; // 68x71 px
+    this->init_sprites(); // to call last, after all attributes are set
     
 }
 
@@ -24,5 +24,5 @@ void Monster::move(const float& deltaTime, const float dir_x, const float dir_y)
     *       -1 <= dir_x <= 1
     *       -1 <= dir_y <= 1
     */
-    sprite.move(dir_x*this->movementSpeed*deltaTime,dir_y*this->movementSpeed*deltaTime);
+    sprite.move(dir_x*this->movement_speed*deltaTime,dir_y*this->movement_speed*deltaTime);
 }

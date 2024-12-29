@@ -23,11 +23,11 @@ class Entity
     protected : 
 
     sf::RectangleShape shape ; 
-    float movementSpeed ; 
+    float movement_speed ; 
     int health ; // number of health points the entity has
-    int maxHealth ; // number of health points the entity starts with 
-    int imagesPerMovement ; // according to what I have in Images/<entity>/Moves
-    int numberOfDifferentMovements; // also according to what I have in Images/<entity>/Moves
+    int max_health ; // number of health points the entity starts with 
+    int images_per_movement ; // according to what I have in Images/<entity>/Moves
+    int number_of_different_movements; // also according to what I have in Images/<entity>/Moves
 
     // Map to link sprite arrays to their movement directions
     std::map<std::string, std::vector<sf::Sprite>> spriteMap;
@@ -39,16 +39,16 @@ class Entity
     // float height; // height of entity
     // sf::Vector2f size ; // size (width,height) of the entity
 
-    float initialX; // Initial X position
-    float initialY;  // Initial Y position
-    sf::Vector2f initialPos; // Initial position (initialX,initialY)
+    float initial_x; // Initial X position
+    float initial_y;  // Initial Y position
+    sf::Vector2f initial_pos; // Initial position (initial_x,initial_y)
     
     sf::Sprite sprite ; // current sprite of the entity
     
     
     
     std::string imagesFolder = "ressources/Images/" ; // root image folder
-    std::string entityImagesFolder ; // entity related images
+    std::string entity_images_folder ; // entity related images
     std::vector<std::string> movements ; // all movements the entity can do (depends on the sprites we will find)
     
 
@@ -65,7 +65,7 @@ class Entity
         virtual void update(const float& deltaTime) ;
         virtual void render(sf::RenderTarget* target) ;
         void move(const float& deltaTime, const float x, const float y);
-        int initSprites();
+        int init_sprites();
         sf::Clock clock; // // starts the clock
         
         sf::Time time1,time2 ; // 

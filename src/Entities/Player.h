@@ -17,7 +17,7 @@ private:
     std::string lastMovingMovement ; // same possibilities as lastMovement excluding "IDLE" (used for fireball direction)
 
     sf::Sprite fireball ; // only fireball displayed
-    bool fireballBurning ; 
+    bool fireball_burning ; 
     float time_to_live_fireball ; // in seconds
     std::vector<std::string> fireballs_colors ; // pink,red,blue
     int N_fireballs ; // number of sprites for each fireball color
@@ -43,8 +43,8 @@ public:
     Player();
     ~Player();
     
-    int initSprites(); // First method called 
-    void initSpritesFireballs(); // subroutine of initSprites
+    int init_sprites(); // First method called 
+    void initSpritesFireballs(); // subroutine of init_sprites
     void init_life_display(); // Second method called
 
     // Called every frame //
@@ -55,14 +55,14 @@ public:
 
     // Called potentially every frame //
 
-    void nextSprite(float dir_x, float dir_y); 
-    void nextSpriteIDLE(); 
+    void next_sprite(float dir_x, float dir_y); 
+    void next_sprite_idle(); 
     
     
     void manage_life_display(); // called when attacked
     void attack(); // called when attack
-    void manageFireballLifetime(float seconds_to_live); // manages lifetime of fireball
-    void manageFireballTrajectory(float deltaTime); 
+    void manage_fireball_lifetime(float seconds_to_live); // manages lifetime of fireball
+    void manage_fireball_trajectory(float deltaTime); 
 
     // getters/setters
 
