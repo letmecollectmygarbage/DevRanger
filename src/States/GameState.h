@@ -15,7 +15,10 @@ class GameState :
             sf::Clock clock; // // starts the clock
             sf::Time time1,time2 ; // 
             std::vector<GameTile*> tiles ; // copy of the vector generated in GameWorld
-            
+            std::vector<sf::Keyboard::Key> movement_keys ; // Z, Q, S and D
+            std::vector<sf::Keyboard::Key> attack_keys ; // space
+            std::map<sf::Keyboard::Key, sf::Vector2f> key_dir ; // map linking a key to a direction so the player can move 
+
         public:
             GameState(sf::RenderWindow* window, sf::View view);
             virtual ~GameState();

@@ -3,9 +3,17 @@
 
 GameState::GameState(sf::RenderWindow* window, sf::View view)
     : State(window,view) 
+    , movement_keys{sf::Keyboard::Key::Z, sf::Keyboard::Key::Q, sf::Keyboard::Key::S, sf::Keyboard::Key::D}
+    , attack_keys{sf::Keyboard::Key::Space}
+
 {
     gameWorld = &GameWorld::getInstance(); // Initialize the class member
     receiveMap(gameWorld->tiles);
+    key_dir[sf::Keyboard::Key::Z] = {0.f,-1.f} ;
+    key_dir[sf::Keyboard::Key::Q] = {-1.f,0.f} ;
+    key_dir[sf::Keyboard::Key::S] = {0.f,1.f} ;
+    key_dir[sf::Keyboard::Key::D] = {1.f,0.f} ;
+    
 }
 
 // Destructor (but does nothing yet)
@@ -28,10 +36,12 @@ void GameState::render(sf::RenderTarget* target){
     // BACKGROUND
     int numVectors = gameWorld->tiles.size(); 
 	int numSprites ;
-	for(int i = 0 ; i < numVectors ; i++){
+	for(int i = 0 ; i < numVectors ; i++)
+    {
 		numSprites = gameWorld->tiles[i]->sprites.size();
-		for(int j = 0 ; j < numSprites ; j++ ){
-		this->window->draw(gameWorld->tiles[i]->sprites[j]);
+		for(int j = 0 ; j < numSprites ; j++ )
+        {
+		    this->window->draw(gameWorld->tiles[i]->sprites[j]);
 		}
 	}
     // FOREGROUND
@@ -41,40 +51,68 @@ void GameState::render(sf::RenderTarget* target){
 }
 
 // Update player's input
-void GameState::updateInput(const float& deltaTime){
-    static sf::Keyboard::Key space = sf::Keyboard::Space ;
+/*
+*   2 modes can be enabled independatly : movement mode and attack mode
+*   To enable movement mode : press Z, Q, S or D
+*   To enable attack mode : press Space bar
+*   To leave each mode : release key
+*   If no mode is enabled, method will check if any key is pressed and return
+*   Else, method will check if it can exit the given mode. 
+*
+*/
+void GameState::updateInput(const float& deltaTime)
+{
+    static sf::Keyboard::Key space_key = sf::Keyboard::Space ;
     this->checkForQuit();
+    static bool attack_mode = false ; 
+    static bool movement_mode = false ; 
+    static sf::Keyboard::Key mvmt_key_pressed ;
     
-    // Update player's input //
-    
-    // LEFT:
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
-        this->statePlayer.move(deltaTime,-1.f,0.f);
-        if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,1.f,0.f);
+    // Check if movement mode needs to be enabled
+    if(!movement_mode)
+    {
+        for(auto key : movement_keys)
+        {
+            if(sf::Keyboard::isKeyPressed(key))
+            {
+                movement_mode = true ; 
+                mvmt_key_pressed = key ; 
+                break ; // player can move only one direction at the time for now
+            }
+        }
     }
-    // UP:
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
-        this->statePlayer.move(deltaTime,0.f,-1.f);
-        if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,0.f,1.f);
+    // check if movement mode can be disabled 
+    else
+    {
+        if(!sf::Keyboard::isKeyPressed(mvmt_key_pressed))
+        {
+            movement_mode = false ; 
+        }
+        else
+        {
+
+            sf::Vector2f dir = key_dir[mvmt_key_pressed] ;
+
+            this->statePlayer.move(deltaTime, dir.x, dir.y);
+
+
+        }
+
+
+
+
     }
-    // RIGHT:
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-        this->statePlayer.move(deltaTime,1.f,0.f);
-        if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,-1.f,0.f);
-    } 
-    // DOWN:
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-        this->statePlayer.move(deltaTime,0.f,1.f);
-        if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,0.f,-1.f);
-    }
+
     // ATTACK:
-    else if(sf::Keyboard::isKeyPressed(space)){
-        acquireInput(space);
+    if(sf::Keyboard::isKeyPressed(space_key))
+    {
+        acquireInput(space_key);
         this->statePlayer.attack();
     }
     // no key pressed, IDLE
-    else{
-        this->statePlayer.move(deltaTime,0.f,0.f);
+    else
+    {
+        this->statePlayer.move(deltaTime, 0.f, 0.f);
     }
     if(isPlayerTouchingMonster()){
         MonsterAttacksPlayer();
@@ -84,6 +122,32 @@ void GameState::updateInput(const float& deltaTime){
     view.setCenter(this->statePlayer.pos);
     window->setView(this->view);
 }
+
+
+    // // LEFT:
+    // if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+    // {
+    //     this->statePlayer.move(deltaTime,-1.f,0.f);
+    //     if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,1.f,0.f);
+    // }
+    // // UP:
+    // else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+    // {
+    //     this->statePlayer.move(deltaTime,0.f,-1.f);
+    //     if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,0.f,1.f);
+    // }
+    // // RIGHT:
+    // else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    // {
+    //     this->statePlayer.move(deltaTime,1.f,0.f);
+    //     if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,-1.f,0.f);
+    // } 
+    // // DOWN:
+    // else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    // {
+    //     this->statePlayer.move(deltaTime,0.f,1.f);
+    //     if(isPlayerTouchingWall()) this->statePlayer.move(deltaTime,0.f,-1.f);
+    // }
 
 // Calculates monster to hero direction 
 // move monster in this direction to attack hero

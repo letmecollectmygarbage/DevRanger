@@ -5,8 +5,6 @@
 #include "States/Menu.h"
 #include "Map/GameWorld.h"
 
-#include "wtypes.h" // to get screen resolution
-
 class Game
 {
 private:
