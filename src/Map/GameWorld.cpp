@@ -7,13 +7,8 @@ GameWorld::GameWorld()
     , dMap{"Map/"}
 {
     setUpTiles();
-}
-
-// define static member 
-GameWorld GameWorld::instance;
-
-GameWorld& GameWorld::getInstance(){
-    return instance ;
+    this->construction_finished = true ; 
+    std::cout << "end of GameWorld constructor" << std::endl ; 
 }
 
 

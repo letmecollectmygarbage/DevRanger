@@ -12,21 +12,13 @@ class GameWorld
         
         std::string dImg ; // root img directory
         std::string dMap ; // map textures directory
-        static GameWorld instance ; // Static instance for the singleton
-        GameWorld(); // private constructor for the singleton pattern
-
-        // Explicitly delete copy constructor and assignment operator to prevent copying
-        GameWorld(const GameWorld&) = delete; 
-        GameWorld& operator=(const GameWorld&) = delete;
+        bool construction_finished = false ;
         
-
-
-
     public : 
+        GameWorld(); 
         std::vector<GameTile*> tiles ;
         sf::Texture loadTexture(std::string txtrName); 
         
-        static GameWorld& getInstance(); // Accessor for the singleton instance
 
 };
 

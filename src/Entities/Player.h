@@ -12,6 +12,7 @@ private:
     std::vector<sf::Sprite> health_hearts ; 
     sf::Texture hurt_texture ; //texture to use when Player is hurt
     sf::Sprite hurt ; // sprite to use when Player is hurt
+    
 
     std::string lastMovement; // last movement of the player ("UP","DOWN","LEFT","RIGHT","IDLE")
     std::string lastMovingMovement ; // same possibilities as lastMovement excluding "IDLE" (used for fireball direction)

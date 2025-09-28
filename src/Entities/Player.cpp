@@ -48,7 +48,6 @@ void Player::update(const float &deltaTime){
 
     manage_fireball_trajectory(deltaTime);
     manage_fireball_lifetime(time_to_live_fireball);
-
 }
 
 

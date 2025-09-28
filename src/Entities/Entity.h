@@ -58,6 +58,7 @@ class Entity
 
     public:
         sf::Vector2f pos ; // current position of the entity
+        std::vector<sf::Sprite> latest_obstacles ; // latest obstacle that got in contact with entity
         Entity();
         virtual ~Entity(); // Declare the destructor as virtual for proper polymorphism
 

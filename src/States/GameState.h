@@ -10,10 +10,10 @@ class GameState :
         private:
             // Main and only player
             Player statePlayer ; 
-            GameWorld* gameWorld; // Use a pointer to the singleton instance of GameWorld
+            GameWorld gameWorld; // Use a pointer to the singleton instance of GameWorld
             Monster stateMonster ;
             sf::Clock clock; // // starts the clock
-            sf::Time time1,time2 ; // 
+            sf::Time time1, time2 ; // 
             std::vector<GameTile*> tiles ; // copy of the vector generated in GameWorld
             std::vector<sf::Keyboard::Key> movement_keys ; // Z, Q, S and D
             std::vector<sf::Keyboard::Key> attack_keys ; // space
@@ -32,6 +32,8 @@ class GameState :
             bool isPlayerTouchingWall();
             bool isPlayerTouchingMonster();
             void MonsterAttacksPlayer();
+            void manageCollisions(const float& deltaTime);
+            std::string whereIsObstacleComparedToPlayer();
     };
 
 #endif
