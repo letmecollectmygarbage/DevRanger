@@ -20,6 +20,7 @@ Menu::Menu(sf::RenderWindow* window, sf::View view)
     int cols = resX/sizeTexture.x + 1 ; // min number of cols to fill resY px with texture
     if(resX%sizeTexture.x==0) cols = resX/sizeTexture.x ; // lucky case
     background_texture.setSmooth(true); // blurs edges
+    
     for(int i = 0 ; i < lines ; i++){
         pos.x = 0.f ; // reset
         for(int j = 0 ; j < cols ; j++){
@@ -27,9 +28,9 @@ Menu::Menu(sf::RenderWindow* window, sf::View view)
             sprite.setTexture(background_texture);
             sprite.setPosition(pos);
             background_sprites.push_back(sprite);
-            pos.x += sprite.getGlobalBounds().getSize().x ;
+            pos.x += sprite.getGlobalBounds().width ;
         }
-        pos.y += sprite.getGlobalBounds().getSize().y ; 
+        pos.y += sprite.getGlobalBounds().height ; 
     }
     choices.push_back("Retry");
     choices.push_back("Exit DevRanger");

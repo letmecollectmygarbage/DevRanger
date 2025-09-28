@@ -27,7 +27,7 @@
 *.lib
 
 # Executables
-*.exe
+DevRanger
 *.out
 *.app
 desktop.ini
@@ -49,3 +49,4 @@ ressources/Images/walls taken.xcf
 src/UnitTesting/States/main.cpp
 src/UnitTesting/States/MenuTest.cpp
 src/UnitTesting/States/MenuTest.h
+

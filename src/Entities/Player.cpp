@@ -74,7 +74,7 @@ void Player::move(const float& deltaTime, const float dir_x, const float dir_y){
     {
         return ; 
     }
-    float width_heart = health_hearts[0].getGlobalBounds().getSize().x ; 
+    float width_heart = health_hearts[0].getGlobalBounds().width ; 
     // dispose 3 hearts horizontally 
     for(sf::Sprite heart : health_hearts)
     {
@@ -168,7 +168,7 @@ void Player::init_life_display(){
     }
     heart_texture.setSmooth(true); // blurs edges
     heart_sprite.setTexture(heart_texture); 
-    float width_heart = heart_sprite.getGlobalBounds().getSize().x ; 
+    float width_heart = heart_sprite.getGlobalBounds().width ; 
     // dispose 3 hearts horizontally 
     for(float i = 0 ; i < 3 ; i++){
         heart_sprite.setPosition(pos_player.x+(width_heart*i),pos_player.y-100);
@@ -200,7 +200,7 @@ void Player::manage_life_display(){
         health_hearts.clear();
         sf::Sprite heart_sprite ;
         heart_sprite.setTexture(heart_texture);
-        float width_heart = heart_sprite.getGlobalBounds().getSize().x ;
+        float width_heart = heart_sprite.getGlobalBounds().width ;
         for(float i=0 ; i < num_hearts ; i++){
             heart_sprite.setPosition(pos.x+(width_heart*i),pos.y-100);
             health_hearts.push_back(heart_sprite);
@@ -283,8 +283,8 @@ void Player::initSpritesFireballs(){
         for(int i = 0 ; i < N_fireballs ; i++){
             sf::Sprite fireballSprite ;
             fireballSprite.setTexture(fireball_color_textures[color][i]) ;
-            float x = fireballSprite.getGlobalBounds().getSize().x / 2 ;
-            float y = fireballSprite.getGlobalBounds().getSize().y / 2 ;
+            float x = fireballSprite.getGlobalBounds().width / 2 ;
+            float y = fireballSprite.getGlobalBounds().width / 2 ;
             fireballSprite.setOrigin(x,y); // make origin the center of the sprite 
             fireballSprite.setPosition(initial_pos);
             fireballSprite.setScale(scaleFireball);
@@ -326,8 +326,8 @@ void Player::attack(){
     fireball_burning = true ; 
     dirFireball = lastMovingMovement ; // direction of player
     sf::Vector2f posFireball = pos ;
-    posFireball.x += sprite.getGlobalBounds().getSize().x / 2 ; 
-    posFireball.y += sprite.getGlobalBounds().getSize().y / 2 ; 
+    posFireball.x += sprite.getGlobalBounds().width / 2 ; 
+    posFireball.y += sprite.getGlobalBounds().height / 2 ; 
     fireball.setPosition(posFireball); // initiate fireball at middle of player's sprite
 }
 

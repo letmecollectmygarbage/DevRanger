@@ -31,7 +31,7 @@ class State
 		// argument means you can draw at another 
 		// window but default is principal window 
 		virtual void render(sf::RenderTarget* target = nullptr) = 0;
-		void acquireInput(sf::Keyboard::Key key); 
+		bool acquireInput(sf::Keyboard::Key key); 
 	};
 
 #endif
